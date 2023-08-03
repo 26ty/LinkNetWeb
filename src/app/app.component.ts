@@ -6,4 +6,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'LinkNetWeb';
+
+  homeLink() {
+    window.location.assign('/');
+  }
+
+  privyLink() {
+    window.location.assign('/privy');
+  }
+
+  addArticleLink() {
+    window.location.assign('/addArticle');
+  }
+
+  collectionLink() {
+    window.location.assign('/collection');
+  }
 }

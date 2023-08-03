@@ -19,12 +19,18 @@ import { PrivyComponent } from './views/privy/privy.component';
 import { PrivyRoutingModule } from './views/privy/privy-routing.module'
 
 import { RouterModule } from '@angular/router';
+import { AddArticleComponent } from './views/add-article/add-article.component';
+import { CollectionComponent } from './views/collection/collection.component';
+import { EditArticleComponent } from './views/edit-article/edit-article.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RecommendComponent,
-    PrivyComponent
+    PrivyComponent,
+    AddArticleComponent,
+    CollectionComponent,
+    EditArticleComponent
   ],
   imports: [
     BrowserModule,
@@ -41,8 +47,10 @@ import { RouterModule } from '@angular/router';
     
     PrivyRoutingModule,
     RouterModule.forRoot([
+      {path:"",component:HomeComponent},
       {path:"privy",component:PrivyComponent},
-      {path:"",component:HomeComponent}
+      {path:"addArticle",component:AddArticleComponent},
+      {path:"collection",component:CollectionComponent},
     ]),
   ],
   providers: [],
