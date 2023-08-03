@@ -16,7 +16,7 @@ h2{
 
 /*隔線上下距離*/
 mat-divider {
-    margin-top: 4px;
+    margin-top: 10px;
     margin-bottom: 10px; 
 }
 
