@@ -35,6 +35,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     left: 0;
     right: 0;
     height: 113px;
+    width: 100%;
     /* display: flex; */
     padding-top: 10px;
     align-items: center;
@@ -43,6 +44,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     font-weight: 600;
     border-bottom: 1px solid #dadce0;
     /* border-color: #6c6b6b; */
+
+    .col{
+        padding: 0;
+    }
   }
 
   .toolbar img {

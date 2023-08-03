@@ -9,6 +9,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+
+
 //page
 import { HomeComponent } from './views/home/home.component';
 import { RecommendComponent } from './views/recommend/recommend.component';
@@ -27,10 +30,13 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    /*  matrial */
     MatSlideToggleModule,
     MatIconModule,
     MatCardModule,
     MatDividerModule,
+    MatButtonModule,
+
     PrivyRoutingModule,
     RouterModule.forRoot([
       {path:"privy",component:PrivyComponent},
