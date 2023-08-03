@@ -25,6 +25,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     margin: 0;
   }
 
+  
+
   .spacer {
     flex: 1;
   }
@@ -84,7 +86,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 
   mat-icon{
     color: #888;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     
     font-size: 32px;
   }

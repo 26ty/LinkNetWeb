@@ -1,7 +1,7 @@
 <!-- <style> </style> -->
 
 <!-- Toolbar -->
-<div class="toolbar" role="banner" style="width: 100%;">
+<div class="toolbar" role="banner">
   <div class="row" style="width: 100%;">
     <div class="col-lg-2">
       <img width="60" alt="Angular Logo" src="../assets/image/linknet-logo.png" />
@@ -13,12 +13,30 @@
     </div>
     <div class="col-lg-2 pt-1">
       <div class="user-logo">
-        <a href="">
+        <!-- <a href="">
           <mat-icon style="font-size: 26px;">settings</mat-icon>
-        </a>
-        <a href="">
-          <img width="40" class="user-logo" alt="Angular Logo" src="../assets/image/user.png" />
-        </a>
+        </a> -->
+        <button mat-icon-button>
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>person</mat-icon>
+          <!-- <img width="40" class="user-logo" alt="Angular Logo" src="../assets/image/user.png" /> -->
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>dialpad</mat-icon>
+            <span>Redial</span>
+          </button>
+          <button mat-menu-item disabled>
+            <mat-icon>voicemail</mat-icon>
+            <span>Check voice mail</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Disable alerts</span>
+          </button>
+        </mat-menu>
       </div>
       <!-- <mat-icon>settings</mat-icon>
       <a href="">

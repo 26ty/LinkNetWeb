@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-
+import {MatMenuModule} from '@angular/material/menu';
 
 //page
 import { HomeComponent } from './views/home/home.component';
@@ -36,7 +36,9 @@ import { RouterModule } from '@angular/router';
     MatCardModule,
     MatDividerModule,
     MatButtonModule,
+    MatMenuModule,
 
+    
     PrivyRoutingModule,
     RouterModule.forRoot([
       {path:"privy",component:PrivyComponent},
