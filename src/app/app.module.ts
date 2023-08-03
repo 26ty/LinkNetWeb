@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 //page
 import { HomeComponent } from './views/home/home.component';
@@ -43,7 +44,7 @@ import { EditArticleComponent } from './views/edit-article/edit-article.componen
     MatDividerModule,
     MatButtonModule,
     MatMenuModule,
-
+    MatPaginatorModule,
     
     PrivyRoutingModule,
     RouterModule.forRoot([
