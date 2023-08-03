@@ -6,10 +6,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //material component
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatIconModule} from '@angular/material/icon'
+import {MatIconModule} from '@angular/material/icon';
+import { HomeComponent } from './views/home/home.component';
+import { RecommendComponent } from './views/recommend/recommend.component';
+import { PrivyComponent } from './views/privy/privy.component'
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    RecommendComponent,
+    PrivyComponent
   ],
   imports: [
     BrowserModule,

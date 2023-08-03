@@ -79,11 +79,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
 
   mat-icon{
     color: #888;
+    margin-top: 10px;
     
+    font-size: 32px;
   }
 
   .user-logo{
-    float: right;
+    float: right; 
+  }
+
+  ul{
+    margin-top: 13px;
   }
   /* .material-symbols-outlined {
     font-variation-settings:
