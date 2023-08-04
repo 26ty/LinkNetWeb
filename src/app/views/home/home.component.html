@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col">
             <h1 class="pb-0 mb-0">首頁</h1>
-        <p class="today-tips">8月３日 星期四</p>
+        <p class="today-tips">{{this.today}}</p>
         </div>
         <div class="col">
             <button mat-mini-fab class="add-article-btn">
@@ -39,7 +39,7 @@
                     <div class="col">
                         <div class="row">
                             <div class="col article-content">
-                                <p>
+                                <p id="article-content" name="article-content">
                                     {{item.content}}
                                 </p>
                             </div>

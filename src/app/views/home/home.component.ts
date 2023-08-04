@@ -11,11 +11,23 @@ export class HomeComponent implements OnInit{
     private HttpApiService:HttpApiService
   ){}
 
-  
+  today:any
   ngOnInit():void{
     this.getAllArticle()
+    const p:any = document.getElementById('article-content')
+    // this.limitText(p,20)
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    this.today = `${year}年${month}月${day}日`;
+    console.log(this.today);
   }
 
+
+  
+   // 输出当前日期
 
   articleDatas:any;
   /**
@@ -31,7 +43,21 @@ export class HomeComponent implements OnInit{
       }
     )
   }
-  
+
+  // p = document.getElementById('article-content');
+  /**
+    * 限制<p>內字數顯示
+    * @param limit 限制字數
+    * @return {obj} article datas 
+  */
+  limitText(p:HTMLElement,limit:number):void {
+    const text:any = p.textContent?.trim();
+    if (text.length > limit) {
+      const truncated: string = text.slice(0, limit) + '...';
+      p.textContent = truncated;
+    }
+  }
+
   detailArticle(id:string) {
     window.location.assign('/detailArticle/' + id);
   }
