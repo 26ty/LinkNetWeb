@@ -5,7 +5,7 @@
     </div>
     <!--material-->
     <div class="row">
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline">
             <textarea 
                 matInput
                 #title 
@@ -23,7 +23,7 @@
         
     </div>
     <div class="row">
-        <mat-form-field class="example-full-width" class="textarea-content">
+        <mat-form-field appearance="outline" class="textarea-content">
             <textarea 
                 class="textarea-content" 
                 matInput 
@@ -41,6 +41,15 @@
         </mat-form-field>
     </div>
 
+    <div class="row">
+
+        <div class="d-grid gap-2 col mx-auto">
+            <button class="btn btn-danger delete-btn" type="button">取消</button>
+        </div>
+        <div class="d-grid gap-2 col mx-auto">
+            <button class="btn btn-primary save-btn" type="button">儲存</button>
+        </div>
+    </div>
     <!-- <mat-form-field>
         <textarea name="intro_self" matInput placeholder="自我介紹" matTextareaAutosize required></textarea>
         <mat-hint>簡單介紹一下你的興趣吧！</mat-hint>

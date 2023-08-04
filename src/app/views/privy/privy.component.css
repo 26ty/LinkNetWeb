@@ -42,3 +42,12 @@ mat-icon{
 mat-card{
     border-radius:2%;
   }
+
+
+/*新增文章按鈕*/
+.add-article-btn {
+    float: right;
+    background-color: #f2f2f2;
+    color: #333333;
+    box-shadow: none; 
+  }

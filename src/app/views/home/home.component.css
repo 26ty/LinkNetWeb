@@ -33,6 +33,14 @@ mat-divider {
     box-shadow: none;
 }
 
+/*新增文章按鈕*/
+.add-article-btn {
+    float: right;
+    background-color: #f2f2f2;
+    color: #333333;
+    box-shadow: none; 
+}
+
 mat-icon{
     color: #333333;
     /* margin-bottom: 5px; */

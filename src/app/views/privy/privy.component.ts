@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class PrivyComponent {
 
+
+  detailArticle() {
+    window.location.assign('/detailArticle');
+  }
 }

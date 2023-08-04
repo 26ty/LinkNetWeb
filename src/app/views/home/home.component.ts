@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  detailArticle() {
+    window.location.assign('/detailArticle');
+  }
 }

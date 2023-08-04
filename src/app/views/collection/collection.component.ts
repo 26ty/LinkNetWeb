@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class CollectionComponent {
 
+  detailArticle() {
+    window.location.assign('/detailArticle');
+  }
+
+  goBack() {
+    window.history.back();
+  }
 }

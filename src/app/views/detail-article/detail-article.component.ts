@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./detail-article.component.css']
 })
 export class DetailArticleComponent {
-
+  goBack() {
+    window.history.back();
+  }
 }

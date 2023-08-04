@@ -1,7 +1,14 @@
 <div class="row">
     <div class="row">
-        <h1 class="pb-0 mb-0">我的文章</h1>
+        <div class="col">
+            <h1 class="pb-0 mb-0">我的文章</h1>
         <p class="today-tips">8月３日 星期四</p>
+        </div>
+        <div class="col">
+            <button mat-mini-fab class="add-article-btn">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
     </div>
     <div class="col-lg">
         <mat-card class="example-card">
@@ -45,7 +52,7 @@
                             </div>
                         </div>
                         <div class="row" style="float: right;margin-right: 5px;">
-                            <button mat-fab extended class="expand-btn">
+                            <button mat-fab extended class="expand-btn" (click)="detailArticle()">
                                 <mat-icon>exit_to_app</mat-icon>
                                 閱讀全文
                             </button>
