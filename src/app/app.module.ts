@@ -33,6 +33,11 @@ import { RouterModule } from '@angular/router';
 import { AddArticleComponent } from './views/add-article/add-article.component';
 import { CollectionComponent } from './views/collection/collection.component';
 import { EditArticleComponent } from './views/edit-article/edit-article.component';
+import { LoginComponent } from './login/login.component';
+import { ContainerComponent } from './views/container/container.component';
+import { ContainerRoutingModule } from './views/container/container-routing.module';
+import { ContainerModule } from './views/container/container.module';
+import { DetailArticleComponent } from './views/detail-article/detail-article.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +46,10 @@ import { EditArticleComponent } from './views/edit-article/edit-article.componen
     PrivyComponent,
     AddArticleComponent,
     CollectionComponent,
-    EditArticleComponent
+    EditArticleComponent,
+    LoginComponent,
+    ContainerComponent,
+    DetailArticleComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,24 +66,26 @@ import { EditArticleComponent } from './views/edit-article/edit-article.componen
     MatFormFieldModule,
     MatInputModule,
 
-    
     /* editor */
     AngularEditorModule,
-
     /* http */
     HttpClientModule,
-
     FormsModule,
 
 
     /* routing */
     PrivyRoutingModule,
     RouterModule.forRoot([
-      {path:"",component:HomeComponent},
+      {path:"main",component:HomeComponent},
       {path:"privy",component:PrivyComponent},
       {path:"addArticle",component:AddArticleComponent},
+      {path:"editArticle",component:EditArticleComponent},
+      {path:"detailArticle",component:DetailArticleComponent},
       {path:"collection",component:CollectionComponent},
     ]),
+    
+    ContainerRoutingModule,
+    ContainerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

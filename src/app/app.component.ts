@@ -8,7 +8,7 @@ export class AppComponent {
   title = 'LinkNetWeb';
 
   homeLink() {
-    window.location.assign('/');
+    window.location.assign('/main');
   }
 
   privyLink() {
