@@ -15,6 +15,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 
+//textarea
+import { TextFieldModule } from '@angular/cdk/text-field';
+
 //editor
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
@@ -66,6 +69,8 @@ import { DetailArticleComponent } from './views/detail-article/detail-article.co
     MatFormFieldModule,
     MatInputModule,
 
+    /* textarea */
+    TextFieldModule,
     /* editor */
     AngularEditorModule,
     /* http */

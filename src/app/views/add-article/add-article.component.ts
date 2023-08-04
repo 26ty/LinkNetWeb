@@ -1,5 +1,7 @@
-import { Component} from '@angular/core';
+import { Component , NgZone , ViewChild} from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import {CdkTextareaAutosize} from '@angular/cdk/text-field';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-articletextarea[autoresize]',
@@ -7,7 +9,15 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
   styleUrls: ['./add-article.component.css']
 })
 export class AddArticleComponent {
-  constructor(){}
+  constructor(private _ngZone: NgZone){}
+  
+  // @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
+
+  // triggerResize() {
+  //   // Wait for changes to be applied, then trigger textarea resize.
+  //   this._ngZone.onStable.pipe(take(1))
+  //       .subscribe(() => this.autosize.resizeToFitContent(true));
+  // }
 
   name = 'Angular 6';
   htmlContent = '';

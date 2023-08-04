@@ -9,6 +9,12 @@
     border-radius:5%;
 }
 
+.detail-article-img{
+    /* position: relative; */
+    width: 80%;
+    border-radius:5%;
+}
+
 /*h2 mb*/
 h2{
     margin-bottom: 0;
@@ -22,7 +28,7 @@ mat-divider {
 
 /*文章內容預留空間*/
 .article-content {
-    height: 260px;
+    height: 500px;
 }
 
 /*查看完整文章按鈕*/

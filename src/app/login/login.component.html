@@ -13,6 +13,7 @@
                         <mat-label>帳號</mat-label>
                         <input matInput placeholder="輸入帳號">
                         <mat-icon matSuffix>person</mat-icon>
+                        <mat-error>帳號必填！</mat-error>
                     </mat-form-field>
                 </p>
                 <p>
@@ -23,6 +24,7 @@
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                           </button>
                         <mat-hint align="end">{{password.value.length}} / 10</mat-hint>
+                        <mat-error>密碼必填！</mat-error>
                     </mat-form-field>
                 </p>
                 <div class="d-grid gap-2 col-6 mx-auto">
