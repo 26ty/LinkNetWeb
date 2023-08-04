@@ -186,7 +186,7 @@ svg.material-icons:not(:last-child) {
 
 .card {
   all: unset;
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid #eee;
   background-color: #fafafa;
   height: 40px;

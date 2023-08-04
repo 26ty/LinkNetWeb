@@ -1,4 +1,4 @@
-import { Component , NgZone , ViewChild} from '@angular/core';
+import { Component , OnInit, NgZone , ViewChild} from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {take} from 'rxjs/operators';
@@ -8,8 +8,11 @@ import {take} from 'rxjs/operators';
   templateUrl: './add-article.component.html',
   styleUrls: ['./add-article.component.css']
 })
-export class AddArticleComponent {
+export class AddArticleComponent implements OnInit{
+
   constructor(private _ngZone: NgZone){}
+  
+  ngOnInit():void{}
   
   // @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
 

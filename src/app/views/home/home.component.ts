@@ -11,22 +11,28 @@ export class HomeComponent implements OnInit{
     private HttpApiService:HttpApiService
   ){}
 
-  // ngOnInit(): void {
-  //   // 在这里初始化组件
-  // }
+  
+  ngOnInit():void{
+    this.getAllArticle()
+  }
+
 
   articleDatas:any;
-  ngOnInit():void{
+  /**
+    * 取得所有文章data
+    *
+    * @return {obj} article datas 
+  */
+  getAllArticle() {
     this.HttpApiService.getArticleRequest().subscribe(
       res => {
         this.articleDatas = res
         console.log(this.articleDatas)
       }
     )
-    console.log("test")
   }
-
-  detailArticle() {
-    window.location.assign('/detailArticle');
+  
+  detailArticle(id:string) {
+    window.location.assign('/detailArticle/' + id);
   }
 }

@@ -79,5 +79,42 @@ export class HttpApiService {
     return this.http.delete(url);
   }
 
+  /* Comment CRUD */
+  /**
+    * 取得所有評論data
+    *
+    * @return {obj} article datas 
+  */
+  getCommentRequest() : Observable<any> {
+    return this.http.get(this.BaseUrl + '/Comments');
+  }
+
+  /**
+    * 更新評論
+    * @param  {Comment} 填入body obj
+    * @return {obj} Comment datas 
+  */
+  uploadCommentRequest(body: Comment) : Observable<any>{
+    const url = `${this.BaseUrl}/Comments`;
+    return this.http.post(url, body);
+  }
+  /**
+    * 取得單一評論data
+    * @param  {string} 填入欲取得的評論id
+    * @return {obj} Comment datas 
+  */
+  getOneCommentRequest(id: string): Observable<any> {
+    const url = `${this.BaseUrl}/Comments/${id}`;
+    return this.http.get(url);
+  }
+  /**
+    * 刪除單一評論data
+    * @param  {string} 填入欲刪除的評論id
+    * @return {obj} Comment datas 
+  */
+  deleteCommentRequest(id: string) {
+    const url = `${this.BaseUrl}/Comments/${id}`;
+    return this.http.delete(url);
+  }
 
 }

@@ -1,26 +1,29 @@
 <div class="row">
     <div class="col-lg">
-        <mat-card class="example-card">
+        <mat-card class="example-card" *ngIf="OneArticleDatas">
             <mat-card-header>
                 <mat-card-title>
                     <button mat-icon-button (click)="goBack()">
                         <mat-icon>keyboard_arrow_left</mat-icon>
                     </button>
-                    <h1>月月配00929 vs 00878+0056+00713報酬率PK！存股高股息ETF，退休打造月月領息現金流的4個指引</h1>
+                    <h1>{{this.OneArticleDatas.title}}</h1>
                 </mat-card-title>
-                <mat-card-subtitle>8月３日 星期四</mat-card-subtitle>
+                <mat-card-subtitle>{{this.OneArticleDatas.created_at | date: 'yyyy.MM.dd HH:mm'}}</mat-card-subtitle>
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="mt-2">
                 <div class="row text-center">
                     <div class="col detail-article-img">
-                        <img src="../../../assets/image/pricy-image.jpg" class="detail-article-img" alt="">
+                        <img src="{{this.OneArticleDatas.img_url}}" class="detail-article-img" alt="">
                     </div>
                 </div>
                 <!--文章卡-->
                 <div class="row mt-3">
                     <div class="col article-content">
                         <p>
+                            {{this.OneArticleDatas.content}}
+                        </p>
+                        <!-- <p>
                             最近復華台灣科技優息ETF 00929又準備要除息了，繼7月份第一次除息就配出每單位0.11元後，
                             8月份第二次配息預估為每單位0.11元，投資人如果想參與此次配息，8/16為最後買進日。
                             復華台灣科技優息ETF 00929，2023/06/09一上市就帶來一波投資熱潮，當天成交量達到12萬張，
@@ -47,7 +50,7 @@
                             看到這邊，不難發現，高股息ETF產品隨著投資人的需求與市場變化推陳出新，利用更多的篩選因子與定期的成分股更換，
                             期望讓投資人能在資本利得與股息上都能夠有更好的報酬表現。未來投資人一定會有更多相關高股息產品的選擇，因此了解其選股策略是很重要的，
                             投資人可以選擇自己認同的選股策略來組成適合自己的月月配高股息ETF。
-                        </p>
+                        </p> -->
                     </div>
                 </div>
             </mat-card-content>

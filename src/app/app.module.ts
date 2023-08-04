@@ -85,7 +85,7 @@ import { DetailArticleComponent } from './views/detail-article/detail-article.co
       {path:"privy",component:PrivyComponent},
       {path:"addArticle",component:AddArticleComponent},
       {path:"editArticle",component:EditArticleComponent},
-      {path:"detailArticle",component:DetailArticleComponent},
+      {path:"detailArticle/:a_id",component:DetailArticleComponent},
       {path:"collection",component:CollectionComponent},
     ]),
     
