@@ -42,6 +42,7 @@ import { ContainerRoutingModule } from './views/container/container-routing.modu
 import { ContainerModule } from './views/container/container.module';
 import { DetailArticleComponent } from './views/detail-article/detail-article.component';
 import { LoginModule } from './login/login.module';
+
 @NgModule({
   declarations: [
     AppComponent,

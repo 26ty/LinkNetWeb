@@ -1,11 +1,27 @@
-import { Component } from '@angular/core';
+import { Component , OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpApiService } from './api/http-api.service';
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   title = 'LinkNetWeb';
+
+  constructor(
+    private router: Router,
+    private HttpApiService: HttpApiService,
+  ){
+
+  }
+
+  ngOnInit():void{
+
+  }
 
   homeLink() {
     window.location.assign('/main');
@@ -21,5 +37,46 @@ export class AppComponent {
 
   collectionLink() {
     window.location.assign('/collection');
+  }
+
+  /**
+    * 登出函式
+  */
+  logout(){
+    Swal.fire({
+      title: '您是否確定要登出?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: '確認!',
+      cancelButtonText: '取消!',
+      confirmButtonColor: '#1972D6',
+      cancelButtonColor: '#d33',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //進行local資訊清空及登出
+        this.HttpApiService.logout()
+        Swal.fire(
+          {
+            icon: 'success',
+            title: '登出成功!',
+            showConfirmButton: false,
+            timer: 1500
+          }
+        )
+
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire(
+          {
+            icon: 'error',
+            title: '取消登出!',
+            showConfirmButton: false,
+            timer: 1500
+          }
+        )
+      }
+    })
   }
 }

@@ -60,7 +60,7 @@ export class HttpApiService {
     window.localStorage.clear();
   }
 
-  logout() {
+  logout() : void{
     this.signOut();
     this.router.navigate(['/']);
   }

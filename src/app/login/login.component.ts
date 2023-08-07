@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpApiService } from '../api/http-api.service';
 // ES6 Modules or TypeScript
 import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -60,10 +61,50 @@ export class LoginComponent implements OnInit{
     this.HttpApiService.login(this.loginUserData).subscribe(
       res => {
         console.log("登入request",res)
+        if(res.code == 200){
+
+          //若登入成功則使用userId取得該使用者資料
+          this.getOneUserData(res.userId,res.message)
+        }
       },
       err => {
         console.log("登入錯誤",err)
-        // console.log("登入錯誤",err.error.code,err.error.message);
+        //根據錯誤碼對應提示彈跳視窗
+        this.LoginErrorStatus(err.error.code,err.error.message)
+      }
+    )
+
+  }
+
+  userDatasList: any = {}
+  /**
+    * 取得單一使用者data
+    *
+    * @param {any} user_id 填入欲取得的使用者id
+  */
+  getOneUserData(user_id:string,message:string){
+    this.HttpApiService.getOneUserRequest(user_id).subscribe(
+      res => {
+        console.log("取得單一使用者data",res)
+        this.userDatasList['username'] = res.username
+        this.userDatasList['email'] = res.email
+        this.userDatasList['id'] = res.id
+        console.log("要存入local的使用者資訊",this.userDatasList)
+
+        //存入local
+        this.HttpApiService.saveUser(this.userDatasList)
+        //跳轉至首頁
+        this.router.navigateByUrl(`/main`);
+
+        Swal.fire({
+          icon: 'success',
+          title: message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      },
+      err => {
+        console.log("存取錯誤!",err)
         this.LoginErrorStatus(err.error.code,err.error.message)
       }
     )
@@ -94,6 +135,7 @@ export class LoginComponent implements OnInit{
         confirmButtonColor: '#1972D6',
         cancelButtonText: '取消',
         confirmButtonText: '註冊',
+        reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire({
