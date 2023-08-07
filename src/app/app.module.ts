@@ -41,6 +41,7 @@ import { ContainerComponent } from './views/container/container.component';
 import { ContainerRoutingModule } from './views/container/container-routing.module';
 import { ContainerModule } from './views/container/container.module';
 import { DetailArticleComponent } from './views/detail-article/detail-article.component';
+import { LoginModule } from './login/login.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,7 +91,8 @@ import { DetailArticleComponent } from './views/detail-article/detail-article.co
     ]),
     
     ContainerRoutingModule,
-    ContainerModule
+    ContainerModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

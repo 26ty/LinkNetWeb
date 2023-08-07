@@ -8,27 +8,35 @@
             </div>
             <mat-divider></mat-divider>
             <mat-card-content class="mt-2">
-                <p>
-                    <mat-form-field appearance="outline">
-                        <mat-label>帳號</mat-label>
-                        <input matInput placeholder="輸入帳號">
-                        <mat-icon matSuffix>person</mat-icon>
-                        <mat-error>帳號必填！</mat-error>
-                    </mat-form-field>
-                </p>
-                <p>
-                    <mat-form-field appearance="outline" hintLabel="最多10個字元">
-                        <mat-label>密碼</mat-label>
-                        <input matInput #password maxlength="10" placeholder="輸入密碼" [type]="hide ? 'password' : 'text'">
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                          </button>
-                        <mat-hint align="end">{{password.value.length}} / 10</mat-hint>
-                        <mat-error>密碼必填！</mat-error>
-                    </mat-form-field>
-                </p>
+                <!-- <form [formGroup]="loginForm"> -->
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>帳號</mat-label>
+                            <input matInput placeholder="輸入帳號" [(ngModel)]="username">
+                            <mat-icon matSuffix>person</mat-icon>
+                            <mat-error>帳號必填！</mat-error>
+                        </mat-form-field>
+                    </p>
+                    <p>
+                        <!-- <mat-form-field appearance="outline" hintLabel="最多10個字元">
+                            <mat-label>密碼</mat-label>
+                            <input matInput #password maxlength="10" placeholder="輸入密碼" [(ngModel)]="password" [type]="hide ? 'password' : 'text'" >
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-hint align="end">{{password.value.length}} / 10</mat-hint>
+                            <mat-error>密碼必填！</mat-error>
+                        </mat-form-field> -->
+                        <mat-form-field appearance="outline">
+                            <mat-label>密碼</mat-label>
+                            <input matInput type="password" placeholder="輸入密碼" [(ngModel)]="password">
+                            <mat-icon matSuffix>person</mat-icon>
+                            <mat-error>密碼必填！</mat-error>
+                        </mat-form-field>
+                    </p>
+                <!-- </form> -->
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <button class="btn btn-primary login-btn" type="button">註冊／登入</button>
+                    <button class="btn btn-primary login-btn" type="button" (click)="login()">註冊／登入</button>
                 </div>
                 <p><a href="#" class="link-underline-light">忘記密碼</a></p>
             </mat-card-content>
