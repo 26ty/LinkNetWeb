@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Article } from '../shared/models/article-data';
 import { Users } from '../shared/models/user-data';
 import { Comment } from '../shared/models/comment-data';
+import { UsersLogin } from '../shared/models/user-data';
 
 const USER_KEY = 'auth-user';//儲存使用者資料
 
@@ -37,8 +38,61 @@ export class HttpApiService {
   // }
 
   /* 登入 */
-  login():void{
+  login(body: UsersLogin) : Observable<any> {
+    const url = `${this.BaseUrl}/Login`;
+    return this.http.post(url, body);
+  }
 
+  /* 存使用者資料至本地端 */
+  saveUser(user: Users): void {
+    const userStr = JSON.stringify(user);
+    window.localStorage.removeItem(USER_KEY);
+    window.localStorage.setItem(USER_KEY, userStr);
+  }
+
+  /* 至本地端存取使用者資料 */
+  getUser(): string | null {
+    return window.localStorage.getItem(USER_KEY);
+  }
+
+  /* 登出 */
+  signOut(): void {
+    window.localStorage.clear();
+  }
+
+  logout() {
+    this.signOut();
+    this.router.navigate(['/']);
+  }
+
+  /* User CR */
+  /**
+    * 取得所有使用者data
+    *
+    * @return {obj} User datas 
+  */
+  getUserRequest() : Observable<any> {
+    return this.http.get(this.BaseUrl + '/Users');
+  }
+
+  /**
+    * 取得單一使用者data
+    * @param  {string} 填入欲取得的使用者id
+    * @return {obj} User datas 
+  */
+  getOneUserRequest(id: string): Observable<any> {
+    const url = `${this.BaseUrl}/Users/${id}`;
+    return this.http.get(url);
+  }
+
+  /**
+    * 新增使用者
+    * @param  {Comment} 填入body obj
+    * @return {obj} User datas 
+  */
+  uploadUserRequest(body: Comment) : Observable<any>{
+    const url = `${this.BaseUrl}/Users`;
+    return this.http.post(url, body);
   }
 
   /* Article CRUD */
@@ -52,15 +106,6 @@ export class HttpApiService {
   }
 
   /**
-    * 更新文章
-    * @param  {Article} 填入body obj
-    * @return {obj} article datas 
-  */
-  uploadArticleRequest(body: Article) : Observable<any>{
-    const url = `${this.BaseUrl}/Articles`;
-    return this.http.post(url, body);
-  }
-  /**
     * 取得單一文章data
     * @param  {string} 填入欲取得的文章id
     * @return {obj} article datas 
@@ -69,6 +114,27 @@ export class HttpApiService {
     const url = `${this.BaseUrl}/Articles/${id}`;
     return this.http.get(url);
   }
+
+  /**
+    * 新增文章
+    * @param  {Article} 填入body obj
+    * @return {obj} article datas 
+  */
+  uploadArticleRequest(body: Article) : Observable<any>{
+    const url = `${this.BaseUrl}/Articles`;
+    return this.http.post(url, body);
+  }
+
+  /**
+    * 更新文章
+    * @param  {Article} 填入body obj
+    * @return {obj} article datas 
+  */
+  updateArticleRequest(body: Article) : Observable<any>{
+    const url = `${this.BaseUrl}/Articles`;
+    return this.http.put(url, body);
+  }
+
   /**
     * 刪除單一文章data
     * @param  {string} 填入欲刪除的文章id
@@ -90,15 +156,6 @@ export class HttpApiService {
   }
 
   /**
-    * 更新評論
-    * @param  {Comment} 填入body obj
-    * @return {obj} Comment datas 
-  */
-  uploadCommentRequest(body: Comment) : Observable<any>{
-    const url = `${this.BaseUrl}/Comments`;
-    return this.http.post(url, body);
-  }
-  /**
     * 取得單一評論data
     * @param  {string} 填入欲取得的評論id
     * @return {obj} Comment datas 
@@ -107,6 +164,27 @@ export class HttpApiService {
     const url = `${this.BaseUrl}/Comments/${id}`;
     return this.http.get(url);
   }
+
+  /**
+    * 新增評論
+    * @param  {Comment} 填入body obj
+    * @return {obj} Comment datas 
+  */
+  uploadCommentRequest(body: Comment) : Observable<any>{
+    const url = `${this.BaseUrl}/Comments`;
+    return this.http.post(url, body);
+  }
+
+  /**
+    * 更新評論
+    * @param  {Comment} 填入body obj
+    * @return {obj} Comment datas 
+  */
+  updateCommentRequest(body: Comment) : Observable<any>{
+    const url = `${this.BaseUrl}/Comments`;
+    return this.http.put(url, body);
+  }
+
   /**
     * 刪除單一評論data
     * @param  {string} 填入欲刪除的評論id

@@ -11,12 +11,16 @@ export class HomeComponent implements OnInit{
     private HttpApiService:HttpApiService
   ){}
 
-  today:any
   ngOnInit():void{
     this.getAllArticle()
     const p:any = document.getElementById('article-content')
     // this.limitText(p,20)
 
+    this.getToday()
+  }
+
+  today:any
+  getToday(){
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
@@ -24,8 +28,6 @@ export class HomeComponent implements OnInit{
     this.today = `${year}年${month}月${day}日`;
     console.log(this.today);
   }
-
-
   
    // 输出当前日期
 
