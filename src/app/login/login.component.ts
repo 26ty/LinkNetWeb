@@ -111,6 +111,47 @@ export class LoginComponent implements OnInit{
 
   }
 
+  uploadUserData:any={}
+  /**
+    * 新增使用者
+    *
+    * 
+  */
+  registry(){
+    this.uploadUserData['username'] = this.username
+    this.uploadUserData['email'] = this.email
+    this.uploadUserData['password'] = this.password
+    this.uploadUserData['created_at'] = new Date()
+    this.uploadUserData['updated_at'] = new Date()
+
+    console.log("欲新增使用者資料",this.uploadUserData)
+    this.HttpApiService.uploadUserRequest(this.uploadUserData).subscribe(
+      res => {
+        console.log("新增使用者res",res)
+        if(this.username == res.username){
+          Swal.fire({
+            icon: 'success',
+            title: '註冊成功!',
+            text: "您已加入LinkNet會員",
+            confirmButtonColor: '#1972D6',
+            confirmButtonText: '登入',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.registryStatus = true
+              this.login()
+            }
+          })
+        }
+      },
+      err => {
+        console.log("存取錯誤!",err)
+        this.LoginErrorStatus(err.error.code,err.error.message)
+      }
+    )
+  }
+
+  registryStatus:boolean=false
+  email:string='';
   /**
     * 登入錯誤代碼對應的提示視窗
     *
@@ -138,13 +179,15 @@ export class LoginComponent implements OnInit{
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            icon: 'success',
-            title: '註冊成功!',
-            text: "您已加入LinkNet會員",
-            confirmButtonColor: '#1972D6',
-            confirmButtonText: '登入',
-          })
+          this.registryStatus = true
+          //this.registry()
+          // Swal.fire({
+          //   icon: 'success',
+          //   title: '註冊成功!',
+          //   text: "您已加入LinkNet會員",
+          //   confirmButtonColor: '#1972D6',
+          //   confirmButtonText: '登入',
+          // })
           //註冊流程api
         }
       })
@@ -173,6 +216,8 @@ export class LoginComponent implements OnInit{
     
   }
 
+
+  
 
 
 }
