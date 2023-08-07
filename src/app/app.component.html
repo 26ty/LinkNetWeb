@@ -1,11 +1,11 @@
 <!-- <style> </style> -->
 
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
+<!-- <div class="toolbar" role="banner">
   <div class="row" style="width: 100%;">
     <div class="col-lg-2">
       <img width="60" alt="Angular Logo" src="../assets/image/linknet-logo.png" (click)="homeLink()" />
-      <!-- <div class="spacer"></div> -->
+      
     </div>
     <div class="col-lg-8">
       <input class="form-control form-control-lg search-bar" type="text" placeholder="搜尋主題和來源" aria-label=".form-control-lg example">
@@ -16,15 +16,13 @@
           <mat-icon>settings</mat-icon>
         </button>
         
-        <!-- <button mat-fab extended>
-          Hi!Admin
-        </button> -->
-        <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="this.userData!==null" >
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="this.userData" >
           <mat-icon>person</mat-icon>
-          <!-- <img width="40" class="user-logo" alt="Angular Logo" src="../assets/image/user.png" /> -->
+          
         </button>
-        <span *ngIf="this.userData == null" class="user-name">未登入</span>
-        <span *ngIf="this.userData!==null" class="user-name">Hi {{this.userData.username}}!</span>
+        <span *ngIf="!this.userData" class="user-name">未登入</span>
+        <span *ngIf="this.userData" class="user-name">Hi {{this.userData.username}}!</span>
         <mat-menu #menu="matMenu" >
           <button mat-menu-item (click)="addArticleLink()">
             <mat-icon>add</mat-icon>
@@ -44,10 +42,7 @@
           </button>
         </mat-menu>
       </div>
-      <!-- <mat-icon>settings</mat-icon>
-      <a href="">
-        <img width="40" class="user-logo" alt="Angular Logo" src="../assets/image/user.png" />
-      </a> -->
+ 
     </div>
   </div>
   <div class="row" style="width: 100%;">
@@ -76,8 +71,9 @@
     
   </div>
 
-</div>
+</div> -->
 
+<app-header></app-header>
 <div class="content" role="main">
   <div class=" mt-5">
     <router-outlet></router-outlet>

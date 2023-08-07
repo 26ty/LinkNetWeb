@@ -1,17 +1,17 @@
 import { Component , OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpApiService } from './api/http-api.service';
+import { HttpApiService } from 'src/app/api/http-api.service';
 // ES6 Modules or TypeScript
 import Swal from 'sweetalert2'
 
 const USER_KEY = 'auth-user';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
-export class AppComponent implements OnInit {
+export class HeaderComponent  implements OnInit {
 
   title = 'LinkNetWeb';
 
@@ -27,9 +27,8 @@ export class AppComponent implements OnInit {
     
     const userLocalData = window.localStorage.getItem(USER_KEY)
     this.userData = JSON.parse(String(userLocalData))
-
+    
     console.log(this.userData)
-
   }
 
   homeLink() {
@@ -66,6 +65,7 @@ export class AppComponent implements OnInit {
         //進行local資訊清空及登出
         this.HttpApiService.logout()
         this.userData=""
+        console.log(this.userData)
         Swal.fire(
           {
             icon: 'success',
