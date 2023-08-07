@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { HttpApiService } from './api/http-api.service';
 // ES6 Modules or TypeScript
 import Swal from 'sweetalert2'
+
+const USER_KEY = 'auth-user';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,9 +21,12 @@ export class AppComponent implements OnInit {
   ){
 
   }
-
+  userData: any = ""
   ngOnInit():void{
-
+    // location.reload()
+    const userLocalData = window.localStorage.getItem(USER_KEY)
+    this.userData = JSON.parse(String(userLocalData))
+    console.log(this.userData)
   }
 
   homeLink() {
@@ -56,6 +62,7 @@ export class AppComponent implements OnInit {
       if (result.isConfirmed) {
         //進行local資訊清空及登出
         this.HttpApiService.logout()
+        this.userData=""
         Swal.fire(
           {
             icon: 'success',

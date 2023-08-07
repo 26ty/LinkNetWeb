@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit{
         this.HttpApiService.saveUser(this.userDatasList)
         //跳轉至首頁
         this.router.navigateByUrl(`/main`);
-
+        
         Swal.fire({
           icon: 'success',
           title: message,
