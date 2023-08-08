@@ -2,7 +2,12 @@ import { Component , OnInit, NgZone , ViewChild} from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {take} from 'rxjs/operators';
-
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HttpApiService } from 'src/app/api/http-api.service';
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
+const USER_KEY = 'auth-user';
 @Component({
   selector: 'app-add-articletextarea[autoresize]',
   templateUrl: './add-article.component.html',
@@ -10,41 +15,81 @@ import {take} from 'rxjs/operators';
 })
 export class AddArticleComponent implements OnInit{
 
-  constructor(private _ngZone: NgZone){}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private HttpApiService: HttpApiService
+    ){}
   
-  ngOnInit():void{}
-  
-  // @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
+  userData: any = ""
+  ngOnInit():void{
+    const userLocalData = localStorage.getItem(USER_KEY)
+    this.userData = JSON.parse(String(userLocalData))
 
-  // triggerResize() {
-  //   // Wait for changes to be applied, then trigger textarea resize.
-  //   this._ngZone.onStable.pipe(take(1))
-  //       .subscribe(() => this.autosize.resizeToFitContent(true));
-  // }
+    this.getToday()
+  }
 
-  name = 'Angular 6';
-  htmlContent = '';
+  /**
+    * 登入函式
+  */
+  today:any
+  getToday(){
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+    this.today = `${year}年${month}月${day}日`;
+    console.log(this.today);
+  }
 
-  config: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '10rem',
-    minHeight: '5rem',
-    placeholder: 'Enter text in this rich text editor....',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-    customClasses: [
-      {
-        name: 'Quote',
-        class: 'quoteClass',
+  //文章body
+  title:string=''
+  content:string=''
+  img_url:any
+  user_id:string=''
+  uploadArticleData:any={}
+  /**
+    * 新增文章
+    *
+    * 
+  */
+  uploadArticle(){
+    this.uploadArticleData['title'] = this.title
+    this.uploadArticleData['content'] = this.content
+    this.uploadArticleData['aimg_urlvatar'] = this.img_url
+    this.uploadArticleData['user_id'] = this.userData.id
+    this.uploadArticleData['created_at'] = new Date()
+    this.uploadArticleData['updated_at'] = new Date()
+    console.log("欲新增文章資料",this.uploadArticleData)
+    this.HttpApiService.uploadArticleRequest(this.uploadArticleData).subscribe(
+      res => {
+        console.log("新增使用者res",res)
+        if(this.title == res.title){
+        // if(res.statusCode == 200){
+          Swal.fire({
+            icon: 'success',
+            title: '新增成功!',
+            text: "您已成功新增一篇文章",
+            confirmButtonColor: '#1972D6',
+            confirmButtonText: '看文章！',
+          }).then((result) => {
+            this.router.navigate(['/main']);
+            
+          })
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: '存取錯誤!',
+            text: "請聯絡網管人員.",
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
       },
-      {
-        name: 'Title Heading',
-        class: 'titleHead',
-        tag: 'h1',
-      },
-    ],
-  };
-
-  
+      err => {
+        console.log("存取錯誤!",err)
+        console.log("API狀態碼:", err.status);
+      }
+    )
+  }
 }

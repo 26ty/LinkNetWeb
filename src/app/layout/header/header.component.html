@@ -22,8 +22,8 @@
                     <mat-icon>person</mat-icon>
                     <!-- <img width="40" class="user-logo" alt="Angular Logo" src="../assets/image/user.png" /> -->
                 </button>
-                <span *ngIf="!this.userData" class="user-name">未登入</span>
-                <span *ngIf="this.userData" class="user-name">Hi {{this.userData.username}}!</span>
+                <!-- <span *ngIf="!this.userData" class="user-name">未登入</span> -->
+                <span *ngIf="this.userData" class="user-name">Hi {{ this.userData ? this.userData.username : '未登入' }}!</span>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="addArticleLink()">
                         <mat-icon>add</mat-icon>

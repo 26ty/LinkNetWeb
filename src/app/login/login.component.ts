@@ -38,6 +38,9 @@ export class LoginComponent implements OnInit{
 
   }
 
+  /**
+    * 取得今日日期
+  */
   today:any
   getToday(){
     const now = new Date();
@@ -94,8 +97,8 @@ export class LoginComponent implements OnInit{
         //存入local
         this.HttpApiService.saveUser(this.userDatasList)
         //跳轉至首頁
-        this.router.navigateByUrl(`/main`);
-        
+        // this.router.navigateByUrl(`/main`);
+        this.router.navigate(['/main']);
         Swal.fire({
           icon: 'success',
           title: message,
@@ -128,7 +131,8 @@ export class LoginComponent implements OnInit{
     this.HttpApiService.uploadUserRequest(this.uploadUserData).subscribe(
       res => {
         console.log("新增使用者res",res)
-        if(this.username == res.username){
+        // if(this.username == res.user.username){
+        if(res.statusCode == 200){
           Swal.fire({
             icon: 'success',
             title: '註冊成功!',
@@ -141,10 +145,19 @@ export class LoginComponent implements OnInit{
               this.login()
             }
           })
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: '存取錯誤!',
+            text: "請聯絡網管人員.",
+            showConfirmButton: false,
+            timer: 1500
+          })
         }
       },
       err => {
         console.log("存取錯誤!",err)
+        console.log("API狀態碼:", err.status);
         this.LoginErrorStatus(err.error.code,err.error.message)
       }
     )

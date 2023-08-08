@@ -1,4 +1,4 @@
-import { Component , OnInit } from '@angular/core';
+import { Component , OnInit , ChangeDetectorRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpApiService } from 'src/app/api/http-api.service';
 // ES6 Modules or TypeScript
@@ -18,6 +18,7 @@ export class HeaderComponent  implements OnInit {
   constructor(
     private router: Router,
     private HttpApiService: HttpApiService,
+    private changeDetectorRef: ChangeDetectorRef
   ){
 
   }
@@ -25,9 +26,10 @@ export class HeaderComponent  implements OnInit {
   ngOnInit():void{
     // location.reload()
     
-    const userLocalData = window.localStorage.getItem(USER_KEY)
+    const userLocalData = localStorage.getItem(USER_KEY)
     this.userData = JSON.parse(String(userLocalData))
-    
+    // 手动触发变更检测
+    this.changeDetectorRef.detectChanges();
     console.log(this.userData)
   }
 
