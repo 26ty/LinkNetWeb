@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-lg">
-        <mat-card class="example-card" *ngIf="OneArticleDatas">
+    <div class="col-lg-12">
+        <mat-card class="article-card" *ngIf="OneArticleDatas">
             <mat-card-header>
                 <mat-card-title>
                     <button mat-icon-button (click)="goBack()">
@@ -14,7 +14,7 @@
             <mat-card-content class="mt-2">
                 <div class="row text-center">
                     <div class="col detail-article-img">
-                        <img src="{{this.OneArticleDatas.img_url}}" class="detail-article-img" alt="">
+                        <img src="{{this.OneArticleDatas.img_url ?? '../../../assets/image/404-error.jpeg'}}" class="detail-article-img" alt="">
                     </div>
                 </div>
                 <!--文章卡-->

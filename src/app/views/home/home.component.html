@@ -5,7 +5,7 @@
         <p class="today-tips">{{this.today}}</p>
         </div>
         <div class="col">
-            <button mat-mini-fab class="add-article-btn">
+            <button mat-mini-fab class="add-article-btn" (click)="addArticleLink()">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
@@ -26,9 +26,9 @@
             <mat-card-content class="mt-2">
                 <!--文章卡-->
                 <div class="row" *ngFor="let item of articleDatas; index as i">
-                    <div class="col">
+                    <div class="col-6">
                         <div class="row">
-                            <img src="{{item.img_url}}" class="article-img" alt="">
+                            <img src="{{item.img_url ? item.img_url:'../../../assets/image/404-error.jpeg'}}" class="article-img" alt="">
                         </div>
                         <div class="row mt-2">
                             <h2>
@@ -36,15 +36,15 @@
                             </h2>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-6" >
                         <div class="row">
-                            <div class="col article-content">
-                                <p id="article-content" name="article-content">
+                            <div class="col article-content" >
+                                <p>
                                     {{item.content}}
                                 </p>
                             </div>
                         </div>
-                        <div class="row" style="float: right;margin-right: 5px;">
+                        <div class="row mt-1" style="float: right;margin-right: 5px;">
                             <button mat-fab extended class="expand-btn" (click)="detailArticle(item.id)">
                                 <mat-icon>exit_to_app</mat-icon>
                                 閱讀全文

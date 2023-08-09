@@ -48,6 +48,7 @@ export class HttpApiService {
     const userStr = JSON.stringify(user);
     window.localStorage.removeItem(USER_KEY);
     window.localStorage.setItem(USER_KEY, userStr);
+    // window.location.reload()
   }
 
   /* 至本地端存取使用者資料 */
@@ -65,7 +66,7 @@ export class HttpApiService {
     this.router.navigate(['/']);
   }
 
-  /* User CR */
+  /* User CR -------------------------------------------------------------*/
   /**
     * 取得所有使用者data
     *
@@ -95,7 +96,7 @@ export class HttpApiService {
     return this.http.post(url, body);
   }
 
-  /* Article CRUD */
+  /* Article CRUD -------------------------------------------------------*/
   /**
     * 取得所有文章data
     *
@@ -145,7 +146,17 @@ export class HttpApiService {
     return this.http.delete(url);
   }
 
-  /* Comment CRUD */
+  /**
+    * 取得該user_id的文章列表
+    * @param  {string} 填入user_id
+    * @return {obj} article datas 
+  */
+  getUserArticlesRequest(user_id: string): Observable<any> {
+    const url = `${this.BaseUrl}/Articles/getUserArticles/${user_id}`;
+    return this.http.get(url);
+  }
+
+  /* Comment CRUD ------------------------------------------------------------*/
   /**
     * 取得所有評論data
     *

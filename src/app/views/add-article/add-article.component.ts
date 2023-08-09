@@ -56,7 +56,7 @@ export class AddArticleComponent implements OnInit{
   uploadArticle(){
     this.uploadArticleData['title'] = this.title
     this.uploadArticleData['content'] = this.content
-    this.uploadArticleData['aimg_urlvatar'] = this.img_url
+    this.uploadArticleData['img_url'] = null
     this.uploadArticleData['user_id'] = this.userData.id
     this.uploadArticleData['created_at'] = new Date()
     this.uploadArticleData['updated_at'] = new Date()
@@ -64,8 +64,8 @@ export class AddArticleComponent implements OnInit{
     this.HttpApiService.uploadArticleRequest(this.uploadArticleData).subscribe(
       res => {
         console.log("新增使用者res",res)
-        if(this.title == res.title){
-        // if(res.statusCode == 200){
+        // if(this.title == res.title){
+        if(res.status == 200){
           Swal.fire({
             icon: 'success',
             title: '新增成功!',

@@ -98,13 +98,20 @@ export class LoginComponent implements OnInit{
         this.HttpApiService.saveUser(this.userDatasList)
         //跳轉至首頁
         // this.router.navigateByUrl(`/main`);
-        this.router.navigate(['/main']);
-        Swal.fire({
-          icon: 'success',
-          title: message,
-          showConfirmButton: false,
-          timer: 1500
-        })
+        // this.router.navigate(['/main']);
+
+        this.router.navigate(['/main']).then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: message,
+            showConfirmButton: false,
+            timer: 1500
+          })
+          // 重新加载页面
+          location.reload()
+          
+        });
+        
       },
       err => {
         console.log("存取錯誤!",err)
@@ -132,7 +139,7 @@ export class LoginComponent implements OnInit{
       res => {
         console.log("新增使用者res",res)
         // if(this.username == res.user.username){
-        if(res.statusCode == 200){
+        if(res.status == 200){
           Swal.fire({
             icon: 'success',
             title: '註冊成功!',

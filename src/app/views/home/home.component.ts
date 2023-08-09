@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit{
   ){}
 
   ngOnInit():void{
+
+    //呼叫取得所有文章
     this.getAllArticle()
     const p:any = document.getElementById('article-content')
     // this.limitText(p,20)
@@ -20,6 +22,11 @@ export class HomeComponent implements OnInit{
   }
 
   today:any
+  /**
+    * 取得現在日期與時間
+    *
+    * @return {string} time datas 
+  */
   getToday(){
     const now = new Date();
     const year = now.getFullYear();
@@ -28,8 +35,6 @@ export class HomeComponent implements OnInit{
     this.today = `${year}年${month}月${day}日`;
     console.log(this.today);
   }
-  
-   // 输出当前日期
 
   articleDatas:any;
   /**
@@ -41,7 +46,7 @@ export class HomeComponent implements OnInit{
     this.HttpApiService.getArticleRequest().subscribe(
       res => {
         this.articleDatas = res
-        console.log(this.articleDatas)
+        console.log("取得所有文章res",this.articleDatas)
       }
     )
   }
@@ -60,7 +65,17 @@ export class HomeComponent implements OnInit{
     }
   }
 
+  /**
+    * 查看文章內容
+  */
   detailArticle(id:string) {
     window.location.assign('/detailArticle/' + id);
+  }
+
+  /**
+    * 前往新增文章頁面
+  */
+  addArticleLink() {
+    window.location.assign('/addArticle');
   }
 }

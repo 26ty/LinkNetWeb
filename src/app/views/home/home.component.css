@@ -23,6 +23,10 @@ mat-divider {
 /*文章內容預留空間*/
 .article-content {
     height: 240px;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 /*查看完整文章按鈕*/

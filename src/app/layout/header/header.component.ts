@@ -41,6 +41,9 @@ export class HeaderComponent  implements OnInit {
     window.location.assign('/privy');
   }
 
+  /**
+    * 前往新增文章頁面
+  */
   addArticleLink() {
     window.location.assign('/addArticle');
   }

@@ -1,9 +1,13 @@
-/*今日提示*/
+/* 今日提示 */
 .today-tips{
     color: #888;
 }
 
-/*圖片圓角*/
+/* 文章卡片 */
+.article-card {
+    width: 800px;
+}
+/* 圖片圓角 */
 .article-img{
     width: 100%;
     border-radius:5%;
