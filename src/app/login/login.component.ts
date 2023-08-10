@@ -106,9 +106,11 @@ export class LoginComponent implements OnInit{
             title: message,
             showConfirmButton: false,
             timer: 1500
-          })
-          // 重新加载页面
+          }).then(() =>{
+            // 重新加载页面
           location.reload()
+          })
+          
           
         });
         
