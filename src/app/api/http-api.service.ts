@@ -156,6 +156,27 @@ export class HttpApiService {
     return this.http.get(url);
   }
 
+  /**
+    * 新增文章圖片檔案
+    * @param  {string} 填入body obj
+    * @return {obj} imagePath and other datas 
+  */
+  uploadArticleImageFileRequest(body: any) : Observable<any>{
+    const url = `${this.BaseUrl}/Articles/uploadImageFile`;
+    return this.http.post(url, body);
+  }
+
+  
+  /**
+    * 取得所有文章圖片data
+    *
+    * @param {string} imageName datas 
+  */
+  getArticleImageFileRequest(imageName:string) : Observable<any> {
+    const headers = new HttpHeaders().set('Content-Type', 'blob');
+    return this.http.get(this.BaseUrl + '/Articles/getImageFile/' + imageName,{ responseType: 'blob' });
+  }
+
   /* Comment CRUD ------------------------------------------------------------*/
   /**
     * 取得所有評論data
