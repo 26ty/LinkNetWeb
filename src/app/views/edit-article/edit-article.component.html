@@ -1,14 +1,15 @@
 <div class="row">
     <div class="row">
         <h1 class="pb-0 mb-0">編輯文章</h1>
-        <p class="today-tips">8月３日 星期四</p>
+        <p class="today-tips">{{this.today}}</p>
     </div>
     <!--material-->
     <div class="row">
         <mat-form-field appearance="outline">
             <textarea 
                 matInput
-                #title 
+                #titleLenth
+                [(ngModel)]="title"
                 id="title" 
                 name="title" 
                 maxlength="30" 
@@ -18,7 +19,7 @@
                 cdkAutosizeMinRows="1"
                 cdkAutosizeMaxRows="10"
                 required></textarea>
-            <mat-hint align="end">{{title.value.length}} / 30</mat-hint>
+            <mat-hint align="end">{{titleLenth.value.length}} / 30</mat-hint>
         </mat-form-field>
         
     </div>
@@ -27,7 +28,8 @@
             <textarea 
                 class="textarea-content" 
                 matInput 
-                #content 
+                #contentLenth
+                [(ngModel)]="content"
                 id="content" 
                 name="content" 
                 maxlength="1000"
@@ -37,14 +39,14 @@
                 cdkAutosizeMinRows="1"
                 cdkAutosizeMaxRows="30" 
                 required></textarea>
-            <mat-hint align="end">{{content.value.length}} / 1000</mat-hint>
+            <mat-hint align="end">{{contentLenth.value.length}} / 1000</mat-hint>
         </mat-form-field>
     </div>
 
     <div class="row">
 
         <div class="d-grid gap-2 col mx-auto">
-            <button class="btn btn-danger delete-btn" type="button">取消</button>
+            <button class="btn btn-danger delete-btn" type="button" (click)="goBack()">取消</button>
         </div>
         <div class="d-grid gap-2 col mx-auto">
             <button class="btn btn-primary save-btn" type="button">儲存</button>

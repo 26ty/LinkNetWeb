@@ -31,7 +31,7 @@ export class DetailArticleComponent implements OnInit{
     this.HttpApiService.getOneArticleRequest(a_id).subscribe(
       res => {
         this.OneArticleDatas = res
-        console.log(this.OneArticleDatas)
+        console.log("取單一文章data",this.OneArticleDatas)
 
         //呼叫轉換圖片
         this.getArticleImageFile(this.OneArticleDatas.img_url)

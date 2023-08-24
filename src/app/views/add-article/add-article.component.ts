@@ -29,7 +29,8 @@ export class AddArticleComponent implements OnInit {
     const userLocalData = localStorage.getItem(USER_KEY)
     this.userData = JSON.parse(String(userLocalData))
 
-    this.today=this.DateService.today()
+    this.today=this.DateService.getToday();
+    console.log(this.today)
   }
 
 
@@ -143,6 +144,8 @@ export class AddArticleComponent implements OnInit {
     )
   }
 
-  
+  goBack() {
+    window.history.back();
+  }
   
 }
