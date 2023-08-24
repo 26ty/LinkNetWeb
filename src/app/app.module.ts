@@ -88,7 +88,7 @@ import { HeaderComponent } from './layout/header/header.component';
       {path:"main",component:HomeComponent},
       {path:"privy",component:PrivyComponent},
       {path:"addArticle",component:AddArticleComponent},
-      {path:"editArticle",component:EditArticleComponent},
+      {path:"editArticle/:a_id",component:EditArticleComponent},
       {path:"detailArticle/:a_id",component:DetailArticleComponent},
       {path:"collection",component:CollectionComponent},
     ]),

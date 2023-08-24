@@ -33,6 +33,36 @@ mat-divider {
     box-shadow: none;
 }
 
+.delete-btn {
+    background-color: rgb(210, 0, 0);
+    color: #FFFFFF;
+    margin-right: 5px;
+}
+
+.edit-btn {
+    background-color: rgb(29, 173, 0);
+    color: #FFFFFF;
+    margin-right: 5px;
+}
+
+/* .icon-btn{
+    background-color: #f2f2f2;
+    box-shadow: none;
+    margin-right: 5px;
+}
+
+.icon-red{
+    color:rgb(210, 0, 0) ;
+}
+
+.icon-green{
+    color:rgb(29, 173, 0) ;
+} */
+
+.icon-white {
+ color: #FFFFFF;
+}
+
 mat-icon{
     color: #333333;
     /* margin-bottom: 5px; */

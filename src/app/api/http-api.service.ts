@@ -141,7 +141,7 @@ export class HttpApiService {
     * @param  {string} 填入欲刪除的文章id
     * @return {obj} article datas 
   */
-  deleteArticleRequest(id: string) {
+  deleteArticleRequest(id: string) : Observable<any> {
     const url = `${this.BaseUrl}/Articles/${id}`;
     return this.http.delete(url);
   }

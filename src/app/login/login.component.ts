@@ -220,6 +220,8 @@ export class LoginComponent implements OnInit{
         showConfirmButton: false,
         timer: 1500
       })
+
+      this.password='';
     }else if(code == 500){ //伺服器無連線，請聯絡伺服器管理人員
       Swal.fire({
         icon: 'error',
@@ -227,6 +229,8 @@ export class LoginComponent implements OnInit{
         showConfirmButton: false,
         timer: 1500
       })
+
+      this.password='';
     }else{ //未知錯誤
       Swal.fire({
         icon: 'error',
@@ -234,6 +238,8 @@ export class LoginComponent implements OnInit{
         showConfirmButton: false,
         timer: 1500
       })
+
+      this.password='';
     }
     
   }

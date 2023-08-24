@@ -2,6 +2,9 @@ import { Component ,OnInit} from '@angular/core';
 import { HttpApiService } from 'src/app/api/http-api.service';
 import { Router } from '@angular/router';
 import { DateService} from 'src/app/shared/date/date.service';
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
+
 const USER_KEY = 'auth-user';
 @Component({
   selector: 'app-privy',
@@ -97,8 +100,79 @@ export class PrivyComponent implements OnInit{
     )
   }
 
+  /**
+    * 刪除文章
+    * @param  {string} id 填入文章id
+  */
+  deleteArticle(id:string){
+    Swal.fire({
+      title: "是否確定刪除文章",
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#1972D6',
+      cancelButtonText: '取消',
+      confirmButtonText: '刪除',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.HttpApiService.deleteArticleRequest(id).subscribe(
+          res => {
+            console.log("deleteArticle",res)
+            if(res.statusCode == 200){
+              Swal.fire({
+                icon: 'success',
+                title: "已成功刪除！",
+                showConfirmButton: false,
+                timer: 1500
+              }).then((result) => {
+                window.location.reload()
+              })
+              
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: "刪除失敗！",
+                showConfirmButton: false,
+                timer: 1500
+              })
+            }
+          },
+          err => {
+            console.log("存取錯誤!", err)
+            console.log("API狀態碼:", err.status);
+            Swal.fire({
+              icon: 'error',
+              title: "刪除失敗！",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        )
+      }
+    })
+    
+  }
+
+  /**
+    * 前往文章細節頁面
+  */
   detailArticle(id:string) {
     window.location.assign('/detailArticle/' + id);
   }
 
+  /**
+    * 前往文章編輯頁面
+  */
+  editArticle(id:string) {
+    window.location.assign('/editArticle/' + id);
+  }
+
+  /**
+    * 前往新增文章頁面
+  */
+  addArticleLink() {
+    window.location.assign('/addArticle');
+  }
 }

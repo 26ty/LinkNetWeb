@@ -5,7 +5,7 @@
         <p class="today-tips">{{this.today}}</p>
         </div>
         <div class="col">
-            <button mat-mini-fab class="add-article-btn">
+            <button mat-mini-fab class="add-article-btn" (click)="addArticleLink()">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
@@ -44,6 +44,18 @@
                             </div>
                         </div>
                         <div class="row" style="float: right;margin-right: 5px;">
+                            <!-- <button mat-icon-button class="icon-btn" aria-label="Example icon button with a heart icon">
+                                <mat-icon class="icon-green">edit</mat-icon>
+                            </button>
+                            <button mat-icon-button class="icon-btn" aria-label="Example icon button with a heart icon">
+                                <mat-icon class="icon-red">delete</mat-icon>
+                            </button> -->
+                            <button mat-icon-button class="edit-btn" aria-label="Example icon button with a heart icon" (click)="editArticle(item.id)">
+                                <mat-icon class="icon-white">edit</mat-icon>
+                            </button>
+                            <button mat-icon-button class="delete-btn" aria-label="Example icon button with a heart icon" (click)="deleteArticle(item.id)">
+                                <mat-icon class="icon-white" >delete</mat-icon>
+                            </button>
                             <button mat-fab extended class="expand-btn" (click)="detailArticle(item.id)">
                                 <mat-icon>exit_to_app</mat-icon>
                                 閱讀全文
