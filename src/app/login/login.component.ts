@@ -252,7 +252,7 @@ export class LoginComponent implements OnInit{
   apim_id = 'aa354322-7e55-4d7d-9d9d-9ca31924b6e6';
   ad = ''; // 登入者的AD帳號
   qrCodeUrl:string = ''
-  successLoginData :any
+  successLoginData: any = {}
 
   getQRCode(): void {
     if (this.source != null) {
@@ -288,17 +288,19 @@ export class LoginComponent implements OnInit{
         refresh_token?: string;
         emp_no?: string;
         expire?: string;
+        name?:string;
+        email?:string;
+        adAccount?:string;
       };
   
-      //將成功登入後回傳的data存入陣列
-      this.successLoginData = data;
+      
 
       if (data.type == 'qrcode') {
         this.showQRCode("data:image/png;base64, " + this.decode(data.message!));
       } else if (data.type == 'qrcodeIsScan') {
         this.qrcodeIsScan();
       } else if (data.type == 'loginSuccess') {
-        this.loginSuccess(data.token!, data.refresh_token!, data.emp_no!, data.expire!);
+        this.loginSuccess(data.token!, data.refresh_token!, data.emp_no!, data.expire!, data.name!, data.email! , data.adAccount!);
         this.source!.close();
       } else if (data.type == 'error') {
         this.error(data.message!);
@@ -339,7 +341,7 @@ export class LoginComponent implements OnInit{
   }
   
   //告知已成功登入，並回傳相關訊息
-  loginSuccess(token: string, refreshToken: string, empNo: string, expire: string): void {
+  loginSuccess(token: string, refreshToken: string, empNo: string, expire: string , name:string , email:string , adAccount:string): void {
     (document.getElementById("iQRCode") as HTMLImageElement)!.src = "";
     // document.getElementById("display")!.innerHTML = "登入成功，登入資訊如下：<br>";
     // document.getElementById("display")!.innerHTML += "Token:" + token + "<br>";
@@ -353,7 +355,18 @@ export class LoginComponent implements OnInit{
     console.log("RefreshToken:",refreshToken)
     console.log("EmpNo:",empNo)
     console.log("Expire:",expire)
+    console.log("Name:",name)
+    console.log("Email:",email)
+    console.log("AdAccount:",adAccount)
 
+    //將成功登入後回傳的data存入陣列
+    this.successLoginData['id'] =  empNo
+    this.successLoginData['token'] =  token
+    this.successLoginData['refreshToken'] =  refreshToken
+    this.successLoginData['expire'] =  expire
+    this.successLoginData['username'] =  name
+    this.successLoginData['email'] =  email
+    this.successLoginData['adAccount'] =  adAccount
     //存入local
     console.log("successLoginData",this.successLoginData)
     this.HttpApiService.saveUser(this.successLoginData)
@@ -372,7 +385,9 @@ export class LoginComponent implements OnInit{
         location.reload()
       })
     });
-    // if(this.ad == empNo){
+
+
+    // if(this.ad == adAccount){
     //   document.getElementById("display")!.innerHTML = "輸入AD與掃描者身份一致" + "<br>";
     //   console.log("輸入AD與掃描者身份一致");
     // }else{

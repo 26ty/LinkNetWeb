@@ -157,6 +157,16 @@ export class HttpApiService {
   }
 
   /**
+    * 取得指定數量隨機文章列表
+    * @param  {string} count
+    * @return {obj} article datas 
+  */
+  getRandomArticlesRequest(count?:number): Observable<any> {
+    const url = `${this.BaseUrl}/Articles/getRandomArticles/${count}`;
+    return this.http.get(url);
+  }
+
+  /**
     * 新增文章圖片檔案
     * @param  {string} 填入body obj
     * @return {obj} imagePath and other datas 

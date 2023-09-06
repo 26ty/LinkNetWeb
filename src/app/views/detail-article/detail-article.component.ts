@@ -1,6 +1,11 @@
 import { Component ,OnInit} from '@angular/core';
 import { HttpApiService } from 'src/app/api/http-api.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DateService } from 'src/app/shared/date/date.service';
+import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-detail-article',
   templateUrl: './detail-article.component.html',

@@ -1,6 +1,11 @@
-import { Component ,OnInit} from '@angular/core';
+import { Component ,OnInit ,TemplateRef, ViewChild, ElementRef} from '@angular/core';
 import { HttpApiService } from 'src/app/api/http-api.service';
 import { DateService } from 'src/app/shared/date/date.service';
+import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import Swal from 'sweetalert2'
+
+const USER_KEY = 'auth-user';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,22 +13,38 @@ import { DateService } from 'src/app/shared/date/date.service';
 })
 export class HomeComponent implements OnInit{
 
+  @ViewChild('paginator') paginator!: MatPaginator;
   constructor(
     private HttpApiService:HttpApiService,
-    private DateService:DateService
+    private DateService:DateService,
+    private matPaginatorIntl: MatPaginatorIntl,
   ){}
 
+  // MatPaginator Inputs
+  totalCount!: number;
+  // MatPaginator Output
+  pageEvent!: PageEvent;
+
+  userData: any = ""
   today:any
   ngOnInit():void{
+    const userLocalData = window.localStorage.getItem(USER_KEY)
+    this.userData = JSON.parse(String(userLocalData))
 
-    //呼叫取得所有文章
+    // 呼叫取得所有文章
     this.getAllArticle()
+
+    // 取得隨機指定數量文章
+    this.getRandomArticle(3)
+
+
     const p:any = document.getElementById('article-content')
     // this.limitText(p,20)
 
     this.today = this.DateService.getToday()
-  }
 
+    this.setPaginator();
+  }
   
   //所有文章資料
   articleDatas:any;
@@ -48,6 +69,37 @@ export class HomeComponent implements OnInit{
     )
   }
 
+  //所有文章資料
+  randomArticleDatas:any;
+  /**
+    * 取得隨機指定文章data
+    * @param  {string} count
+    * @return {obj} article datas 
+  */
+  getRandomArticle(count?:number) {
+    this.HttpApiService.getRandomArticlesRequest(count).subscribe(
+      res => {
+        this.randomArticleDatas = res
+        console.log("取得隨機指定文章res",this.randomArticleDatas)
+
+        for(let i in this.randomArticleDatas){
+          if(this.randomArticleDatas[i].img_url != null){
+            //取得圖片資訊
+            this.getArticleImageFile(this.randomArticleDatas[i].id,this.randomArticleDatas[i].img_url)
+
+            var substr = this.randomArticleDatas[i].content.substr(0,23);
+            this.randomArticleDatas[i].content = substr;
+            console.log("截斷文章內容",this.randomArticleDatas[i].content)
+          }
+        }
+
+        
+      }
+
+      
+    )
+  }
+
   //取blob:後的URL
   imageUrl:any
   //轉換過的url及其對應id陣列
@@ -63,16 +115,16 @@ export class HomeComponent implements OnInit{
   getArticleImageFile(a_id:string,imageName:string){
     this.HttpApiService.getArticleImageFileRequest(imageName).subscribe(
       res => {
-        console.log("取得圖片res",res);
+        // console.log("取得圖片res",res);
         // 設置 blob 的類型為圖像的 MIME 類型
         const blob = new Blob([res], { type: 'image/jpeg' }); 
         // 使用 blob 創建圖像 URL
         this.imageUrl = URL.createObjectURL(blob); 
-        console.log("取blob:後的URL",this.imageUrl)
+        // console.log("取blob:後的URL",this.imageUrl)
 
         // 設置[轉換過的url及其對應id陣列]
         this.articleImageDataList.push( { "id" : a_id , "img_url" : this.imageUrl } ) //轉換過的url及其對應id陣列
-        console.log("轉換過的url及其對應id陣列",this.articleImageDataList)
+        // console.log("轉換過的url及其對應id陣列",this.articleImageDataList)
 
         this.newArticleDatas = this.articleDatas.concat();
         for(let i in this.newArticleDatas){
@@ -83,7 +135,7 @@ export class HomeComponent implements OnInit{
           }
         }
 
-        console.log("交換完圖片網址的所有文章資料",this.newArticleDatas)
+        // console.log("交換完圖片網址的所有文章資料",this.newArticleDatas)
       },
       err => {
         console.log("存取錯誤!", err)
@@ -107,6 +159,60 @@ export class HomeComponent implements OnInit{
   }
 
 
+  /**
+    * 刪除文章
+    * @param  {string} id 填入文章id
+  */
+  deleteArticle(id:string){
+    Swal.fire({
+      title: "是否確定刪除文章",
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#1972D6',
+      cancelButtonText: '取消',
+      confirmButtonText: '刪除',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.HttpApiService.deleteArticleRequest(id).subscribe(
+          res => {
+            console.log("deleteArticle",res)
+            if(res.statusCode == 200){
+              Swal.fire({
+                icon: 'success',
+                title: "已成功刪除！",
+                showConfirmButton: false,
+                timer: 1500
+              }).then((result) => {
+                window.location.reload()
+              })
+              
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: "刪除失敗！",
+                showConfirmButton: false,
+                timer: 1500
+              })
+            }
+          },
+          err => {
+            console.log("存取錯誤!", err)
+            console.log("API狀態碼:", err.status);
+            Swal.fire({
+              icon: 'error',
+              title: "刪除失敗！",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        )
+      }
+    })
+    
+  }
 
   // p = document.getElementById('article-content');
   /**
@@ -122,8 +228,30 @@ export class HomeComponent implements OnInit{
     }
   }
 
+  // 設定分頁器參數--------------------------------------------------------
+  setPaginator() {
+    // 設定顯示筆數資訊文字
+    this.matPaginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number): string => {
+      if (length === 0 || pageSize === 0) {
+        return `第 0 筆、共 ${length} 筆`;
+      }
+
+      length = Math.max(length, 0);
+      const startIndex = page * pageSize;
+      const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+
+      return `第 ${startIndex + 1} - ${endIndex} 筆、共 ${length} 筆`;
+    };
+
+    // 設定其他顯示資訊文字
+    this.matPaginatorIntl.itemsPerPageLabel = '每頁筆數：';
+    this.matPaginatorIntl.nextPageLabel = '下一頁';
+    this.matPaginatorIntl.previousPageLabel = '上一頁';
+  }
+
+
   /**
-    * 查看文章內容
+    * 前往文章細節頁面
   */
   detailArticle(id:string) {
     window.location.assign('/detailArticle/' + id);
@@ -134,5 +262,12 @@ export class HomeComponent implements OnInit{
   */
   addArticleLink() {
     window.location.assign('/addArticle');
+  }
+
+  /**
+    * 前往文章編輯頁面
+  */
+  editArticle(id:string) {
+    window.location.assign('/editArticle/' + id);
   }
 }

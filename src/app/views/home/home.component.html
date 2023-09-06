@@ -14,6 +14,7 @@
         <mat-card class="example-card">
             <mat-card-header>
                 <mat-card-title>
+                    <mat-icon>whatshot</mat-icon>
                     熱門 > 
                     <!-- <button mat-mini-fab class="add-article-btn">
                         <mat-icon>add</mat-icon>
@@ -35,6 +36,11 @@
                                 {{item.title}}
                             </h2>
                         </div>
+                        <div class="row mt-2">
+                            <p class="today-tips">
+                                {{item.created_at | date: 'yyyy.MM.dd HH:mm'}}
+                            </p>
+                        </div>
                     </div>
                     <div class="col-6" >
                         <div class="row">
@@ -45,6 +51,12 @@
                             </div>
                         </div>
                         <div class="row mt-1" style="float: right;margin-right: 5px;">
+                            <button mat-icon-button class="edit-btn" aria-label="Example icon button with a heart icon" (click)="editArticle(item.id)" *ngIf="item.user_id == this.userData.id">
+                                <mat-icon class="icon-white">edit</mat-icon>
+                            </button>
+                            <button mat-icon-button class="delete-btn" aria-label="Example icon button with a heart icon" (click)="deleteArticle(item.id)" *ngIf="item.user_id == this.userData.id">
+                                <mat-icon class="icon-white" >delete</mat-icon>
+                            </button>
                             <button mat-fab extended class="expand-btn" (click)="detailArticle(item.id)">
                                 <mat-icon>exit_to_app</mat-icon>
                                 閱讀全文
@@ -147,7 +159,7 @@
                     </div>
                 </div> -->
                 <!-- <mat-divider></mat-divider> -->
-                <mat-paginator [length]="200" [pageSizeOptions]="[10, 50, 100]" aria-label="Select page">
+                <mat-paginator #paginator [length]="100" [pageSizeOptions]="[3, 5, 10]" aria-label="Select page">
                 </mat-paginator>
             </mat-card-content>
         </mat-card>
@@ -161,9 +173,29 @@
                 </mat-card-title>
             </mat-card-header>
             <mat-divider></mat-divider>
-            <mat-card-content>
+            <mat-card-content *ngIf="randomArticleDatas">
                 <!--精選文章卡-->
-                <div class="row">
+                <div class="row" *ngFor="let item of randomArticleDatas; index as i">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-10">
+                                <a href="/detailArticle/{{item.id}}">
+                                    <h3>
+                                        {{item.content}} ...
+                                    </h3>
+                                </a>
+                            </div>
+                            <div class="col-2">
+                                <mat-icon>call_made<</mat-icon>
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
+                    </div>
+                    
+                </div>
+                
+                <!--精選文章卡-->
+                <!-- <div class="row">
                     <div class="col">
                         <div class="row">
                             <div class="col-10">
@@ -179,43 +211,7 @@
                         </div>
                     </div>
                 </div>
-                <mat-divider></mat-divider>
-                <!--精選文章卡-->
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-10">
-                                <a href="/main">
-                                    <h3>
-                                        全球股市震盪中，投資者面臨風險挑戰。財報季來臨...
-                                    </h3>
-                                </a>
-                            </div>
-                            <div class="col-2">
-                                <mat-icon>call_made<</mat-icon>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <mat-divider></mat-divider>
-                <!--精選文章卡-->
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-10">
-                                <a href="/main">
-                                    <h3>
-                                        全球股市震盪中，投資者面臨風險挑戰。財報季來臨...
-                                    </h3>
-                                </a>
-                            </div>
-                            <div class="col-2">
-                                <mat-icon>call_made<</mat-icon>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <mat-divider></mat-divider>
+                <mat-divider></mat-divider> -->
             </mat-card-content>
             <mat-card-actions>
 

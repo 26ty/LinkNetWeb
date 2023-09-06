@@ -3,6 +3,11 @@
     color: #888;
 }
 
+/* 評論標記*/
+.comment{
+    color:#888;
+}
+
 /* 文章卡片 */
 .article-card {
     width: 800px;
@@ -51,4 +56,4 @@ mat-icon{
 
 mat-card{
     border-radius:2%;
-  }
+}
