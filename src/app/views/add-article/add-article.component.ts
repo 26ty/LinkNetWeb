@@ -26,9 +26,11 @@ export class AddArticleComponent implements OnInit {
   today: any
   userData: any = ""
   ngOnInit(): void {
+    //取得使用者資料
     const userLocalData = localStorage.getItem(USER_KEY)
     this.userData = JSON.parse(String(userLocalData))
 
+    //調用日期服務>取得今日日期與時間
     this.today=this.DateService.getToday();
     console.log(this.today)
   }
@@ -101,8 +103,8 @@ export class AddArticleComponent implements OnInit {
 
   /**
     * 新增文章
-    *
     * 
+    * @param {obj} uploadArticleData and other datas 
   */
   uploadArticle() {
     this.uploadArticleData['title'] = this.title

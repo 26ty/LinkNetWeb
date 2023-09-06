@@ -79,12 +79,20 @@
                 </div>
 
                 <div class="row">
-                    <mat-form-field>
-                        <mat-label>留言</mat-label>
-                        <input matInput placeholder="輸入留言">
-                        <mat-icon matSuffix>insert_comment</mat-icon>
-                        <mat-error>帳號必填！</mat-error>
-                    </mat-form-field>
+                    <div class="col-10">
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>留言</mat-label>
+                            <input matInput placeholder="輸入留言" [(ngModel)]="content"> 
+                            <mat-error>帳號必填！</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2">
+                        <button mat-icon-button class="send-btn" aria-label="Example icon button with a heart icon" (click)="uploadArticle()">
+                            <mat-icon class="icon-white" >send</mat-icon>
+                        </button>
+                    </div>
+                    
+                    
                 </div>
             </mat-card-content>
         </mat-card>
