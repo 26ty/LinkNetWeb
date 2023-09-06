@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit{
     //   password : new FormControl()
     // })
 
+    this.getQRCode()
   }
 
   /**
@@ -107,8 +108,8 @@ export class LoginComponent implements OnInit{
             showConfirmButton: false,
             timer: 1500
           }).then(() =>{
-            // 重新加载页面
-          location.reload()
+            // 重新載入页面
+            location.reload()
           })
           
           
@@ -234,7 +235,7 @@ export class LoginComponent implements OnInit{
     }else{ //未知錯誤
       Swal.fire({
         icon: 'error',
-        title: message,
+        title: "伺服器未開啟！",
         showConfirmButton: false,
         timer: 1500
       })
@@ -245,6 +246,146 @@ export class LoginComponent implements OnInit{
   }
 
 
+  /* web Fido test-------------------------------------------------- */
+
+  source:any;
+  apim_id = 'aa354322-7e55-4d7d-9d9d-9ca31924b6e6';
+  ad = ''; // 登入者的AD帳號
+  qrCodeUrl:string = ''
+  successLoginData :any
+
+  getQRCode(): void {
+    if (this.source != null) {
+      this.source.close();
+    }
+  
+    this.connectEventSource();
+  }
+  
+  connectEventSource(): void {
+    this.source = new EventSource(`https://apim.innolux.com/b4f570a1-1014-4525-ad1f-a735c7dde55e?apim_id=${this.apim_id}&ad=${this.ad}`);
+  
+    this.source.onopen = function (e: Event): void {
+      console.log("連線打開");
+    };
+  
+    this.source.onclose = function (e: Event): void {
+      console.log("連線關閉");
+    };
+  
+    this.source.onerror = function (e: Event): void {
+      console.log("發生錯誤");
+      this.source!.close();
+    };
+  
+    this.source.onmessage = (event: MessageEvent): void => {
+      console.log(event.data);
+  
+      const data = JSON.parse(event.data) as {
+        type: string;
+        message?: string;
+        token?: string;
+        refresh_token?: string;
+        emp_no?: string;
+        expire?: string;
+      };
+  
+      //將成功登入後回傳的data存入陣列
+      this.successLoginData = data;
+
+      if (data.type == 'qrcode') {
+        this.showQRCode("data:image/png;base64, " + this.decode(data.message!));
+      } else if (data.type == 'qrcodeIsScan') {
+        this.qrcodeIsScan();
+      } else if (data.type == 'loginSuccess') {
+        this.loginSuccess(data.token!, data.refresh_token!, data.emp_no!, data.expire!);
+        this.source!.close();
+      } else if (data.type == 'error') {
+        this.error(data.message!);
+        this.source!.close();
+      }
+    };
+  }
+  
+  decode(input: string): string {
+    // Replace non-url compatible chars with base64 standard chars
+    input = input.replace(/-/g, '+').replace(/_/g, '/');
+  
+    // Pad out with standard base64 required padding characters
+    const pad = input.length % 4;
+    if (pad) {
+      if (pad === 1) {
+        throw new Error('InvalidLengthError: Input base64url string is the wrong length to determine padding');
+      }
+      input += new Array(5 - pad).join('=');
+    }
+  
+    return input;
+  };
+  
+  //取得QRCode的圖
+  showQRCode(qrcode: string): void {
+    this.qrCodeUrl = qrcode;
+    document.getElementById("display")!.innerHTML = "";
+    // (document.getElementById("iQRCode") as HTMLImageElement).src = qrcode;
+    // document.getElementById("display")!.innerHTML = "";
+  }
+  
+  //告知QRCode已被掃描
+  qrcodeIsScan(): void {
+    //document.getElementById("iQRCode").src = "";
+    // document.getElementById("display")!.innerHTML = "QRCode已被掃描<br>";
+    console.log("QRCode已被掃描");
+  }
+  
+  //告知已成功登入，並回傳相關訊息
+  loginSuccess(token: string, refreshToken: string, empNo: string, expire: string): void {
+    (document.getElementById("iQRCode") as HTMLImageElement)!.src = "";
+    // document.getElementById("display")!.innerHTML = "登入成功，登入資訊如下：<br>";
+    // document.getElementById("display")!.innerHTML += "Token:" + token + "<br>";
+    // document.getElementById("display")!.innerHTML += "RefreshToken:" + refreshToken + "<br>";
+    // document.getElementById("display")!.innerHTML += "EmpNo:" + empNo + "<br>";
+    // document.getElementById("display")!.innerHTML += "Expire:" + expire + "<br>";
+
+    console.log(this.ad)
+
+    console.log("Token:",token)
+    console.log("RefreshToken:",refreshToken)
+    console.log("EmpNo:",empNo)
+    console.log("Expire:",expire)
+
+    //存入local
+    console.log("successLoginData",this.successLoginData)
+    this.HttpApiService.saveUser(this.successLoginData)
+    //跳轉至首頁
+    // this.router.navigateByUrl(`/main`);
+    // this.router.navigate(['/main']);
+
+    this.router.navigate(['/main']).then(() => {
+      Swal.fire({
+        icon: 'success',
+        title: "登入成功！",
+        showConfirmButton: false,
+        timer: 1500
+      }).then(() =>{
+        // 重新載入页面
+        location.reload()
+      })
+    });
+    // if(this.ad == empNo){
+    //   document.getElementById("display")!.innerHTML = "輸入AD與掃描者身份一致" + "<br>";
+    //   console.log("輸入AD與掃描者身份一致");
+    // }else{
+    //   document.getElementById("display")!.innerHTML = "輸入AD與掃描者身份不一致" + "<br>";
+    //   console.log("輸入AD與掃描者身份不一致")
+    // }
+  }
+  
+  //告知發生了甚麼錯誤
+  error(message: string): void {
+    (document.getElementById("iQRCode")as HTMLImageElement).src = "";
+    document.getElementById("display")!.innerHTML = message + "<br>";
+  }
   
 
 

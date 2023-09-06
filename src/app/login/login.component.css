@@ -73,3 +73,7 @@ mat-card {
 mat-card{
     width: 500px;
 }
+
+.tab-content{
+    margin: 20px;
+}

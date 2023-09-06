@@ -28,7 +28,7 @@ export class HeaderComponent  implements OnInit {
     
     const userLocalData = localStorage.getItem(USER_KEY)
     this.userData = JSON.parse(String(userLocalData))
-    // 手动触发变更检测
+    // 手動觸發
     this.changeDetectorRef.detectChanges();
     console.log(this.userData)
   }

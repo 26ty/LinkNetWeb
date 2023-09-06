@@ -38,9 +38,15 @@ export class EditArticleComponent implements OnInit{
     this.a_id = this.route.snapshot.paramMap.get('a_id')
     console.log(this.a_id)
 
-    //呼叫取得單一文章
+    //呼叫取得欲編輯單一文章
     this.getOneArticle(this.a_id)
   }
+
+  //文章body
+  title: string = ''
+  content: string = ''
+  img_url: any
+  created_at:any
 
   OneArticleDatas:any;
   /**
@@ -56,6 +62,8 @@ export class EditArticleComponent implements OnInit{
 
         this.title = this.OneArticleDatas.title
         this.content = this.OneArticleDatas.content
+        this.img_url = this.OneArticleDatas.img_url
+        this.created_at = this.OneArticleDatas.created_at
         //呼叫轉換圖片
         this.getArticleImageFile(this.OneArticleDatas.img_url)
       }
@@ -91,13 +99,62 @@ export class EditArticleComponent implements OnInit{
     )
   }
 
-  //文章body
-  title: string = ''
-  content: string = ''
-  img_url: any
-  user_id: string = ''
+  //編輯文章body
   updateArticleData: any = {}
 
+  /**
+    * 編輯文章
+    *
+    * 
+  */
+  updateArticle() {
+    this.updateArticleData['id'] = this.a_id
+    this.updateArticleData['title'] = this.title
+    this.updateArticleData['content'] = this.content
+    this.updateArticleData['img_url'] = this.img_url
+    this.updateArticleData['user_id'] = this.userData.id
+    this.updateArticleData['created_at'] = new Date(this.created_at)
+    this.updateArticleData['updated_at'] = new Date()
+    console.log("欲編輯文章資料", this.updateArticleData)
+    this.HttpApiService.updateArticleRequest(this.a_id,this.updateArticleData).subscribe(
+      res => {
+        console.log("編輯文章res", res)
+        // if(this.title == res.title){
+        if (res.status == 200) {
+          Swal.fire({
+            icon: 'success',
+            title: '編輯成功!',
+            text: "您已成功編輯文章",
+            confirmButtonColor: '#1972D6',
+            confirmButtonText: '看文章！',
+          }).then((result) => {
+            this.router.navigate(['/privy']);
+            // location.reload();
+
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: '編輯存取錯誤!',
+            text: "請聯絡網管人員.",
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
+        Swal.fire({
+          icon: 'error',
+          title: '存取錯誤!',
+          text: "請聯絡網管人員.",
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    )
+  }
 
   goBack() {
     window.history.back();

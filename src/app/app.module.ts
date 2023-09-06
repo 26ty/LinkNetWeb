@@ -14,6 +14,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatTabsModule} from '@angular/material/tabs';
 
 //textarea
 import { TextFieldModule } from '@angular/cdk/text-field';
@@ -72,7 +73,8 @@ import { HeaderComponent } from './layout/header/header.component';
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
-
+    MatTabsModule,
+    
     /* textarea */
     TextFieldModule,
     /* editor */

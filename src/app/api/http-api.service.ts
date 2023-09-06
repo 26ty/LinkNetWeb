@@ -131,8 +131,8 @@ export class HttpApiService {
     * @param  {Article} 填入body obj
     * @return {obj} article datas 
   */
-  updateArticleRequest(body: Article) : Observable<any>{
-    const url = `${this.BaseUrl}/Articles`;
+  updateArticleRequest(id:string,body: Article) : Observable<any>{
+    const url = `${this.BaseUrl}/Articles/${id}`;
     return this.http.put(url, body);
   }
 
