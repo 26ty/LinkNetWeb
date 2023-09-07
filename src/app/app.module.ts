@@ -23,6 +23,9 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 //editor
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
+//quill
+// import { QuillModule } from 'ngx-quill';
+
 //http
 import { HttpClientModule } from '@angular/common/http';
 
@@ -81,6 +84,8 @@ import { HeaderComponent } from './layout/header/header.component';
     TextFieldModule,
     /* editor */
     AngularEditorModule,
+    /* */
+    // QuillModule.forRoot(),
     /* http */
     HttpClientModule,
     FormsModule,

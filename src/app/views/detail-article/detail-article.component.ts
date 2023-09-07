@@ -49,18 +49,22 @@ export class DetailArticleComponent implements OnInit{
     this.getArticleComments()
   }
 
+  //自適應文章高度
   shouldApplyAdaptiveHeight() {
     const content = this.OneArticleDatas.content;
     return content && content.length > 100; // 根据需要调整字数的值
   }
 
+  //讚按鈕
   favoriteBtn(){
     this.favorite_status = !this.favorite_status
   }
 
+  //收藏按鈕
   turnedBtn(){
     this.turned_status = !this.turned_status
   }
+
   OneArticleDatas:any;
   /**
     * 取單一文章data
@@ -73,16 +77,26 @@ export class DetailArticleComponent implements OnInit{
         this.OneArticleDatas = res
         console.log("取單一文章data",this.OneArticleDatas)
 
-        
+        this.OneArticleDatas.content = this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content) as SafeHtml;
 
-        // this.OneArticleDatas.content = this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content);
+        console.log("content",this.OneArticleDatas.content);
 
-        console.log("content",this.OneArticleDatas.content)
+        console.log(typeof(this.OneArticleDatas.content))
         //呼叫轉換圖片
         this.getArticleImageFile(this.OneArticleDatas.img_url)
       }
     )
   }
+
+  get trustedContent() {
+    return this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content);
+  }
+  // getFormattedContent(): SafeHtml {
+  //   if (this.OneArticleDatas && this.OneArticleDatas.content) {
+  //     return this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content);
+  //   }
+  //   return '';
+  // }
 
   //取blob:後的URL
   imageUrl:any
@@ -112,6 +126,7 @@ export class DetailArticleComponent implements OnInit{
       }
     )
   }
+
 
   //文章評論資料
   commentDatas:any;
