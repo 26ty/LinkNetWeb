@@ -21,9 +21,9 @@
                 <!--文章卡-->
                 <div class="row mt-3" >
                     <div class="col" [ngClass]="{'adaptive-height': shouldApplyAdaptiveHeight()}">
-                        <p>
-                            {{this.OneArticleDatas.content}}
-                        </p>
+                        <div [innerHTML]="this.OneArticleDatas.content">
+                        </div>
+                        <!-- <p>{{this.OneArticleDatas.content}}</p> -->
                     </div>
                 </div>
                 <!--評論區塊-->

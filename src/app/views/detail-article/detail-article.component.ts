@@ -5,6 +5,8 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Valida
 import { Router } from '@angular/router';
 import { DateService } from 'src/app/shared/date/date.service';
 import Swal from 'sweetalert2'
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 const USER_KEY = 'auth-user';
 @Component({
   selector: 'app-detail-article',
@@ -17,7 +19,8 @@ export class DetailArticleComponent implements OnInit{
     private HttpApiService:HttpApiService,
     private route: ActivatedRoute,
     private router: Router,
-    private DateService:DateService
+    private DateService:DateService,
+    private sanitizer: DomSanitizer
   ){}
 
   a_id:any
@@ -48,9 +51,9 @@ export class DetailArticleComponent implements OnInit{
 
   shouldApplyAdaptiveHeight() {
     const content = this.OneArticleDatas.content;
-    return content && content.length > 100; // 根据需要调整字数的阈值
+    return content && content.length > 100; // 根据需要调整字数的值
   }
-  
+
   favoriteBtn(){
     this.favorite_status = !this.favorite_status
   }
@@ -70,6 +73,11 @@ export class DetailArticleComponent implements OnInit{
         this.OneArticleDatas = res
         console.log("取單一文章data",this.OneArticleDatas)
 
+        
+
+        // this.OneArticleDatas.content = this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content);
+
+        console.log("content",this.OneArticleDatas.content)
         //呼叫轉換圖片
         this.getArticleImageFile(this.OneArticleDatas.img_url)
       }
