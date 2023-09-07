@@ -76,6 +76,17 @@ mat-divider {
     color: #FFFFFF;
 }
 
+.favorite-btn:hover{
+    background-color: inherit;
+    color: inherit;
+}
+
+/*bgc*/
+/* .comment-bgc{
+    background-color: #F2F3F4;
+} */
+
+/*native class*/
 mat-icon{
     color: #333333;
     /* margin-bottom: 5px; */
@@ -84,4 +95,12 @@ mat-icon{
 
 mat-card{
     border-radius:2%;
+}
+
+mat-chip-option{
+    background-color: #1976D2;
+}
+
+p{
+    margin: 0;
 }

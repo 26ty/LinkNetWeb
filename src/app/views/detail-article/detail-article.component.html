@@ -14,7 +14,8 @@
             <mat-card-content class="mt-2">
                 <div class="row text-center">
                     <div class="col detail-article-img">
-                        <img src="{{this.OneArticleDatas.img_url ?? '../../../assets/image/404-error.jpeg'}}" class="detail-article-img" alt="">
+                        <img src="{{this.OneArticleDatas.img_url ?? '../../../assets/image/404-error.jpeg'}}"
+                            class="detail-article-img" alt="">
                     </div>
                 </div>
                 <!--文章卡-->
@@ -52,85 +53,89 @@
                             投資人可以選擇自己認同的選股策略來組成適合自己的月月配高股息ETF。
                         </p> -->
                     </div>
-                    
+
                 </div>
                 <!--評論區塊-->
-                <!-- <div class="row">
-                    <mat-divider></mat-divider>
-                    <div class="col-8">
-                        作者太用心了！
+                <section id="comment-section" class="comment-bgc">
+                    <!--comment chip-->
+                    <div class="row">
+                        <div class="col">
+                            <mat-chip-listbox aria-label="Fish selection">
+                                <mat-chip-option selected>熱門</mat-chip-option>
+                                <mat-chip-option>由舊致新</mat-chip-option>
+                            </mat-chip-listbox>
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <p class="comment">
-                            2023.09.06 15:34
-                        </p>
+                    <!--comment count-->
+                    <div class="row mt-3">
+                        <div class="col">
+                            <p class="comment">共 {{commentTotal}} 則留言</p>
+                        </div>
                     </div>
-                </div> -->
-                <div class="row" *ngFor="let item of commentDatas">
-                    <mat-divider></mat-divider>
-                    <div class="col-8">
-                        {{item.content}}
-                    </div>
-                    <div class="col-4">
-                        <div class="row">
-                            <div class="col">
-                                <p class="comment">
-                                    {{item.created_at | date: 'yyyy.MM.dd HH:mm'}}
-                                </p>
-                            </div>
-                            <div class="col">
-                                <button mat-icon-button 
-                                        [matMenuTriggerFor]="menu"
-                                        class="comment-btn" 
+                    <!--顯示評論區塊-->
+                    <div class="row" *ngFor="let item of commentDatas">
+                        <mat-divider></mat-divider>
+                        <div class="col-7 d-flex align-items-center">
+                            {{item.content}}
+                        </div>
+                        <div class="col-5 d-flex align-items-center">
+                            <div class="row">
+                                <div class="col-6 d-flex align-items-center">
+                                    <p class="comment">
+                                        {{item.created_at | date: 'yyyy.MM.dd HH:mm'}}
+                                    </p>
+                                </div>
+                                <div class="col-3 d-flex align-items-center">
+                                    <button mat-icon-button class="comment-btn"
+                                        aria-label="Example icon button with a heart icon"
+                                        class="favorite-btn">
+                                        <mat-icon>favorite_border</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="col-3 d-flex align-items-center">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="comment-btn"
                                         aria-label="Example icon button with a heart icon"
                                         *ngIf="item.user_id == this.userData.id">
-                                    <mat-icon >more_horiz</mat-icon>
-                                </button>
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item (click)="PostUpdateCommentData(item.id,item.content,item.created_at)">
-                                        <mat-icon>edit</mat-icon>
-                                        <span>編輯</span>
+                                        <mat-icon>more_horiz</mat-icon>
                                     </button>
-                                    <button mat-menu-item (click)="deleteComment(item.id)">
-                                        <mat-icon>delete</mat-icon>
-                                        <span>刪除</span>
-                                    </button>
-                                </mat-menu>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item
+                                            (click)="PostUpdateCommentData(item.id,item.content,item.created_at)">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>編輯</span>
+                                        </button>
+                                        <button mat-menu-item (click)="deleteComment(item.id)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>刪除</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
                             </div>
                         </div>
-                        
-                        
                     </div>
-                    
-                </div>
 
-                <div class="row">
-                    <div class="col-10">
-                        <mat-form-field style="width: 100%;">
-                            <mat-label>留言</mat-label>
-                            <input matInput placeholder="輸入留言" [(ngModel)]="content"> 
-                            <mat-error>帳號必填！</mat-error>
-                        </mat-form-field>
+                    <!--填寫評論區塊-->
+                    <div class="row mt-2">
+                        <div class="col-10">
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>留言</mat-label>
+                                <input matInput placeholder="輸入留言" [(ngModel)]="content">
+                                <mat-error>帳號必填！</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2">
+                            <button mat-icon-button *ngIf="editStatusBtn == true" class="edit-btn"
+                                aria-label="Example icon button with a heart icon" (click)="updateComment()">
+                                <mat-icon class="icon-white">send</mat-icon>
+                            </button>
+                            <button mat-icon-button *ngIf="editStatusBtn == false" class="send-btn"
+                                aria-label="Example icon button with a heart icon" (click)="uploadComment()">
+                                <mat-icon class="icon-white">send</mat-icon>
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-2">
-                        <button mat-icon-button 
-                                *ngIf="editStatusBtn == true"
-                                class="edit-btn" 
-                                aria-label="Example icon button with a heart icon" 
-                                (click)="updateComment()">
-                            <mat-icon class="icon-white" >send</mat-icon>
-                        </button>
-                        <button mat-icon-button 
-                                *ngIf="editStatusBtn == false"
-                                class="send-btn" 
-                                aria-label="Example icon button with a heart icon" 
-                                (click)="uploadComment()">
-                            <mat-icon class="icon-white" >send</mat-icon>
-                        </button>
-                    </div>
-                    
-                    
-                </div>
+                </section>
+
             </mat-card-content>
         </mat-card>
     </div>

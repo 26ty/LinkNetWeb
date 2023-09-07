@@ -91,6 +91,7 @@ export class DetailArticleComponent implements OnInit{
 
   //文章評論資料
   commentDatas:any;
+  commentTotal:number = 0
   // created_at:any;
   /**
     * 取得所有文章評論data
@@ -102,7 +103,8 @@ export class DetailArticleComponent implements OnInit{
       res => {
         this.commentDatas = res
         console.log("取得文章評論res",this.commentDatas)
-
+        this.commentTotal = this.commentDatas.length
+        console.log("評論數量",this.commentTotal)
         
         // for(let i in this.articleDatas){
         //   if(this.articleDatas[i].img_url != null){

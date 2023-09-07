@@ -10,11 +10,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
 
 //textarea
 import { TextFieldModule } from '@angular/cdk/text-field';
@@ -23,7 +24,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 //http
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 
@@ -74,7 +75,8 @@ import { HeaderComponent } from './layout/header/header.component';
     MatFormFieldModule,
     MatInputModule,
     MatTabsModule,
-    
+    MatChipsModule,
+
     /* textarea */
     TextFieldModule,
     /* editor */
@@ -87,14 +89,14 @@ import { HeaderComponent } from './layout/header/header.component';
     /* routing */
     PrivyRoutingModule,
     RouterModule.forRoot([
-      {path:"main",component:HomeComponent},
-      {path:"privy",component:PrivyComponent},
-      {path:"addArticle",component:AddArticleComponent},
-      {path:"editArticle/:a_id",component:EditArticleComponent},
-      {path:"detailArticle/:a_id",component:DetailArticleComponent},
-      {path:"collection",component:CollectionComponent},
+      { path: "main", component: HomeComponent },
+      { path: "privy", component: PrivyComponent },
+      { path: "addArticle", component: AddArticleComponent },
+      { path: "editArticle/:a_id", component: EditArticleComponent },
+      { path: "detailArticle/:a_id", component: DetailArticleComponent },
+      { path: "collection", component: CollectionComponent },
     ]),
-    
+
     ContainerRoutingModule,
     ContainerModule,
     LoginModule,
