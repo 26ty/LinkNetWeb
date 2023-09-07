@@ -55,7 +55,7 @@
                     
                 </div>
                 <!--評論區塊-->
-                <div class="row">
+                <!-- <div class="row">
                     <mat-divider></mat-divider>
                     <div class="col-8">
                         作者太用心了！
@@ -65,17 +65,43 @@
                             2023.09.06 15:34
                         </p>
                     </div>
-                </div>
-                <div class="row">
+                </div> -->
+                <div class="row" *ngFor="let item of commentDatas">
                     <mat-divider></mat-divider>
                     <div class="col-8">
-                        作者太用心了！
+                        {{item.content}}
                     </div>
                     <div class="col-4">
-                        <p class="comment">
-                            2023.09.06 15:34
-                        </p>
+                        <div class="row">
+                            <div class="col">
+                                <p class="comment">
+                                    {{item.created_at | date: 'yyyy.MM.dd HH:mm'}}
+                                </p>
+                            </div>
+                            <div class="col">
+                                <button mat-icon-button 
+                                        [matMenuTriggerFor]="menu"
+                                        class="comment-btn" 
+                                        aria-label="Example icon button with a heart icon"
+                                        *ngIf="item.user_id == this.userData.id">
+                                    <mat-icon >more_horiz</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="PostUpdateCommentData(item.id,item.content,item.created_at)">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>編輯</span>
+                                    </button>
+                                    <button mat-menu-item (click)="deleteComment(item.id)">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>刪除</span>
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </div>
+                        
+                        
                     </div>
+                    
                 </div>
 
                 <div class="row">
@@ -87,7 +113,18 @@
                         </mat-form-field>
                     </div>
                     <div class="col-2">
-                        <button mat-icon-button class="send-btn" aria-label="Example icon button with a heart icon" (click)="uploadArticle()">
+                        <button mat-icon-button 
+                                *ngIf="editStatusBtn == true"
+                                class="edit-btn" 
+                                aria-label="Example icon button with a heart icon" 
+                                (click)="updateComment()">
+                            <mat-icon class="icon-white" >send</mat-icon>
+                        </button>
+                        <button mat-icon-button 
+                                *ngIf="editStatusBtn == false"
+                                class="send-btn" 
+                                aria-label="Example icon button with a heart icon" 
+                                (click)="uploadComment()">
                             <mat-icon class="icon-white" >send</mat-icon>
                         </button>
                     </div>

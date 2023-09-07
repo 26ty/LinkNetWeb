@@ -37,6 +37,9 @@ export class DetailArticleComponent implements OnInit{
 
     //取得單一文章
     this.getOneArticle(this.a_id)
+
+    //取得單一文章評論
+    this.getArticleComments()
   }
 
   OneArticleDatas:any;
@@ -86,6 +89,35 @@ export class DetailArticleComponent implements OnInit{
     )
   }
 
+  //文章評論資料
+  commentDatas:any;
+  // created_at:any;
+  /**
+    * 取得所有文章評論data
+    *
+    * @return {obj} article datas 
+  */
+  getArticleComments() {
+    this.HttpApiService.getArticleCommentsRequest(this.a_id).subscribe(
+      res => {
+        this.commentDatas = res
+        console.log("取得文章評論res",this.commentDatas)
+
+        
+        // for(let i in this.articleDatas){
+        //   if(this.articleDatas[i].img_url != null){
+        //     //取得圖片資訊
+        //     this.getArticleImageFile(this.articleDatas[i].id,this.articleDatas[i].img_url)
+        //   }
+        // }
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
+      }
+    )
+  }
+
   //評論body
   content:string = ''
   uploadCommentData:any = {}
@@ -95,32 +127,111 @@ export class DetailArticleComponent implements OnInit{
     * 
     * @param {obj} uploadCommentData and other datas 
   */
-  uploadArticle() {
+  uploadComment() {
     this.uploadCommentData['content'] = this.content
     this.uploadCommentData['article_id'] = this.a_id
     this.uploadCommentData['user_id'] = this.userData.id
     this.uploadCommentData['created_at'] = new Date()
     this.uploadCommentData['updated_at'] = new Date()
     console.log("欲新增文章評論資料", this.uploadCommentData)
-    this.HttpApiService.uploadCommentRequest(this.uploadCommentData).subscribe(
-      res => {
-        console.log("新增文章評論res", res)
 
+    //排除input填空值
+    if(this.content.trim() !== '' && this.content != null ){
+      this.HttpApiService.uploadCommentRequest(this.uploadCommentData).subscribe(
+        res => {
+          console.log("新增文章評論res", res)
+  
+          if (res.status == 200) {
+  
+            this.content = ''
+  
+            Swal.fire({
+              icon: 'success',
+              title: '新增成功!',
+              text: "您已成功新增一評論",
+              confirmButtonColor: '#1972D6',
+              confirmButtonText: '看文章！',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // window.location.reload()
+                this.getArticleComments()
+              }
+              
+  
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: '存取錯誤!',
+              text: "請聯絡網管人員.",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        },
+        err => {
+          console.log("存取錯誤!", err)
+          console.log("API狀態碼:", err.status);
+        }
+      )
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: '未填寫評論!',
+        // text: "請聯絡網管人員.",
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+    
+  }
+
+  editStatusBtn = false
+  c_id:string = ''
+  created_at:any
+  PostUpdateCommentData(c_id:string,content:string,created_at:any){
+    this.editStatusBtn = true
+    this.c_id = c_id
+    this.content = content
+    this.created_at = created_at
+  }
+  //編輯評論body
+  updateCommentData: any = {}
+
+  /**
+    * 編輯文章
+    *
+    * 
+  */
+  updateComment() {
+    this.updateCommentData['id'] = this.c_id
+    this.updateCommentData['content'] = this.content
+    this.updateCommentData['user_id'] = this.userData.id
+    this.updateCommentData['article_id'] = this.a_id
+    this.updateCommentData['created_at'] = new Date(this.created_at)
+    this.updateCommentData['updated_at'] = new Date()
+    console.log("欲編輯評論資料", this.updateCommentData)
+    this.HttpApiService.updateCommentRequest(this.c_id,this.updateCommentData).subscribe(
+      res => {
+        console.log("編輯評論res", res)
+        // if(this.title == res.title){
         if (res.status == 200) {
+          this.editStatusBtn = false // 修改編輯按鈕狀態
+          this.content = ''
           Swal.fire({
             icon: 'success',
-            title: '新增成功!',
-            text: "您已成功新增一評論",
-            confirmButtonColor: '#1972D6',
-            confirmButtonText: '看文章！',
+            title: '編輯成功!',
+            text: "您已成功編輯評論",
+            showConfirmButton: false,
+            timer: 1500
           }).then((result) => {
-            this.router.navigate([`/detailArticle/${this.a_id}`]);
+            this.getArticleComments()
 
           })
         } else {
           Swal.fire({
             icon: 'error',
-            title: '存取錯誤!',
+            title: '編輯存取錯誤!',
             text: "請聯絡網管人員.",
             showConfirmButton: false,
             timer: 1500
@@ -130,9 +241,72 @@ export class DetailArticleComponent implements OnInit{
       err => {
         console.log("存取錯誤!", err)
         console.log("API狀態碼:", err.status);
+        Swal.fire({
+          icon: 'error',
+          title: '存取錯誤!',
+          text: "請聯絡網管人員.",
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     )
   }
+
+  /**
+    * 刪除文章
+    * @param  {string} id 填入文章id
+  */
+  deleteComment(id:string){
+    Swal.fire({
+      title: "是否確定刪除評論",
+      //text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#1972D6',
+      cancelButtonText: '取消',
+      confirmButtonText: '刪除',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.HttpApiService.deleteCommentRequest(id).subscribe(
+          res => {
+            console.log("deleteComment",res)
+            if(res.statusCode == 200){
+              Swal.fire({
+                icon: 'success',
+                title: "已成功刪除！",
+                showConfirmButton: false,
+                timer: 1500
+              }).then((result) => {
+                this.getArticleComments()
+              })
+              
+            }else{
+              Swal.fire({
+                icon: 'error',
+                title: "刪除失敗！",
+                showConfirmButton: false,
+                timer: 1500
+              })
+            }
+          },
+          err => {
+            console.log("存取錯誤!", err)
+            console.log("API狀態碼:", err.status);
+            Swal.fire({
+              icon: 'error',
+              title: "刪除失敗！",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        )
+      }
+    })
+    
+  }
+
   goBack() {
     window.history.back();
   }

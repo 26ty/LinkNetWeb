@@ -54,6 +54,12 @@ mat-divider {
     margin-right: 5px;
 }
 
+.comment-btn {
+    background-color: #ffffff;
+    color: #FFFFFF;
+    margin-right: 5px;
+}
+
 .delete-btn {
     background-color: rgb(210, 0, 0);
     color: #FFFFFF;

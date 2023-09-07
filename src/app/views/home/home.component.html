@@ -51,13 +51,24 @@
                             </div>
                         </div>
                         <div class="row mt-1" style="float: right;margin-right: 5px;">
-                            <button mat-icon-button class="edit-btn" aria-label="Example icon button with a heart icon" (click)="editArticle(item.id)" *ngIf="item.user_id == this.userData.id">
+                            <button mat-icon-button 
+                                    class="edit-btn" 
+                                    aria-label="Example icon button with a heart icon" 
+                                    (click)="editArticle(item.id)" 
+                                    *ngIf="item.user_id == this.userData.id">
                                 <mat-icon class="icon-white">edit</mat-icon>
                             </button>
-                            <button mat-icon-button class="delete-btn" aria-label="Example icon button with a heart icon" (click)="deleteArticle(item.id)" *ngIf="item.user_id == this.userData.id">
+                            <button mat-icon-button 
+                                    class="delete-btn" 
+                                    aria-label="Example icon button with a heart icon" 
+                                    (click)="deleteArticle(item.id)" 
+                                    *ngIf="item.user_id == this.userData.id">
                                 <mat-icon class="icon-white" >delete</mat-icon>
                             </button>
-                            <button mat-fab extended class="expand-btn" (click)="detailArticle(item.id)">
+                            <button mat-fab 
+                                    extended 
+                                    class="expand-btn" 
+                                    (click)="detailArticle(item.id)">
                                 <mat-icon>exit_to_app</mat-icon>
                                 閱讀全文
                             </button>

@@ -208,6 +208,16 @@ export class HttpApiService {
   }
 
   /**
+    * 取得單一文章評論data
+    * @param  {string} 填入欲取得評論的文章id
+    * @return {obj} Comment datas 
+  */
+  getArticleCommentsRequest(article_id: string): Observable<any> {
+    const url = `${this.BaseUrl}/Comments/getArticleComments/${article_id}`;
+    return this.http.get(url);
+  }
+
+  /**
     * 新增評論
     * @param  {Comment} 填入body obj
     * @return {obj} Comment datas 
@@ -222,8 +232,8 @@ export class HttpApiService {
     * @param  {Comment} 填入body obj
     * @return {obj} Comment datas 
   */
-  updateCommentRequest(body: Comment) : Observable<any>{
-    const url = `${this.BaseUrl}/Comments`;
+  updateCommentRequest(id:string,body: Comment) : Observable<any>{
+    const url = `${this.BaseUrl}/Comments/${id}`;
     return this.http.put(url, body);
   }
 
@@ -232,7 +242,7 @@ export class HttpApiService {
     * @param  {string} 填入欲刪除的評論id
     * @return {obj} Comment datas 
   */
-  deleteCommentRequest(id: string) {
+  deleteCommentRequest(id: string) : Observable<any>{
     const url = `${this.BaseUrl}/Comments/${id}`;
     return this.http.delete(url);
   }

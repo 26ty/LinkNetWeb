@@ -65,6 +65,10 @@ export class HomeComponent implements OnInit{
             this.getArticleImageFile(this.articleDatas[i].id,this.articleDatas[i].img_url)
           }
         }
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
       }
     )
   }
@@ -94,6 +98,10 @@ export class HomeComponent implements OnInit{
         }
 
         
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
       }
 
       
@@ -186,7 +194,10 @@ export class HomeComponent implements OnInit{
                 showConfirmButton: false,
                 timer: 1500
               }).then((result) => {
-                window.location.reload()
+                if (result.isConfirmed) {
+                  window.location.reload()
+                }
+                
               })
               
             }else{
