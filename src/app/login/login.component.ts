@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit{
   }
 
   ngOnInit():void{
-
+    // 取得今日日期
     this.getToday()
 
     // this.loginForm = new FormGroup({
@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit{
     //   password : new FormControl()
     // })
 
+    // 清空 localStorage
+    localStorage.clear();
+    // 取得QRCode
     this.getQRCode()
   }
 

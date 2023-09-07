@@ -24,7 +24,9 @@ export class AppComponent implements OnInit {
   userData: any = ""
   ngOnInit():void{
     // location.reload()
-    
+    // 清空 localStorage
+    // localStorage.clear();
+
     const userLocalData = window.localStorage.getItem(USER_KEY)
     this.userData = JSON.parse(String(userLocalData))
 

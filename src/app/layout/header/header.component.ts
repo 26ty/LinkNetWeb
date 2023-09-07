@@ -31,6 +31,10 @@ export class HeaderComponent  implements OnInit {
     // 手動觸發
     this.changeDetectorRef.detectChanges();
     console.log(this.userData)
+
+    // 清空 localStorage
+    // localStorage.clear();
+    
   }
 
   homeLink() {

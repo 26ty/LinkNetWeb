@@ -40,6 +40,9 @@ mat-divider {
     height: 500px;
 }
 
+.adaptive-height {
+    height: auto;
+}
 /*查看完整文章按鈕*/
 .expand-btn {
     float: right;
@@ -76,9 +79,13 @@ mat-divider {
     color: #FFFFFF;
 }
 
-.favorite-btn:hover{
-    background-color: inherit;
-    color: inherit;
+.favorite-btn{
+    margin-left: 5px;
+}
+
+.cancel-hover:hover {
+    background-color: transparent !important;
+    box-shadow: none !important;
 }
 
 /*bgc*/

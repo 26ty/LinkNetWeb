@@ -19,56 +19,42 @@
                     </div>
                 </div>
                 <!--文章卡-->
-                <div class="row mt-3">
-                    <div class="col article-content">
+                <div class="row mt-3" >
+                    <div class="col" [ngClass]="{'adaptive-height': shouldApplyAdaptiveHeight()}">
                         <p>
                             {{this.OneArticleDatas.content}}
                         </p>
-                        <!-- <p>
-                            最近復華台灣科技優息ETF 00929又準備要除息了，繼7月份第一次除息就配出每單位0.11元後，
-                            8月份第二次配息預估為每單位0.11元，投資人如果想參與此次配息，8/16為最後買進日。
-                            復華台灣科技優息ETF 00929，2023/06/09一上市就帶來一波投資熱潮，當天成交量達到12萬張，
-                            創下近兩年來國內台股ETF掛牌首日的紀錄，截至2023/7/31其規模已達209.1億、受益人數自成立以來成長將近6倍，
-                            達11.5萬人、過去一個月每日平均成交量約5.7萬張。
-                            若你是想要打造月月配現金流的投資人，正在懊惱要直接買單一支月配息ETF 00929，還是要用季配息ETF來組成月月配，
-                            甚至是兩者都選擇做為自己的月月配投資組合，以下提供四個觀點，提供大家思考！...
-                            投資人想要月月配就是希望現金流越多越好，因此殖利率是一個很重要的參考指標。
-                            投資人想要月月配就是希望現金流越多越好，因此殖利率是一個很重要的參考指標，其平均年化殖利率越高，我們一整年領下來的股利也就越多。
-                            以00878+00713+債券ETF (00725B、00720B)的組合來說，其中00878殖利率約為5-6%、00713殖利率約為7-8%，
-                            而債券ETF(00725B、00720B)殖利率約為3-4%，此組合平均殖利率約為5-6%。
-                            另一個組合00878+00713+0056，由於0056殖利率約為5-6%，此組合平均殖利率約為6-7%。
-                            而月配息ETF 00929，以目前兩次配息紀錄來預估年化殖利率預計在7-8%，相對於上述兩檔組合殖利率略高，不過過去兩個月的配息表現，
-                            不等於未來的配息表現，建議投資人還是要先觀察接下來的殖利率表現。
-                            其中00878的選股策略為以MSCI台灣指數中的成分股，選出MSCI ESG評級為BBB(含)級以上的公司，再看過去三年平均年化殖利率，來選出其前30檔作為成分股，
-                            因此主要是以公司過去的表現加上ESG來做為00878成分股篩選。而0056，則是由台灣50、中型100指數中的150檔標的，選出未來一年預測現金股利殖利率為前50檔個股作為其成分股，
-                            以殖利率為主要選取原則、未納入基本面的篩選。
-                            再來是00713，主要是以市值前250大，按照股票流動性、股利率、獲利能力(ROE)、及波動度等選出50檔成分股。
-                            而高股息新秀復華台灣科技優息ETF 00929，成分股主要以高殖利率的電子科技類股為主(範圍涵蓋上、中、下游，包含半導體、電腦及周邊設備、電子零組件通路與光電等相關電子產業)，透過公司基本面的篩選。
-                            以股價波動度、本益比、ROE、現金股利、股息變異性五項指標，選出獲利穩健、股價未來成長性及配發高息的電子科技類股。
-                            例如00929在一年一度6月底成分股調整時，就把飆高的AI概念股緯創、廣達等個股刪除，替換低本益比、股價波動較低的股票，引起網友熱議。
-                            子類股常有勝過大盤加權指數的表現，因此股價成長動能上有機會表現不錯。
-
-                            看到這邊，不難發現，高股息ETF產品隨著投資人的需求與市場變化推陳出新，利用更多的篩選因子與定期的成分股更換，
-                            期望讓投資人能在資本利得與股息上都能夠有更好的報酬表現。未來投資人一定會有更多相關高股息產品的選擇，因此了解其選股策略是很重要的，
-                            投資人可以選擇自己認同的選股策略來組成適合自己的月月配高股息ETF。
-                        </p> -->
                     </div>
-
                 </div>
                 <!--評論區塊-->
                 <section id="comment-section" class="comment-bgc">
                     <!--comment chip-->
                     <div class="row">
-                        <div class="col">
+                        <div class="col-3 d-flex align-items-center">
                             <mat-chip-listbox aria-label="Fish selection">
                                 <mat-chip-option selected>熱門</mat-chip-option>
                                 <mat-chip-option>由舊致新</mat-chip-option>
                             </mat-chip-listbox>
+                            
+                        </div>
+                        <div class="col-7 d-flex align-items-center">
+                            <button mat-icon-button class="favorite-btn" (click)="favoriteBtn()">
+                                <mat-icon>{{favorite_status ? 'favorite' : 'favorite_border' }}</mat-icon>
+                            </button>
+                            <span>1,211</span>
+                            <button mat-icon-button class="favorite-btn" (click)="turnedBtn()">
+                                <mat-icon>{{turned_status ? 'turned_in' : 'turned_in_not' }}</mat-icon>
+                                
+                            </button>
+                            <span>863</span>
+                            <button mat-icon-button class="favorite-btn">
+                                <mat-icon>share</mat-icon>
+                            </button>
                         </div>
                     </div>
                     <!--comment count-->
                     <div class="row mt-3">
-                        <div class="col">
+                        <div class="col d-flex align-items-center">
                             <p class="comment">共 {{commentTotal}} 則留言</p>
                         </div>
                     </div>
@@ -80,19 +66,19 @@
                         </div>
                         <div class="col-5 d-flex align-items-center">
                             <div class="row">
-                                <div class="col-6 d-flex align-items-center">
+                                <div class="col-8 d-flex align-items-center">
                                     <p class="comment">
-                                        {{item.created_at | date: 'yyyy.MM.dd HH:mm'}}
+                                        {{item.created_at | date: 'MM.dd HH:mm'}}
                                     </p>
                                 </div>
-                                <div class="col-3 d-flex align-items-center">
+                                <!-- <div class="col-3 d-flex align-items-center">
                                     <button mat-icon-button class="comment-btn"
                                         aria-label="Example icon button with a heart icon"
                                         class="favorite-btn">
                                         <mat-icon>favorite_border</mat-icon>
                                     </button>
-                                </div>
-                                <div class="col-3 d-flex align-items-center">
+                                </div> -->
+                                <div class="col-4 d-flex align-items-center">
                                     <button mat-icon-button [matMenuTriggerFor]="menu" class="comment-btn"
                                         aria-label="Example icon button with a heart icon"
                                         *ngIf="item.user_id == this.userData.id">
@@ -119,7 +105,14 @@
                         <div class="col-10">
                             <mat-form-field style="width: 100%;">
                                 <mat-label>留言</mat-label>
-                                <input matInput placeholder="輸入留言" [(ngModel)]="content">
+                                <input 
+                                    matInput 
+                                    placeholder="輸入留言" 
+                                    [(ngModel)]="content"
+                                    #titleLenth
+                                    maxlength="30" 
+                                >
+                                <mat-hint align="end">{{titleLenth.value.length}} / 30</mat-hint>
                                 <mat-error>帳號必填！</mat-error>
                             </mat-form-field>
                         </div>

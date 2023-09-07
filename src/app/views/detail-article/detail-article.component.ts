@@ -23,6 +23,10 @@ export class DetailArticleComponent implements OnInit{
   a_id:any
   today: any
   userData: any = ""
+
+  /* fake btn status*/
+  favorite_status = false
+  turned_status = false
   ngOnInit():void{
     this.a_id = this.route.snapshot.paramMap.get('a_id')
     console.log(this.a_id)
@@ -42,6 +46,18 @@ export class DetailArticleComponent implements OnInit{
     this.getArticleComments()
   }
 
+  shouldApplyAdaptiveHeight() {
+    const content = this.OneArticleDatas.content;
+    return content && content.length > 100; // 根据需要调整字数的阈值
+  }
+  
+  favoriteBtn(){
+    this.favorite_status = !this.favorite_status
+  }
+
+  turnedBtn(){
+    this.turned_status = !this.turned_status
+  }
   OneArticleDatas:any;
   /**
     * 取單一文章data
