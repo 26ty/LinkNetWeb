@@ -39,7 +39,8 @@
                         <!-- <div class="adaptive-height" [innerHTML]="getFormattedContent()">
                         </div> -->
                         <!-- <p>{{this.OneArticleDatas.content}}</p> -->
-                        <p [innerHTML]="this.OneArticleDatas.content"></p>
+                        <!-- <p [innerHTML]="OneArticleDatas.content"></p> -->
+                        <p [style]="{'white-space': 'pre-line'}">{{ OneArticleDatas.content }}</p>
                         <!-- <p class="adaptive-height" [innerHTML]="trustedContent" [(ngModel)]="this.OneArticleDatas.content"></p> -->
                     </div>
                 </div>

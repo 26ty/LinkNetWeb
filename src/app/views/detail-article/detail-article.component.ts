@@ -80,7 +80,7 @@ export class DetailArticleComponent implements OnInit{
         this.OneArticleDatas = res
         console.log("取單一文章data",this.OneArticleDatas)
 
-        this.OneArticleDatas.content = this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content) as SafeHtml;
+        // this.OneArticleDatas.content = this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content) as SafeHtml;
 
         console.log("content",this.OneArticleDatas.content);
 

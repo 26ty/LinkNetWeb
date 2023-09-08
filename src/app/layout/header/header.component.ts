@@ -34,7 +34,18 @@ export class HeaderComponent  implements OnInit {
 
     // 清空 localStorage
     // localStorage.clear();
-    
+    // 取得當前網址的路徑
+    var currentPath = window.location.pathname;
+
+    // 取得所有的連結元素
+    var links = document.querySelectorAll('.nav-link');
+
+    // 迭代每個連結元素，檢查其 href 是否與當前路徑相符
+    links.forEach(function(link) {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+        }
+    });
   }
 
   homeLink() {
