@@ -25,7 +25,7 @@ export class HeaderComponent  implements OnInit {
   userData: any = ""
   ngOnInit():void{
     // location.reload()
-    
+    this.userData = ''
     const userLocalData = localStorage.getItem(USER_KEY)
     this.userData = JSON.parse(String(userLocalData))
     // 手動觸發

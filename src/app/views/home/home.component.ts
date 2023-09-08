@@ -1,6 +1,7 @@
 import { Component ,OnInit ,TemplateRef, ViewChild, ElementRef} from '@angular/core';
 import { HttpApiService } from 'src/app/api/http-api.service';
 import { DateService } from 'src/app/shared/date/date.service';
+import { Router } from '@angular/router';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2'
 
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit{
 
   @ViewChild('paginator') paginator!: MatPaginator;
   constructor(
+    private router: Router,
     private HttpApiService:HttpApiService,
     private DateService:DateService,
     private matPaginatorIntl: MatPaginatorIntl,
@@ -193,11 +195,9 @@ export class HomeComponent implements OnInit{
                 title: "已成功刪除！",
                 showConfirmButton: false,
                 timer: 1500
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  window.location.reload()
-                }
-                
+              }).then(() => {
+                // 重新載入页面
+                this.getAllArticle()
               })
               
             }else{

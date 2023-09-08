@@ -126,8 +126,8 @@ export class PrivyComponent implements OnInit{
                 title: "已成功刪除！",
                 showConfirmButton: false,
                 timer: 1500
-              }).then((result) => {
-                window.location.reload()
+              }).then(() => {
+                this.router.navigate(['/main']);
               })
               
             }else{

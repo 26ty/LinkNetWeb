@@ -6,6 +6,21 @@
                     <button mat-icon-button (click)="goBack()">
                         <mat-icon>keyboard_arrow_left</mat-icon>
                     </button>
+                    <button mat-icon-button [matMenuTriggerFor]="authormMenu" *ngIf="this.OneArticleDatas.user_id == this.userData.id">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #authormMenu="matMenu">
+                        <button mat-menu-item
+                            (click)="editArticle(a_id)">
+                            <mat-icon>edit</mat-icon>
+                            <span>編輯</span>
+                        </button>
+                        <button mat-menu-item
+                            (click)="deleteArticle(a_id)">
+                            <mat-icon>delete</mat-icon>
+                            <span>刪除</span>
+                        </button>
+                    </mat-menu>
                     <h1>{{this.OneArticleDatas.title}}</h1>
                 </mat-card-title>
                 <mat-card-subtitle>{{this.OneArticleDatas.created_at | date: 'yyyy.MM.dd HH:mm'}}</mat-card-subtitle>
@@ -63,41 +78,39 @@
                     <!--顯示評論區塊-->
                     <div class="row" *ngFor="let item of commentDatas">
                         <mat-divider></mat-divider>
-                        <div class="col-7 d-flex align-items-center">
+                        <div class="col-5 d-flex align-items-center">
                             {{item.content}}
                         </div>
-                        <div class="col-5 d-flex align-items-center">
-                            <div class="row">
-                                <div class="col-8 d-flex align-items-center">
-                                    <p class="comment">
-                                        {{item.created_at | date: 'MM.dd HH:mm'}}
-                                    </p>
-                                </div>
-                                <!-- <div class="col-3 d-flex align-items-center">
-                                    <button mat-icon-button class="comment-btn"
-                                        aria-label="Example icon button with a heart icon"
-                                        class="favorite-btn">
-                                        <mat-icon>favorite_border</mat-icon>
+                        <div class="col-7 d-flex align-items-center ">
+                            <div class="col-8 d-flex align-items-center ">
+                                <p class="comment">
+                                    {{item.created_at | date: 'MM.dd HH:mm'}}
+                                </p>
+                            </div>
+                            <!-- <div class="col-3 d-flex align-items-center">
+                                <button mat-icon-button class="comment-btn"
+                                    aria-label="Example icon button with a heart icon"
+                                    class="favorite-btn">
+                                    <mat-icon>favorite_border</mat-icon>
+                                </button>
+                            </div> -->
+                            <div class="col-4 d-flex align-items-center">
+                                <button mat-icon-button [matMenuTriggerFor]="menu" class="comment-btn"
+                                    aria-label="Example icon button with a heart icon"
+                                    *ngIf="item.user_id == this.userData.id">
+                                    <mat-icon>more_horiz</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item
+                                        (click)="PostUpdateCommentData(item.id,item.content,item.created_at)">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>編輯</span>
                                     </button>
-                                </div> -->
-                                <div class="col-4 d-flex align-items-center">
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" class="comment-btn"
-                                        aria-label="Example icon button with a heart icon"
-                                        *ngIf="item.user_id == this.userData.id">
-                                        <mat-icon>more_horiz</mat-icon>
+                                    <button mat-menu-item (click)="deleteComment(item.id)">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>刪除</span>
                                     </button>
-                                    <mat-menu #menu="matMenu">
-                                        <button mat-menu-item
-                                            (click)="PostUpdateCommentData(item.id,item.content,item.created_at)">
-                                            <mat-icon>edit</mat-icon>
-                                            <span>編輯</span>
-                                        </button>
-                                        <button mat-menu-item (click)="deleteComment(item.id)">
-                                            <mat-icon>delete</mat-icon>
-                                            <span>刪除</span>
-                                        </button>
-                                    </mat-menu>
-                                </div>
+                                </mat-menu>
                             </div>
                         </div>
                     </div>

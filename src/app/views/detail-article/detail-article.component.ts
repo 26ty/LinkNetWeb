@@ -6,12 +6,14 @@ import { Router } from '@angular/router';
 import { DateService } from 'src/app/shared/date/date.service';
 import Swal from 'sweetalert2'
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { PrivyComponent } from '../privy/privy.component';
 
 const USER_KEY = 'auth-user';
 @Component({
   selector: 'app-detail-article',
   templateUrl: './detail-article.component.html',
-  styleUrls: ['./detail-article.component.css']
+  styleUrls: ['./detail-article.component.css'],
+  providers: [PrivyComponent]
 })
 export class DetailArticleComponent implements OnInit{
 
@@ -20,7 +22,8 @@ export class DetailArticleComponent implements OnInit{
     private route: ActivatedRoute,
     private router: Router,
     private DateService:DateService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private privyComponent:PrivyComponent
   ){}
 
   a_id:any
@@ -350,6 +353,24 @@ export class DetailArticleComponent implements OnInit{
 
   goBack() {
     window.history.back();
+  }
+
+  /**
+    * 前往文章細節頁面
+  */
+  detailArticle(id:string) {
+    window.location.assign('/detailArticle/' + id);
+  }
+
+  /**
+    * 前往文章編輯頁面
+  */
+  editArticle(id:string) {
+    window.location.assign('/editArticle/' + id);
+  }
+
+  deleteArticle(a_id:string){
+    this.privyComponent.deleteArticle(a_id)
   }
 
   

@@ -111,3 +111,7 @@ mat-chip-option{
 p{
     margin: 0;
 }
+
+float-right{
+    float: right;
+}
