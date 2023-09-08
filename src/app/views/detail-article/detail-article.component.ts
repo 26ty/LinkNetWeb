@@ -373,5 +373,26 @@ export class DetailArticleComponent implements OnInit{
     this.privyComponent.deleteArticle(a_id)
   }
 
-  
+  shareUrlBtn(){
+    var currentUrl = window.location.href;
+
+        // 使用 Clipboard API 複製到剪貼簿
+        navigator.clipboard.writeText(currentUrl)
+            .then(function() {
+              Swal.fire({
+                icon: 'success',
+                title: "網址已複製至剪貼簿！",
+                showConfirmButton: false,
+                timer: 1000
+              })
+            })
+            .catch(function(error) {
+              Swal.fire({
+                icon: 'error',
+                title: "網址未成功複製至剪貼簿！",
+                showConfirmButton: false,
+                timer: 1000
+              })
+            });
+  }
 }
