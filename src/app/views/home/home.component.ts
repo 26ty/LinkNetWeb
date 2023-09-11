@@ -47,23 +47,50 @@ export class HomeComponent implements OnInit {
 
     this.setPaginator();
 
+    //預測天氣
+    this.getForcastWeatherData("臺南市","Wx");
+
     //現在天氣
-    this.getWeatherData();
+    this.getNowWeatherData("臺南","TEMP");
   }
 
 
-  //天氣資料
-  weatherData: any;
+  //預測天氣觀測報告
+  forcastWeatherData: any;
+  dispalyForcastWeatherData:any;
   /**
-    * 取得天氣資料
-    *
+    * 取得一般天氣預報－今明36小時天氣預報
+    * @param elementName 欲取得資訊 天氣因子 ex:Wx
+    * @param locationName 填入臺灣各縣市 ex:臺南市
     * @return {obj} weather datas 
   */
-  getWeatherData() {
-    this.HttpApiService.getNowWeather().subscribe(
+  getForcastWeatherData(locationName:string,elementName:string) {
+    this.HttpApiService.getForcastWeather(locationName,elementName).subscribe(
       res => {
-        this.weatherData = res;
-        console.log("現在天氣",this.weatherData)
+        this.forcastWeatherData = res.records.location;
+        console.log("預測天氣",this.forcastWeatherData)
+        this.dispalyForcastWeatherData = this.forcastWeatherData[0].weatherElement[0].time[0].parameter
+        console.log("[顯示]預測天氣－敘述",this.dispalyForcastWeatherData)
+      }
+    )
+  }
+
+  //現在天氣觀測報告
+  nowWeatherData: any;
+  displayNowWeatherData: any;
+  /**
+    * 取得現在天氣觀測報告
+    * @param elementName 欲取得資訊 ex:TEMP
+    * @param locationName 填入氣象站 ex:臺南 可參考 https://e-service.cwb.gov.tw/wdps/obs/state.htm
+    * @return {obj} weather datas 
+  */
+  getNowWeatherData(locationName:string,elementName:string) {
+    this.HttpApiService.getNowWeather(locationName,elementName).subscribe(
+      res => {
+        this.nowWeatherData = res.records.location;
+        console.log("現在天氣",this.nowWeatherData)
+        this.displayNowWeatherData = this.nowWeatherData[0].weatherElement[0]
+        console.log("[顯示]現在天氣-溫度",this.displayNowWeatherData)
       }
     )
   }

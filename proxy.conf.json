@@ -1,0 +1,7 @@
+{
+    "/api": {
+      "target": "https://opendata.cwb.gov.tw",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }

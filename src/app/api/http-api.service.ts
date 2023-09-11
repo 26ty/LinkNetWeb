@@ -25,7 +25,8 @@ const httpOptions = {
 export class HttpApiService {
 
   private BaseUrl: string = 'https://localhost:7086/api';
-  private WeatherUrl: string = 'https://opendata.cwb.gov.tw/api';
+  // private WeatherUrl: string = 'https://opendata.cwb.gov.tw/api';
+  private WeatherUrl: string = '/api';
   private WeatherApiKey:string = 'CWB-A5BCB816-60EC-4014-BD02-E1802C24F27E';
   constructor(
     private http: HttpClient,
@@ -38,13 +39,42 @@ export class HttpApiService {
   //   window.localStorage.setItem(USER_KEY, userStr);
   // }
   /* Weather  -------------------------------------------------------------*/
+  public httpOptions = {
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
+      'Access-Control-Max-Age': '86400'
+    })
+  };
 
-  getNowWeather(): Observable<any> {
-    const url = `${this.WeatherUrl}/v1/rest/datastore/O-A0003-001`
+  /**
+    * 取得一般天氣預報－今明36小時天氣預報
+    * @param elementName 欲取得資訊 天氣因子ex:Wx
+    * @param locationName 填入臺灣各縣市 ex:臺南市
+    * @return {obj} weather datas 
+  */
+  getForcastWeather(locationName:string,elementName?:string): Observable<any> {
+    const url = `${this.WeatherUrl}/v1/rest/datastore/F-C0032-001?Authorization=${this.WeatherApiKey}&locationName=${locationName}&elementName=${elementName}`
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json') // 替换为您要添加的字段和数据
       .set('Authorization', this.WeatherApiKey);
-    return this.http.get(url,{headers})
+    const options = { headers: headers };
+    return this.http.get(url,options)
+  }
+
+  /**
+    * 取得現在天氣觀測報告
+    * @param elementName 欲取得資訊 ex:TEMP
+    * @param locationName 填入氣象站 ex:臺南 可參考 https://e-service.cwb.gov.tw/wdps/obs/state.htm
+    * @return {obj} weather datas 
+  */
+  getNowWeather(locationName:string,elementName?:string): Observable<any> {
+    const url = `${this.WeatherUrl}/v1/rest/datastore/O-A0003-001?Authorization=${this.WeatherApiKey}&locationName=${locationName}&elementName=${elementName}`
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json') // 替换为您要添加的字段和数据
+      .set('Authorization', this.WeatherApiKey);
+    const options = { headers: headers };
+    return this.http.get(url,options)
   }
 
   /* 登入  -------------------------------------------------------------*/

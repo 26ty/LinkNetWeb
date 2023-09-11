@@ -64,8 +64,9 @@
               "browserTarget": "LinkNetWeb:build:production"
             },
             "development": {
-              "browserTarget": "LinkNetWeb:build:development"
-            }
+              "browserTarget": "LinkNetWeb:build:development",
+              "proxyConfig": "proxy.conf.json" 
+            } 
           },
           "defaultConfiguration": "development"
         },

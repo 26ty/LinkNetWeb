@@ -179,16 +179,16 @@
         <div class="row">
             <mat-card class="example-card">
                 <mat-card-header>
-                    <mat-card-title class="d-flex align-items-center">
+                    <mat-card-title class="d-flex align-items-center" *ngIf="this.forcastWeatherData">
                         <mat-icon style="color: red;">location_on</mat-icon> 
-                        台南市
+                        {{this.forcastWeatherData[0].locationName}}
                     </mat-card-title>
                 </mat-card-header>
-                <mat-card-content>
-                    <p class="today-tips">晴時多雲</p>
-                    <div class="row ">
+                <mat-card-content *ngIf="this.forcastWeatherData">
+                    <p class="today-tips">{{this.dispalyForcastWeatherData.parameterName}}</p>
+                    <div class="row">
                         <div class="col d-flex align-items-center ">
-                            <span style="font-size:50px;font-weight: 200;">23°C</span>
+                            <span style="font-size:50px;font-weight: 200;">{{this.displayNowWeatherData.elementValue}}°C</span>
                         </div>
                         <div class="col d-flex align-items-center">
                             <img width="60" alt="Angular Logo" src="../assets/image/cloudy.png"/>
