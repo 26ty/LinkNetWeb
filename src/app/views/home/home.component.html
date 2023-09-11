@@ -179,16 +179,16 @@
         <div class="row">
             <mat-card class="example-card">
                 <mat-card-header>
-                    <mat-card-title class="d-flex align-items-center" *ngIf="this.forcastWeatherData">
+                    <mat-card-title class="d-flex align-items-center" *ngIf="this.nowLocationData">
                         <mat-icon style="color: red;">location_on</mat-icon> 
-                        {{this.forcastWeatherData[0].locationName}}
+                        {{this.city}}
                     </mat-card-title>
                 </mat-card-header>
-                <mat-card-content *ngIf="this.forcastWeatherData">
-                    <p class="today-tips">{{this.dispalyForcastWeatherData.parameterName}}</p>
+                <mat-card-content *ngIf="this.dispalyForcastWeatherData">
+                    <p class="today-tips">{{this.nowWeatherDiscription}}</p>
                     <div class="row">
                         <div class="col d-flex align-items-center ">
-                            <span style="font-size:50px;font-weight: 200;">{{this.displayNowWeatherData.elementValue}}°C</span>
+                            <span style="font-size:50px;font-weight: 200;">{{this.nowTemp}}°C</span>
                         </div>
                         <div class="col d-flex align-items-center">
                             <img width="60" alt="Angular Logo" src="../assets/image/cloudy.png"/>

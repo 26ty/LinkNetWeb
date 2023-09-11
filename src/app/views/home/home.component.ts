@@ -47,30 +47,64 @@ export class HomeComponent implements OnInit {
 
     this.setPaginator();
 
+    //現在位址
+    this.getNowLocation();
+
     //預測天氣
-    this.getForcastWeatherData("臺南市","Wx");
+    this.getForcastWeatherData("臺南市", "Wx");
 
     //現在天氣
-    this.getNowWeatherData("臺南","TEMP");
+    this.getNowWeatherData("臺南", "TEMP");
   }
 
-
+  nowLocationData:any
+  city:any
+  /**
+    * 取得現在位置 經緯度轉址
+    * @return {obj} location datas 
+  */
+  getNowLocation() {
+    // 
+    this.HttpApiService.getLocation().subscribe(
+      res => {
+        console.log(res)
+        this.nowLocationData = res
+        this.city = this.nowLocationData.address.city
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
+      }
+    )
+  }
   //預測天氣觀測報告
   forcastWeatherData: any;
-  dispalyForcastWeatherData:any;
+  dispalyForcastWeatherData: any;
+  nowWeatherDiscription:any
   /**
-    * 取得一般天氣預報－今明36小時天氣預報
+    * 取得一般天氣預報－今明36小時天氣預報 https://opendata.cwb.gov.tw/dist/opendata-swagger.html
     * @param elementName 欲取得資訊 天氣因子 ex:Wx
     * @param locationName 填入臺灣各縣市 ex:臺南市
     * @return {obj} weather datas 
   */
-  getForcastWeatherData(locationName:string,elementName:string) {
-    this.HttpApiService.getForcastWeather(locationName,elementName).subscribe(
+  getForcastWeatherData(locationName: string, elementName: string) {
+    this.HttpApiService.getForcastWeather(locationName, elementName).subscribe(
       res => {
         this.forcastWeatherData = res.records.location;
-        console.log("預測天氣",this.forcastWeatherData)
+        console.log("預測天氣", this.forcastWeatherData)
         this.dispalyForcastWeatherData = this.forcastWeatherData[0].weatherElement[0].time[0].parameter
-        console.log("[顯示]預測天氣－敘述",this.dispalyForcastWeatherData)
+        console.log("[顯示]預測天氣－敘述", this.dispalyForcastWeatherData)
+        this.nowWeatherDiscription = this.dispalyForcastWeatherData.parameterName
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
+        Swal.fire({
+          icon: 'error',
+          title: "存取錯誤！",
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     )
   }
@@ -78,19 +112,31 @@ export class HomeComponent implements OnInit {
   //現在天氣觀測報告
   nowWeatherData: any;
   displayNowWeatherData: any;
+  nowTemp:any
   /**
-    * 取得現在天氣觀測報告
+    * 取得現在天氣觀測報告 https://opendata.cwb.gov.tw/dist/opendata-swagger.html
     * @param elementName 欲取得資訊 ex:TEMP
     * @param locationName 填入氣象站 ex:臺南 可參考 https://e-service.cwb.gov.tw/wdps/obs/state.htm
     * @return {obj} weather datas 
   */
-  getNowWeatherData(locationName:string,elementName:string) {
-    this.HttpApiService.getNowWeather(locationName,elementName).subscribe(
+  getNowWeatherData(locationName: string, elementName: string) {
+    this.HttpApiService.getNowWeather(locationName, elementName).subscribe(
       res => {
         this.nowWeatherData = res.records.location;
-        console.log("現在天氣",this.nowWeatherData)
+        console.log("現在天氣", this.nowWeatherData)
         this.displayNowWeatherData = this.nowWeatherData[0].weatherElement[0]
-        console.log("[顯示]現在天氣-溫度",this.displayNowWeatherData)
+        console.log("[顯示]現在天氣-溫度", this.displayNowWeatherData)
+        this.nowTemp = this.displayNowWeatherData.elementValue
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
+        Swal.fire({
+          icon: 'error',
+          title: "存取錯誤！",
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     )
   }

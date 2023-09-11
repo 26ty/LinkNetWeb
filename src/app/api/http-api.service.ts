@@ -10,9 +10,11 @@ import { Article } from '../shared/models/article-data';
 import { Users } from '../shared/models/user-data';
 import { Comment } from '../shared/models/comment-data';
 import { UsersLogin } from '../shared/models/user-data';
+//location
+
 
 const USER_KEY = 'auth-user';//儲存使用者資料
-
+declare const navigator: Navigator;
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -39,13 +41,53 @@ export class HttpApiService {
   //   window.localStorage.setItem(USER_KEY, userStr);
   // }
   /* Weather  -------------------------------------------------------------*/
-  public httpOptions = {
-    headers: new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
-      'Access-Control-Max-Age': '86400'
-    })
-  };
+
+  /**
+    * 以經緯度轉換地理位置
+  */
+  latitude=23.0904478
+  longitude=120.2773343
+  getLocation() : Observable<any>{
+    //創建Observable對象
+    return new Observable((observer) => {
+      //檢查瀏覽器是否支援地理定位
+      if (navigator.geolocation) {
+        //使用瀏覽器的地理定位API getCurrentPosition方法來獲取user的當前位置
+        navigator.geolocation.getCurrentPosition(
+          //成功獲取位置 position包含獲取的位置訊息
+          (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            console.log('Latitude 緯度:', latitude);
+            console.log('Longitude 經度:', longitude);
+            // 在這裡處理位置信息
+            const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+            this.http.get(url).subscribe(
+              (response) => {
+                observer.next(response);
+                observer.complete();
+              },
+              (error) => {
+                observer.error(error);
+              }
+            );
+          },
+          (error) => {
+            console.log('無法獲取位置:', error);
+            observer.error(error);
+          }
+        );
+      } else {
+        console.log('您的瀏覽器不支援地理定位。');
+        observer.error('瀏覽器不支援地理定位');
+      }
+    });
+  }
+  
+  locationReverse(latitude:number,longitude:number): Observable<any>{
+    const url =`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+    return this.http.get(url)
+  }
 
   /**
     * 取得一般天氣預報－今明36小時天氣預報
