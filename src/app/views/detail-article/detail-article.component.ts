@@ -1,4 +1,4 @@
-import { Component ,OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpApiService } from 'src/app/api/http-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
@@ -15,25 +15,25 @@ const USER_KEY = 'auth-user';
   styleUrls: ['./detail-article.component.css'],
   providers: [PrivyComponent]
 })
-export class DetailArticleComponent implements OnInit{
+export class DetailArticleComponent implements OnInit {
 
   constructor(
-    private HttpApiService:HttpApiService,
+    private HttpApiService: HttpApiService,
     private route: ActivatedRoute,
     private router: Router,
-    private DateService:DateService,
+    private DateService: DateService,
     private sanitizer: DomSanitizer,
-    private privyComponent:PrivyComponent
-  ){}
+    private privyComponent: PrivyComponent
+  ) { }
 
-  a_id:any
+  a_id: any
   today: any
   userData: any = ""
 
   /* fake btn status*/
   favorite_status = false
   turned_status = false
-  ngOnInit():void{
+  ngOnInit(): void {
     this.a_id = this.route.snapshot.paramMap.get('a_id')
     console.log(this.a_id)
 
@@ -42,7 +42,7 @@ export class DetailArticleComponent implements OnInit{
     this.userData = JSON.parse(String(userLocalData))
 
     //調用日期服務>取得今日日期與時間
-    this.today=this.DateService.getToday();
+    this.today = this.DateService.getToday();
     console.log(this.today)
 
     //取得單一文章
@@ -59,32 +59,32 @@ export class DetailArticleComponent implements OnInit{
   }
 
   //讚按鈕
-  favoriteBtn(){
+  favoriteBtn() {
     this.favorite_status = !this.favorite_status
   }
 
   //收藏按鈕
-  turnedBtn(){
+  turnedBtn() {
     this.turned_status = !this.turned_status
   }
 
-  OneArticleDatas:any;
+  OneArticleDatas: any;
   /**
     * 取單一文章data
     *
     * @return {obj} article datas 
   */
-  getOneArticle(a_id:string) {
+  getOneArticle(a_id: string) {
     this.HttpApiService.getOneArticleRequest(a_id).subscribe(
       res => {
         this.OneArticleDatas = res
-        console.log("取單一文章data",this.OneArticleDatas)
+        console.log("取單一文章data", this.OneArticleDatas)
 
         // this.OneArticleDatas.content = this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content) as SafeHtml;
 
-        console.log("content",this.OneArticleDatas.content);
+        console.log("content", this.OneArticleDatas.content);
 
-        console.log(typeof(this.OneArticleDatas.content))
+        console.log(typeof (this.OneArticleDatas.content))
         //呼叫轉換圖片
         this.getArticleImageFile(this.OneArticleDatas.img_url)
       }
@@ -102,22 +102,22 @@ export class DetailArticleComponent implements OnInit{
   // }
 
   //取blob:後的URL
-  imageUrl:any
+  imageUrl: any
   /**
     * 取得圖片
     * @param  {string} a_id 填入文章id
     * @param  {string} imageName 填入欲取得圖片名稱
     * @return {obj} imagePath and other datas 
   */
-  getArticleImageFile(imageName:string){
+  getArticleImageFile(imageName: string) {
     this.HttpApiService.getArticleImageFileRequest(imageName).subscribe(
       res => {
-        console.log("取得圖片res",res);
+        console.log("取得圖片res", res);
         // 設置 blob 的類型為圖像的 MIME 類型
-        const blob = new Blob([res], { type: 'image/jpeg' }); 
+        const blob = new Blob([res], { type: 'image/jpeg' });
         // 使用 blob 創建圖像 URL
-        this.imageUrl = URL.createObjectURL(blob); 
-        console.log("取blob:後的URL",this.imageUrl)
+        this.imageUrl = URL.createObjectURL(blob);
+        console.log("取blob:後的URL", this.imageUrl)
 
         //新圖片網址URL取代原文章圖片網址
         this.OneArticleDatas.img_url = this.imageUrl
@@ -132,8 +132,8 @@ export class DetailArticleComponent implements OnInit{
 
 
   //文章評論資料
-  commentDatas:any;
-  commentTotal:number = 0
+  commentDatas: any;
+  commentTotal: number = 0
   // created_at:any;
   /**
     * 取得所有文章評論data
@@ -144,10 +144,10 @@ export class DetailArticleComponent implements OnInit{
     this.HttpApiService.getArticleCommentsRequest(this.a_id).subscribe(
       res => {
         this.commentDatas = res
-        console.log("取得文章評論res",this.commentDatas)
+        console.log("取得文章評論res", this.commentDatas)
         this.commentTotal = this.commentDatas.length
-        console.log("評論數量",this.commentTotal)
-        
+        console.log("評論數量", this.commentTotal)
+
         // for(let i in this.articleDatas){
         //   if(this.articleDatas[i].img_url != null){
         //     //取得圖片資訊
@@ -163,8 +163,8 @@ export class DetailArticleComponent implements OnInit{
   }
 
   //評論body
-  content:string = ''
-  uploadCommentData:any = {}
+  content: string = ''
+  uploadCommentData: any = {}
 
   /**
     * 新增文章評論
@@ -180,15 +180,15 @@ export class DetailArticleComponent implements OnInit{
     console.log("欲新增文章評論資料", this.uploadCommentData)
 
     //排除input填空值
-    if(this.content.trim() !== '' && this.content != null ){
+    if (this.content.trim() !== '' && this.content != null) {
       this.HttpApiService.uploadCommentRequest(this.uploadCommentData).subscribe(
         res => {
           console.log("新增文章評論res", res)
-  
+
           if (res.status == 200) {
-  
+
             this.content = ''
-  
+
             Swal.fire({
               icon: 'success',
               title: '新增成功!',
@@ -200,8 +200,8 @@ export class DetailArticleComponent implements OnInit{
                 // window.location.reload()
                 this.getArticleComments()
               }
-              
-  
+
+
             })
           } else {
             Swal.fire({
@@ -218,7 +218,7 @@ export class DetailArticleComponent implements OnInit{
           console.log("API狀態碼:", err.status);
         }
       )
-    }else{
+    } else {
       Swal.fire({
         icon: 'error',
         title: '未填寫評論!',
@@ -227,13 +227,13 @@ export class DetailArticleComponent implements OnInit{
         timer: 1500
       })
     }
-    
+
   }
 
   editStatusBtn = false
-  c_id:string = ''
-  created_at:any
-  PostUpdateCommentData(c_id:string,content:string,created_at:any){
+  c_id: string = ''
+  created_at: any
+  PostUpdateCommentData(c_id: string, content: string, created_at: any) {
     this.editStatusBtn = true
     this.c_id = c_id
     this.content = content
@@ -255,7 +255,7 @@ export class DetailArticleComponent implements OnInit{
     this.updateCommentData['created_at'] = new Date(this.created_at)
     this.updateCommentData['updated_at'] = new Date()
     console.log("欲編輯評論資料", this.updateCommentData)
-    this.HttpApiService.updateCommentRequest(this.c_id,this.updateCommentData).subscribe(
+    this.HttpApiService.updateCommentRequest(this.c_id, this.updateCommentData).subscribe(
       res => {
         console.log("編輯評論res", res)
         // if(this.title == res.title){
@@ -300,7 +300,7 @@ export class DetailArticleComponent implements OnInit{
     * 刪除文章
     * @param  {string} id 填入文章id
   */
-  deleteComment(id:string){
+  deleteComment(id: string) {
     Swal.fire({
       title: "是否確定刪除評論",
       //text: "You won't be able to revert this!",
@@ -315,8 +315,8 @@ export class DetailArticleComponent implements OnInit{
       if (result.isConfirmed) {
         this.HttpApiService.deleteCommentRequest(id).subscribe(
           res => {
-            console.log("deleteComment",res)
-            if(res.statusCode == 200){
+            console.log("deleteComment", res)
+            if (res.statusCode == 200) {
               Swal.fire({
                 icon: 'success',
                 title: "已成功刪除！",
@@ -325,8 +325,8 @@ export class DetailArticleComponent implements OnInit{
               }).then((result) => {
                 this.getArticleComments()
               })
-              
-            }else{
+
+            } else {
               Swal.fire({
                 icon: 'error',
                 title: "刪除失敗！",
@@ -348,7 +348,7 @@ export class DetailArticleComponent implements OnInit{
         )
       }
     })
-    
+
   }
 
   goBack() {
@@ -358,41 +358,41 @@ export class DetailArticleComponent implements OnInit{
   /**
     * 前往文章細節頁面
   */
-  detailArticle(id:string) {
+  detailArticle(id: string) {
     window.location.assign('/detailArticle/' + id);
   }
 
   /**
     * 前往文章編輯頁面
   */
-  editArticle(id:string) {
+  editArticle(id: string) {
     window.location.assign('/editArticle/' + id);
   }
 
-  deleteArticle(a_id:string){
+  deleteArticle(a_id: string) {
     this.privyComponent.deleteArticle(a_id)
   }
 
-  shareUrlBtn(){
+  shareUrlBtn() {
     var currentUrl = window.location.href;
 
-        // 使用 Clipboard API 複製到剪貼簿
-        navigator.clipboard.writeText(currentUrl)
-            .then(function() {
-              Swal.fire({
-                icon: 'success',
-                title: "網址已複製至剪貼簿！",
-                showConfirmButton: false,
-                timer: 1000
-              })
-            })
-            .catch(function(error) {
-              Swal.fire({
-                icon: 'error',
-                title: "網址未成功複製至剪貼簿！",
-                showConfirmButton: false,
-                timer: 1000
-              })
-            });
+    // 使用 Clipboard API 複製到剪貼簿
+    navigator.clipboard.writeText(currentUrl)
+      .then(function () {
+        Swal.fire({
+          icon: 'success',
+          title: "網址已複製至剪貼簿！",
+          showConfirmButton: false,
+          timer: 1000
+        })
+      })
+      .catch(function (error) {
+        Swal.fire({
+          icon: 'error',
+          title: "網址未成功複製至剪貼簿！",
+          showConfirmButton: false,
+          timer: 1000
+        })
+      });
   }
 }

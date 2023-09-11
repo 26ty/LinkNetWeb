@@ -14,7 +14,7 @@
         <mat-card class="example-card">
             <mat-card-header>
                 <mat-card-title class="d-flex align-items-center">
-                    <mat-icon>whatshot</mat-icon>
+                    <mat-icon style="color: red;">whatshot</mat-icon>
                     熱門 > 
                     <!-- <button mat-mini-fab class="add-article-btn">
                         <mat-icon>add</mat-icon>
@@ -176,57 +176,63 @@
         </mat-card>
     </div>
     <div class="col-lg-4">
-        <mat-card class="example-card">
-            <mat-card-header>
-                <mat-card-title class="d-flex align-items-center">
-                    <mat-icon>thumb_up_alt</mat-icon> 
-                    精選 >
-                </mat-card-title>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content *ngIf="randomArticleDatas">
-                <!--精選文章卡-->
-                <div class="row" *ngFor="let item of randomArticleDatas; index as i">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-10">
-                                <a href="/detailArticle/{{item.id}}">
-                                    <h3>
-                                        {{item.content}} ...
-                                    </h3>
-                                </a>
-                            </div>
-                            <div class="col-2">
-                                <mat-icon>call_made<</mat-icon>
-                            </div>
+        <div class="row">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <mat-card-title class="d-flex align-items-center">
+                        <mat-icon style="color: red;">location_on</mat-icon> 
+                        台南市
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p class="today-tips">晴時多雲</p>
+                    <div class="row ">
+                        <div class="col d-flex align-items-center ">
+                            <span style="font-size:50px;font-weight: 200;">23°C</span>
                         </div>
-                        <mat-divider></mat-divider>
+                        <div class="col d-flex align-items-center">
+                            <img width="60" alt="Angular Logo" src="../assets/image/cloudy.png"/>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="row" style="padding-top: 12px;">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <mat-card-title class="d-flex align-items-center">
+                        <mat-icon>thumb_up_alt</mat-icon> 
+                        精選 >
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content *ngIf="randomArticleDatas">
+                    <!--精選文章卡-->
+                    <div class="row" *ngFor="let item of randomArticleDatas; index as i">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-10">
+                                    <a href="/detailArticle/{{item.id}}">
+                                        <h3>
+                                            {{item.content}} ...
+                                        </h3>
+                                    </a>
+                                </div>
+                                <div class="col-2">
+                                    <mat-icon>call_made<</mat-icon>
+                                </div>
+                            </div>
+                            <mat-divider></mat-divider>
+                        </div>
+                        
                     </div>
                     
-                </div>
-                
-                <!--精選文章卡-->
-                <!-- <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-10">
-                                <a href="/main">
-                                    <h3>
-                                        全球股市震盪中，投資者面臨風險挑戰。財報季來臨...
-                                    </h3>
-                                </a>
-                            </div>
-                            <div class="col-2">
-                                <mat-icon>call_made<</mat-icon>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <mat-divider></mat-divider> -->
-            </mat-card-content>
-            <mat-card-actions>
-
-            </mat-card-actions>
-        </mat-card>
+                </mat-card-content>
+                <mat-card-actions>
+    
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        
     </div>
 </div>

@@ -25,7 +25,8 @@ const httpOptions = {
 export class HttpApiService {
 
   private BaseUrl: string = 'https://localhost:7086/api';
-
+  private WeatherUrl: string = 'https://opendata.cwb.gov.tw/api';
+  private WeatherApiKey:string = 'CWB-A5BCB816-60EC-4014-BD02-E1802C24F27E';
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -36,8 +37,17 @@ export class HttpApiService {
   //   window.localStorage.removeItem(USER_KEY);
   //   window.localStorage.setItem(USER_KEY, userStr);
   // }
+  /* Weather  -------------------------------------------------------------*/
 
-  /* 登入 */
+  getNowWeather(): Observable<any> {
+    const url = `${this.WeatherUrl}/v1/rest/datastore/O-A0003-001`
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json') // 替换为您要添加的字段和数据
+      .set('Authorization', this.WeatherApiKey);
+    return this.http.get(url,{headers})
+  }
+
+  /* 登入  -------------------------------------------------------------*/
   login(body: UsersLogin) : Observable<any> {
     const url = `${this.BaseUrl}/Login`;
     return this.http.post(url, body);

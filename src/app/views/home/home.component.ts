@@ -1,4 +1,4 @@
-import { Component ,OnInit ,TemplateRef, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
 import { HttpApiService } from 'src/app/api/http-api.service';
 import { DateService } from 'src/app/shared/date/date.service';
 import { Router } from '@angular/router';
@@ -12,15 +12,15 @@ const USER_KEY = 'auth-user';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
   @ViewChild('paginator') paginator!: MatPaginator;
   constructor(
     private router: Router,
-    private HttpApiService:HttpApiService,
-    private DateService:DateService,
+    private HttpApiService: HttpApiService,
+    private DateService: DateService,
     private matPaginatorIntl: MatPaginatorIntl,
-  ){}
+  ) { }
 
   // MatPaginator Inputs
   totalCount!: number;
@@ -28,8 +28,8 @@ export class HomeComponent implements OnInit{
   pageEvent!: PageEvent;
 
   userData: any = ""
-  today:any
-  ngOnInit():void{
+  today: any
+  ngOnInit(): void {
     const userLocalData = window.localStorage.getItem(USER_KEY)
     this.userData = JSON.parse(String(userLocalData))
 
@@ -40,16 +40,36 @@ export class HomeComponent implements OnInit{
     this.getRandomArticle(3)
 
 
-    const p:any = document.getElementById('article-content')
+    const p: any = document.getElementById('article-content')
     // this.limitText(p,20)
 
     this.today = this.DateService.getToday()
 
     this.setPaginator();
+
+    //現在天氣
+    this.getWeatherData();
   }
-  
+
+
+  //天氣資料
+  weatherData: any;
+  /**
+    * 取得天氣資料
+    *
+    * @return {obj} weather datas 
+  */
+  getWeatherData() {
+    this.HttpApiService.getNowWeather().subscribe(
+      res => {
+        this.weatherData = res;
+        console.log("現在天氣",this.weatherData)
+      }
+    )
+  }
+
   //所有文章資料
-  articleDatas:any;
+  articleDatas: any;
   /**
     * 取得所有文章data
     *
@@ -59,12 +79,12 @@ export class HomeComponent implements OnInit{
     this.HttpApiService.getArticleRequest().subscribe(
       res => {
         this.articleDatas = res
-        console.log("取得所有文章res",this.articleDatas)
+        console.log("取得所有文章res", this.articleDatas)
 
-        for(let i in this.articleDatas){
-          if(this.articleDatas[i].img_url != null){
+        for (let i in this.articleDatas) {
+          if (this.articleDatas[i].img_url != null) {
             //取得圖片資訊
-            this.getArticleImageFile(this.articleDatas[i].id,this.articleDatas[i].img_url)
+            this.getArticleImageFile(this.articleDatas[i].id, this.articleDatas[i].img_url)
           }
         }
       },
@@ -76,70 +96,70 @@ export class HomeComponent implements OnInit{
   }
 
   //所有文章資料
-  randomArticleDatas:any;
+  randomArticleDatas: any;
   /**
     * 取得隨機指定文章data
     * @param  {string} count
     * @return {obj} article datas 
   */
-  getRandomArticle(count?:number) {
+  getRandomArticle(count?: number) {
     this.HttpApiService.getRandomArticlesRequest(count).subscribe(
       res => {
         this.randomArticleDatas = res
-        console.log("取得隨機指定文章res",this.randomArticleDatas)
+        console.log("取得隨機指定文章res", this.randomArticleDatas)
 
-        for(let i in this.randomArticleDatas){
-          if(this.randomArticleDatas[i].img_url != null){
+        for (let i in this.randomArticleDatas) {
+          if (this.randomArticleDatas[i].img_url != null) {
             //取得圖片資訊
-            this.getArticleImageFile(this.randomArticleDatas[i].id,this.randomArticleDatas[i].img_url)
+            this.getArticleImageFile(this.randomArticleDatas[i].id, this.randomArticleDatas[i].img_url)
 
-            var substr = this.randomArticleDatas[i].content.substr(0,23);
+            var substr = this.randomArticleDatas[i].content.substr(0, 23);
             this.randomArticleDatas[i].content = substr;
-            console.log("截斷文章內容",this.randomArticleDatas[i].content)
+            console.log("截斷文章內容", this.randomArticleDatas[i].content)
           }
         }
 
-        
+
       },
       err => {
         console.log("存取錯誤!", err)
         console.log("API狀態碼:", err.status);
       }
 
-      
+
     )
   }
 
   //取blob:後的URL
-  imageUrl:any
+  imageUrl: any
   //轉換過的url及其對應id陣列
-  articleImageDataList:any[]=[];
+  articleImageDataList: any[] = [];
   //交換完圖片網址的所有文章資料
-  newArticleDatas:any
+  newArticleDatas: any
   /**
     * 取得圖片
     * @param  {string} a_id 填入文章id
     * @param  {string} imageName 填入欲取得圖片名稱
     * @return {obj} imagePath and other datas 
   */
-  getArticleImageFile(a_id:string,imageName:string){
+  getArticleImageFile(a_id: string, imageName: string) {
     this.HttpApiService.getArticleImageFileRequest(imageName).subscribe(
       res => {
         // console.log("取得圖片res",res);
         // 設置 blob 的類型為圖像的 MIME 類型
-        const blob = new Blob([res], { type: 'image/jpeg' }); 
+        const blob = new Blob([res], { type: 'image/jpeg' });
         // 使用 blob 創建圖像 URL
-        this.imageUrl = URL.createObjectURL(blob); 
+        this.imageUrl = URL.createObjectURL(blob);
         // console.log("取blob:後的URL",this.imageUrl)
 
         // 設置[轉換過的url及其對應id陣列]
-        this.articleImageDataList.push( { "id" : a_id , "img_url" : this.imageUrl } ) //轉換過的url及其對應id陣列
+        this.articleImageDataList.push({ "id": a_id, "img_url": this.imageUrl }) //轉換過的url及其對應id陣列
         // console.log("轉換過的url及其對應id陣列",this.articleImageDataList)
 
         this.newArticleDatas = this.articleDatas.concat();
-        for(let i in this.newArticleDatas){
-          for(let j in this.articleImageDataList){
-            if(this.newArticleDatas[i].id== this.articleImageDataList[j].id){
+        for (let i in this.newArticleDatas) {
+          for (let j in this.articleImageDataList) {
+            if (this.newArticleDatas[i].id == this.articleImageDataList[j].id) {
               this.newArticleDatas[i].img_url = this.articleImageDataList[j].img_url;
             }
           }
@@ -173,7 +193,7 @@ export class HomeComponent implements OnInit{
     * 刪除文章
     * @param  {string} id 填入文章id
   */
-  deleteArticle(id:string){
+  deleteArticle(id: string) {
     Swal.fire({
       title: "是否確定刪除文章",
       //text: "You won't be able to revert this!",
@@ -188,8 +208,8 @@ export class HomeComponent implements OnInit{
       if (result.isConfirmed) {
         this.HttpApiService.deleteArticleRequest(id).subscribe(
           res => {
-            console.log("deleteArticle",res)
-            if(res.statusCode == 200){
+            console.log("deleteArticle", res)
+            if (res.statusCode == 200) {
               Swal.fire({
                 icon: 'success',
                 title: "已成功刪除！",
@@ -199,8 +219,8 @@ export class HomeComponent implements OnInit{
                 // 重新載入页面
                 this.getAllArticle()
               })
-              
-            }else{
+
+            } else {
               Swal.fire({
                 icon: 'error',
                 title: "刪除失敗！",
@@ -222,7 +242,7 @@ export class HomeComponent implements OnInit{
         )
       }
     })
-    
+
   }
 
   // p = document.getElementById('article-content');
@@ -231,8 +251,8 @@ export class HomeComponent implements OnInit{
     * @param limit 限制字數
     * @return {obj} article datas 
   */
-  limitText(p:HTMLElement,limit:number):void {
-    const text:any = p.textContent?.trim();
+  limitText(p: HTMLElement, limit: number): void {
+    const text: any = p.textContent?.trim();
     if (text.length > limit) {
       const truncated: string = text.slice(0, limit) + '...';
       p.textContent = truncated;
@@ -264,7 +284,7 @@ export class HomeComponent implements OnInit{
   /**
     * 前往文章細節頁面
   */
-  detailArticle(id:string) {
+  detailArticle(id: string) {
     window.location.assign('/detailArticle/' + id);
   }
 
@@ -278,7 +298,7 @@ export class HomeComponent implements OnInit{
   /**
     * 前往文章編輯頁面
   */
-  editArticle(id:string) {
+  editArticle(id: string) {
     window.location.assign('/editArticle/' + id);
   }
 }
