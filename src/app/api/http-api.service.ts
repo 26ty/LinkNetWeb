@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Article } from '../shared/models/article-data';
 import { Users } from '../shared/models/user-data';
 import { Comment } from '../shared/models/comment-data';
+import { Collection } from '../shared/models/comment-data';
 import { UsersLogin } from '../shared/models/user-data';
 //location
 
@@ -329,4 +330,62 @@ export class HttpApiService {
     return this.http.delete(url);
   }
 
+  /* Collection CRUD ------------------------------------------------------------*/
+  /**
+    * 取得所有收藏data
+    *
+    * @return {obj} collection datas 
+  */
+  getCollectionRequest() : Observable<any> {
+    return this.http.get(this.BaseUrl + '/Collections');
+  }
+
+  /**
+    * 取得User收藏data
+    *
+    * @return {obj} collection datas 
+  */
+  getUserCollectionRequest(user_id:string) : Observable<any> {
+    return this.http.get(this.BaseUrl + `/Collections/getUserCollections/${user_id}`);
+  }
+
+  /**
+    * 取得單一收藏data
+    * @param  {string} 填入欲取得的收藏id
+    * @return {obj} Collection datas 
+  */
+  getOneCollectionRequest(id: string): Observable<any> {
+    const url = `${this.BaseUrl}/Collections/${id}`;
+    return this.http.get(url);
+  }
+
+  /**
+    * 新增收藏
+    * @param  {Collection} 填入body obj
+    * @return {obj} Collection datas 
+  */
+  uploadCollectionRequest(body: Collection) : Observable<any>{
+    const url = `${this.BaseUrl}/Collections`;
+    return this.http.post(url, body);
+  }
+
+  /**
+    * 更新收藏
+    * @param  {Collection} 填入body obj
+    * @return {obj} Comment datas 
+  */
+  updateCollectionRequest(id:string,body: Collection) : Observable<any>{
+    const url = `${this.BaseUrl}/Collections/${id}`;
+    return this.http.put(url, body);
+  }
+
+  /**
+    * 刪除單一收藏data
+    * @param  {string} 填入欲刪除的收藏id
+    * @return {obj} Comment datas 
+  */
+  deleteCollectionRequest(id: string) : Observable<any>{
+    const url = `${this.BaseUrl}/Collections/${id}`;
+    return this.http.delete(url);
+  }
 }

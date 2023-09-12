@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 //textarea
 import { TextFieldModule } from '@angular/cdk/text-field';
 
@@ -79,6 +79,7 @@ import { HeaderComponent } from './layout/header/header.component';
     MatInputModule,
     MatTabsModule,
     MatChipsModule,
+    MatProgressSpinnerModule,
 
     /* textarea */
     TextFieldModule,
@@ -100,8 +101,8 @@ import { HeaderComponent } from './layout/header/header.component';
       { path: "editArticle/:a_id", component: EditArticleComponent },
       { path: "detailArticle/:a_id", component: DetailArticleComponent },
       { path: "collection", component: CollectionComponent },
-      {path:'',redirectTo:'/login',pathMatch:'full'},
-      {path:'login',component:LoginComponent}
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent }
     ]),
 
     ContainerRoutingModule,

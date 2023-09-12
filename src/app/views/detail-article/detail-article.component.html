@@ -56,12 +56,12 @@
                             
                         </div>
                         <div class="col-7 d-flex align-items-center">
-                            <button mat-icon-button class="favorite-btn" (click)="favoriteBtn()">
+                            <button mat-icon-button class="favorite-btn" >
                                 <mat-icon>{{favorite_status ? 'favorite' : 'favorite_border' }}</mat-icon>
                             </button>
                             <span>1,211</span>
-                            <button mat-icon-button class="favorite-btn" (click)="turnedBtn()">
-                                <mat-icon>{{turned_status ? 'turned_in' : 'turned_in_not' }}</mat-icon>
+                            <button mat-icon-button class="favorite-btn" (click)="uploadCollection()">
+                                <mat-icon>{{existAid ? 'turned_in' : 'turned_in_not' }}</mat-icon>
                                 
                             </button>
                             <span>863</span>

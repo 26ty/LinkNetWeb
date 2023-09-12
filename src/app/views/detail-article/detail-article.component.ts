@@ -50,6 +50,9 @@ export class DetailArticleComponent implements OnInit {
 
     //取得單一文章評論
     this.getArticleComments()
+
+    //取得個人收藏文章
+    this.getUserCollection()
   }
 
   //自適應文章高度
@@ -58,15 +61,15 @@ export class DetailArticleComponent implements OnInit {
     return content && content.length > 100; // 根据需要调整字数的值
   }
 
-  //讚按鈕
-  favoriteBtn() {
-    this.favorite_status = !this.favorite_status
-  }
+  // //讚按鈕
+  // favoriteBtn() {
+  //   this.favorite_status = !this.favorite_status
+  // }
 
-  //收藏按鈕
-  turnedBtn() {
-    this.turned_status = !this.turned_status
-  }
+  // //收藏按鈕
+  // turnedBtn() {
+  //   this.turned_status = !this.turned_status
+  // }
 
   OneArticleDatas: any;
   /**
@@ -94,12 +97,6 @@ export class DetailArticleComponent implements OnInit {
   get trustedContent() {
     return this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content);
   }
-  // getFormattedContent(): SafeHtml {
-  //   if (this.OneArticleDatas && this.OneArticleDatas.content) {
-  //     return this.sanitizer.bypassSecurityTrustHtml(this.OneArticleDatas.content);
-  //   }
-  //   return '';
-  // }
 
   //取blob:後的URL
   imageUrl: any
@@ -165,7 +162,6 @@ export class DetailArticleComponent implements OnInit {
   //評論body
   content: string = ''
   uploadCommentData: any = {}
-
   /**
     * 新增文章評論
     * 
@@ -233,15 +229,20 @@ export class DetailArticleComponent implements OnInit {
   editStatusBtn = false
   c_id: string = ''
   created_at: any
+  /**
+    * 顯示文章評論
+    * 
+    * @param {obj} uploadCommentData and other datas 
+  */
   PostUpdateCommentData(c_id: string, content: string, created_at: any) {
     this.editStatusBtn = true
     this.c_id = c_id
     this.content = content
     this.created_at = created_at
   }
+
   //編輯評論body
   updateCommentData: any = {}
-
   /**
     * 編輯文章
     *
@@ -351,6 +352,104 @@ export class DetailArticleComponent implements OnInit {
 
   }
 
+  //---------------------------------------------------------------------------------------------
+  //個人收藏資料
+  collectionDatas: any;
+  collectionTotal: number = 0
+  existAid:boolean=false
+  // created_at:any;
+  /**
+    * 取得使用者收藏文章評論data
+    *
+    * @return {obj} article datas 
+  */
+  getUserCollection() {
+    this.HttpApiService.getUserCollectionRequest(this.userData.id).subscribe(
+      res => {
+        this.collectionDatas = res
+        console.log("取得個人收藏文章res", this.collectionDatas)
+        
+        //判斷a_id是否已存在 => 決定按鈕true or false
+        this.existAid = this.collectionDatas.some((obj:any) => {
+          return obj.article_id === this.a_id;
+        });
+
+        console.log(this.existAid)
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
+      }
+    )
+  }
+
+  //收藏body
+  uploadCollectionData: any = {}
+
+  /**
+    * 新增收藏
+    * 
+    * @param {obj} uploadCollectionData and other datas 
+  */
+  uploadCollection() {
+    this.uploadCollectionData['article_id'] = this.a_id
+    this.uploadCollectionData['user_id'] = this.userData.id
+    this.uploadCollectionData['created_at'] = new Date()
+    console.log("欲新增文章收藏資料", this.uploadCollectionData)
+
+    this.HttpApiService.uploadCollectionRequest(this.uploadCollectionData).subscribe(
+      res => {
+        console.log("新增文章收藏res", res)
+
+        if (res.status == 200) {
+
+          Swal.fire({
+            icon: 'success',
+            title: '成功加入收藏!',
+            showConfirmButton: false,
+            timer: 1000
+          })
+        } 
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
+      }
+    )
+
+  }
+
+  /**
+    * 刪除收藏
+    * @param  {string} id 填入收藏id
+  */
+  deleteCollection(id:string){
+    this.HttpApiService.deleteCollectionRequest(id).subscribe(
+      res => {
+        console.log("deleteCollection",res)
+        if(res.statusCode == 200){
+          Swal.fire({
+            icon: 'success',
+            title: "移除收藏！",
+            showConfirmButton: false,
+            timer: 1000
+          })
+          // .then(() => {
+          //   this.router.navigate(['/main']);
+          // })
+        }
+      },
+      err => {
+        console.log("存取錯誤!", err)
+        console.log("API狀態碼:", err.status);
+      }
+    )
+    
+  }
+
+  /**
+    * 回上頁
+  */
   goBack() {
     window.history.back();
   }
@@ -369,10 +468,16 @@ export class DetailArticleComponent implements OnInit {
     window.location.assign('/editArticle/' + id);
   }
 
+  /**
+    * 刪除文章
+  */
   deleteArticle(a_id: string) {
     this.privyComponent.deleteArticle(a_id)
   }
 
+  /**
+    * 複製文章鏈結
+  */
   shareUrlBtn() {
     var currentUrl = window.location.href;
 
