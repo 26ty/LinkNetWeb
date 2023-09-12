@@ -60,7 +60,7 @@
                                 <mat-icon>{{favorite_status ? 'favorite' : 'favorite_border' }}</mat-icon>
                             </button>
                             <span>1,211</span>
-                            <button mat-icon-button class="favorite-btn" (click)="uploadCollection()">
+                            <button mat-icon-button class="favorite-btn" (click)="existAid ? deleteCollection() : uploadCollection()">
                                 <mat-icon>{{existAid ? 'turned_in' : 'turned_in_not' }}</mat-icon>
                                 
                             </button>

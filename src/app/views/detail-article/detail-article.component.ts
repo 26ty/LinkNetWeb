@@ -357,6 +357,7 @@ export class DetailArticleComponent implements OnInit {
   collectionDatas: any;
   collectionTotal: number = 0
   existAid:boolean=false
+  collectionId:string = ''
   // created_at:any;
   /**
     * 取得使用者收藏文章評論data
@@ -374,7 +375,16 @@ export class DetailArticleComponent implements OnInit {
           return obj.article_id === this.a_id;
         });
 
+        var item = this.collectionDatas.find((obj:any) => {
+          return obj.article_id === this.a_id;
+        })
+
+        if(item){
+          this.collectionId = item.id;
+        }
+
         console.log(this.existAid)
+        console.log(this.collectionId)
       },
       err => {
         console.log("存取錯誤!", err)
@@ -383,6 +393,9 @@ export class DetailArticleComponent implements OnInit {
     )
   }
 
+  getCollectionId(){
+
+  }
   //收藏body
   uploadCollectionData: any = {}
 
@@ -408,6 +421,8 @@ export class DetailArticleComponent implements OnInit {
             title: '成功加入收藏!',
             showConfirmButton: false,
             timer: 1000
+          }).then((result) => {
+            this.getUserCollection()
           })
         } 
       },
@@ -423,8 +438,9 @@ export class DetailArticleComponent implements OnInit {
     * 刪除收藏
     * @param  {string} id 填入收藏id
   */
-  deleteCollection(id:string){
-    this.HttpApiService.deleteCollectionRequest(id).subscribe(
+  deleteCollection(){
+    console.log(this.collectionId)
+    this.HttpApiService.deleteCollectionRequest(this.collectionId).subscribe(
       res => {
         console.log("deleteCollection",res)
         if(res.statusCode == 200){
@@ -433,6 +449,9 @@ export class DetailArticleComponent implements OnInit {
             title: "移除收藏！",
             showConfirmButton: false,
             timer: 1000
+          }).then((result) => {
+            this.existAid=false
+            this.getUserCollection()
           })
           // .then(() => {
           //   this.router.navigate(['/main']);
