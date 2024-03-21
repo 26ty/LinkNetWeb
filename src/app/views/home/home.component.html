@@ -1,84 +1,76 @@
 <div class="row">
-    <div class="row">
-        <div class="col">
-            <h1 class="pb-0 mb-0">首頁</h1>
-        <p class="today-tips">{{this.today}}</p>
-        </div>
-        <div class="col">
-            <button mat-mini-fab class="add-article-btn" (click)="addArticleLink()">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
+  <div class="row">
+    <div class="col">
+      <h1 class="pb-0 mb-0">首頁</h1>
+      <p class="today-tips">{{this.today}}</p>
     </div>
-    <div class="col-lg-8">
-        <mat-card class="example-card">
-            <mat-card-header>
-                <mat-card-title class="d-flex align-items-center">
-                    <mat-icon style="color: red;">whatshot</mat-icon>
-                    熱門 > 
-                    <!-- <button mat-mini-fab class="add-article-btn">
+    <div class="col">
+      <button mat-mini-fab class="add-article-btn" (click)="addArticleLink()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title class="d-flex align-items-center">
+          <mat-icon style="color: red;">whatshot</mat-icon>
+          熱門 >
+          <!-- <button mat-mini-fab class="add-article-btn">
                         <mat-icon>add</mat-icon>
                     </button> -->
-                </mat-card-title>
-                <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
-                
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content class="mt-2">
-                <!--文章卡-->
-                <div class="row" *ngFor="let item of articleDatas; index as i">
-                    <div class="col-6">
-                        <div class="row">
-                            <img src="{{item.img_url ? item.img_url:'../../../assets/image/404-error.jpeg'}}" class="article-img" alt="">
-                        </div>
-                        <div class="row mt-2">
-                            <h2>
-                                {{item.title}}
-                            </h2>
-                        </div>
-                        <div class="row mt-2">
-                            <p class="today-tips">
-                                {{item.created_at | date: 'yyyy.MM.dd HH:mm'}}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6" >
-                        <div class="row">
-                            <div class="col article-content" >
-                                <p>
-                                    {{item.content}}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row mt-1" style="float: right;margin-right: 5px;">
-                            <button mat-icon-button 
-                                    class="edit-btn" 
-                                    aria-label="Example icon button with a heart icon" 
-                                    (click)="editArticle(item.id)" 
-                                    *ngIf="item.user_id == this.userData.id">
-                                <mat-icon class="icon-white">edit</mat-icon>
-                            </button>
-                            <button mat-icon-button 
-                                    class="delete-btn" 
-                                    aria-label="Example icon button with a heart icon" 
-                                    (click)="deleteArticle(item.id)" 
-                                    *ngIf="item.user_id == this.userData.id">
-                                <mat-icon class="icon-white" >delete</mat-icon>
-                            </button>
-                            <button mat-fab 
-                                    extended 
-                                    class="expand-btn" 
-                                    (click)="detailArticle(item.id)">
-                                <mat-icon>exit_to_app</mat-icon>
-                                閱讀全文
-                            </button>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                </div>
-                
-                <!--文章卡-->
-                <!-- <div class="row">
+        </mat-card-title>
+        <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="mt-2">
+        <!--文章卡-->
+        <div class="row" *ngFor="let item of articleDatas; index as i">
+          <div class="col-6">
+            <div class="row">
+              <img src="{{item.img_url ? item.img_url:'../../../assets/image/404-error.jpeg'}}" class="article-img"
+                alt="">
+            </div>
+            <div class="row mt-2">
+              <h2>
+                {{item.title}}
+              </h2>
+            </div>
+            <div class="row mt-2">
+              <p class="today-tips">
+                {{item.created_at | date: 'yyyy.MM.dd HH:mm'}}
+              </p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="col article-content">
+                <p>
+                  {{item.content}}
+                </p>
+              </div>
+            </div>
+            <div class="row mt-1" style="float: right;margin-right: 5px;">
+              <button mat-icon-button class="edit-btn" aria-label="Example icon button with a heart icon"
+                (click)="editArticle(item.id)" *ngIf="item.user_id == this.userData.id">
+                <mat-icon class="icon-white">edit</mat-icon>
+              </button>
+              <button mat-icon-button class="delete-btn" aria-label="Example icon button with a heart icon"
+                (click)="deleteArticle(item.id)" *ngIf="item.user_id == this.userData.id">
+                <mat-icon class="icon-white">delete</mat-icon>
+              </button>
+              <button mat-fab extended class="expand-btn" (click)="detailArticle(item.id)">
+                <mat-icon>exit_to_app</mat-icon>
+                閱讀全文
+              </button>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <!--文章卡-->
+        <!-- <div class="row">
                     <div class="col">
                         <div class="row">
                             <img src="../../../assets/image/dcard1.png" class="article-img" alt="">
@@ -108,8 +100,8 @@
                     </div>
                 </div>
                 <mat-divider></mat-divider> -->
-                <!--文章卡-->
-                <!-- <div class="row">
+        <!--文章卡-->
+        <!-- <div class="row">
                     <div class="col">
                         <div class="row">
                             <img src="../../../assets/image/dcard2.png" class="article-img" alt="">
@@ -138,9 +130,9 @@
                         </div>
                     </div>
                 </div> -->
-                <!-- <mat-divider></mat-divider> -->
-                <!--文章卡-->
-                <!-- <div class="row">
+        <!-- <mat-divider></mat-divider> -->
+        <!--文章卡-->
+        <!-- <div class="row">
                     <div class="col">
                         <div class="row">
                             <img src="../../../assets/image/dcard3.png" class="article-img" alt="">
@@ -169,70 +161,89 @@
                         </div>
                     </div>
                 </div> -->
-                <!-- <mat-divider></mat-divider> -->
-                <mat-paginator #paginator [length]="100" [pageSizeOptions]="[3, 5, 10]" aria-label="Select page">
-                </mat-paginator>
-            </mat-card-content>
-        </mat-card>
+        <!-- <mat-divider></mat-divider> -->
+        <mat-paginator #paginator [length]="100" [pageSizeOptions]="[3, 5, 10]" aria-label="Select page">
+        </mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-lg-4">
+    <div class="row">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title class="d-flex align-items-center" >
+            <mat-icon style="color: red;">location_on</mat-icon>
+             台南市,新市區
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="today-tips">晴時多雲</p>
+          <div class="row">
+            <div class="col d-flex align-items-center ">
+              <span style="font-size:50px;font-weight: 200;">19°C</span>
+            </div>
+            <div class="col d-flex align-items-center">
+              <img width="60" alt="Angular Logo" src="../assets/image/cloudy.png" />
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <!-- <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title class="d-flex align-items-center" *ngIf="this.nowLocationData">
+            <mat-icon style="color: red;">location_on</mat-icon>
+            {{this.city}}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content *ngIf="this.dispalyForcastWeatherData">
+          <p class="today-tips">{{this.nowWeatherDiscription}}</p>
+          <div class="row">
+            <div class="col d-flex align-items-center ">
+              <span style="font-size:50px;font-weight: 200;">{{this.nowTemp}}°C</span>
+            </div>
+            <div class="col d-flex align-items-center">
+              <img width="60" alt="Angular Logo" src="../assets/image/cloudy.png" />
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card> -->
     </div>
-    <div class="col-lg-4">
-        <div class="row">
-            <mat-card class="example-card">
-                <mat-card-header>
-                    <mat-card-title class="d-flex align-items-center" *ngIf="this.nowLocationData">
-                        <mat-icon style="color: red;">location_on</mat-icon> 
-                        {{this.city}}
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content *ngIf="this.dispalyForcastWeatherData">
-                    <p class="today-tips">{{this.nowWeatherDiscription}}</p>
-                    <div class="row">
-                        <div class="col d-flex align-items-center ">
-                            <span style="font-size:50px;font-weight: 200;">{{this.nowTemp}}°C</span>
-                        </div>
-                        <div class="col d-flex align-items-center">
-                            <img width="60" alt="Angular Logo" src="../assets/image/cloudy.png"/>
-                        </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
-        <div class="row" style="padding-top: 12px;">
-            <mat-card class="example-card">
-                <mat-card-header>
-                    <mat-card-title class="d-flex align-items-center">
-                        <mat-icon>thumb_up_alt</mat-icon> 
-                        精選 >
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-divider></mat-divider>
-                <mat-card-content *ngIf="randomArticleDatas">
-                    <!--精選文章卡-->
-                    <div class="row" *ngFor="let item of randomArticleDatas; index as i">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col-10">
-                                    <a href="/detailArticle/{{item.id}}">
-                                        <h3>
-                                            {{item.content}} ...
-                                        </h3>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <mat-icon>call_made<</mat-icon>
-                                </div>
-                            </div>
-                            <mat-divider></mat-divider>
-                        </div>
-                        
-                    </div>
-                    
-                </mat-card-content>
-                <mat-card-actions>
-    
-                </mat-card-actions>
-            </mat-card>
-        </div>
-        
+    <div class="row" style="padding-top: 12px;">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title class="d-flex align-items-center">
+            <mat-icon>thumb_up_alt</mat-icon>
+            精選 >
+          </mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content *ngIf="randomArticleDatas">
+          <!--精選文章卡-->
+          <div class="row" *ngFor="let item of randomArticleDatas; index as i">
+            <div class="col">
+              <div class="row">
+                <div class="col-10">
+                  <a href="/detailArticle/{{item.id}}">
+                    <h3>
+                      {{item.content}} ...
+                    </h3>
+                  </a>
+                </div>
+                <div class="col-2">
+                  <mat-icon>call_made</mat-icon>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
+
+          </div>
+
+        </mat-card-content>
+        <mat-card-actions>
+
+        </mat-card-actions>
+      </mat-card>
     </div>
+
+  </div>
 </div>

@@ -30,7 +30,7 @@ export class HttpApiService {
   private BaseUrl: string = 'https://localhost:7086/api';
   // private WeatherUrl: string = 'https://opendata.cwb.gov.tw/api';
   private WeatherUrl: string = '/api';
-  private WeatherApiKey:string = 'CWB-A5BCB816-60EC-4014-BD02-E1802C24F27E';
+  private WeatherApiKey:string = 'CWA-D94615CC-D833-4DAF-8353-F58E19EE113A';
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -46,8 +46,8 @@ export class HttpApiService {
   /**
     * 以經緯度轉換地理位置
   */
-  latitude=23.0904478
-  longitude=120.2773343
+  latitude=23.090223155174623
+  longitude=120.27725353858409
   getLocation() : Observable<any>{
     //創建Observable對象
     return new Observable((observer) => {
@@ -84,7 +84,7 @@ export class HttpApiService {
       }
     });
   }
-  
+
   locationReverse(latitude:number,longitude:number): Observable<any>{
     const url =`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
     return this.http.get(url)
@@ -94,7 +94,7 @@ export class HttpApiService {
     * 取得一般天氣預報－今明36小時天氣預報
     * @param elementName 欲取得資訊 天氣因子ex:Wx
     * @param locationName 填入臺灣各縣市 ex:臺南市
-    * @return {obj} weather datas 
+    * @return {obj} weather datas
   */
   getForcastWeather(locationName:string,elementName?:string): Observable<any> {
     const url = `${this.WeatherUrl}/v1/rest/datastore/F-C0032-001?Authorization=${this.WeatherApiKey}&locationName=${locationName}&elementName=${elementName}`
@@ -109,7 +109,7 @@ export class HttpApiService {
     * 取得現在天氣觀測報告
     * @param elementName 欲取得資訊 ex:TEMP
     * @param locationName 填入氣象站 ex:臺南 可參考 https://e-service.cwb.gov.tw/wdps/obs/state.htm
-    * @return {obj} weather datas 
+    * @return {obj} weather datas
   */
   getNowWeather(locationName:string,elementName?:string): Observable<any> {
     const url = `${this.WeatherUrl}/v1/rest/datastore/O-A0003-001?Authorization=${this.WeatherApiKey}&locationName=${locationName}&elementName=${elementName}`
@@ -153,7 +153,7 @@ export class HttpApiService {
   /**
     * 取得所有使用者data
     *
-    * @return {obj} User datas 
+    * @return {obj} User datas
   */
   getUserRequest() : Observable<any> {
     return this.http.get(this.BaseUrl + '/Users');
@@ -162,7 +162,7 @@ export class HttpApiService {
   /**
     * 取得單一使用者data
     * @param  {string} 填入欲取得的使用者id
-    * @return {obj} User datas 
+    * @return {obj} User datas
   */
   getOneUserRequest(id: string): Observable<any> {
     const url = `${this.BaseUrl}/Users/${id}`;
@@ -172,7 +172,7 @@ export class HttpApiService {
   /**
     * 新增使用者
     * @param  {Comment} 填入body obj
-    * @return {obj} User datas 
+    * @return {obj} User datas
   */
   uploadUserRequest(body: Comment) : Observable<any>{
     const url = `${this.BaseUrl}/Users`;
@@ -183,7 +183,7 @@ export class HttpApiService {
   /**
     * 取得所有文章data
     *
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   getArticleRequest() : Observable<any> {
     return this.http.get(this.BaseUrl + '/Articles');
@@ -192,7 +192,7 @@ export class HttpApiService {
   /**
     * 取得單一文章data
     * @param  {string} 填入欲取得的文章id
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   getOneArticleRequest(id: string): Observable<any> {
     const url = `${this.BaseUrl}/Articles/${id}`;
@@ -202,7 +202,7 @@ export class HttpApiService {
   /**
     * 新增文章
     * @param  {Article} 填入body obj
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   uploadArticleRequest(body: Article) : Observable<any>{
     const url = `${this.BaseUrl}/Articles`;
@@ -212,7 +212,7 @@ export class HttpApiService {
   /**
     * 更新文章
     * @param  {Article} 填入body obj
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   updateArticleRequest(id:string,body: Article) : Observable<any>{
     const url = `${this.BaseUrl}/Articles/${id}`;
@@ -222,7 +222,7 @@ export class HttpApiService {
   /**
     * 刪除單一文章data
     * @param  {string} 填入欲刪除的文章id
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   deleteArticleRequest(id: string) : Observable<any> {
     const url = `${this.BaseUrl}/Articles/${id}`;
@@ -232,7 +232,7 @@ export class HttpApiService {
   /**
     * 取得該user_id的文章列表
     * @param  {string} 填入user_id
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   getUserArticlesRequest(user_id: string): Observable<any> {
     const url = `${this.BaseUrl}/Articles/getUserArticles/${user_id}`;
@@ -242,7 +242,7 @@ export class HttpApiService {
   /**
     * 取得指定數量隨機文章列表
     * @param  {string} count
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   getRandomArticlesRequest(count?:number): Observable<any> {
     const url = `${this.BaseUrl}/Articles/getRandomArticles/${count}`;
@@ -252,18 +252,18 @@ export class HttpApiService {
   /**
     * 新增文章圖片檔案
     * @param  {string} 填入body obj
-    * @return {obj} imagePath and other datas 
+    * @return {obj} imagePath and other datas
   */
   uploadArticleImageFileRequest(body: any) : Observable<any>{
     const url = `${this.BaseUrl}/Articles/uploadImageFile`;
     return this.http.post(url, body);
   }
 
-  
+
   /**
     * 取得所有文章圖片data
     *
-    * @param {string} imageName datas 
+    * @param {string} imageName datas
   */
   getArticleImageFileRequest(imageName:string) : Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'blob');
@@ -274,7 +274,7 @@ export class HttpApiService {
   /**
     * 取得所有評論data
     *
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   getCommentRequest() : Observable<any> {
     return this.http.get(this.BaseUrl + '/Comments');
@@ -283,7 +283,7 @@ export class HttpApiService {
   /**
     * 取得單一評論data
     * @param  {string} 填入欲取得的評論id
-    * @return {obj} Comment datas 
+    * @return {obj} Comment datas
   */
   getOneCommentRequest(id: string): Observable<any> {
     const url = `${this.BaseUrl}/Comments/${id}`;
@@ -293,7 +293,7 @@ export class HttpApiService {
   /**
     * 取得單一文章評論data
     * @param  {string} 填入欲取得評論的文章id
-    * @return {obj} Comment datas 
+    * @return {obj} Comment datas
   */
   getArticleCommentsRequest(article_id: string): Observable<any> {
     const url = `${this.BaseUrl}/Comments/getArticleComments/${article_id}`;
@@ -303,7 +303,7 @@ export class HttpApiService {
   /**
     * 新增評論
     * @param  {Comment} 填入body obj
-    * @return {obj} Comment datas 
+    * @return {obj} Comment datas
   */
   uploadCommentRequest(body: Comment) : Observable<any>{
     const url = `${this.BaseUrl}/Comments`;
@@ -313,7 +313,7 @@ export class HttpApiService {
   /**
     * 更新評論
     * @param  {Comment} 填入body obj
-    * @return {obj} Comment datas 
+    * @return {obj} Comment datas
   */
   updateCommentRequest(id:string,body: Comment) : Observable<any>{
     const url = `${this.BaseUrl}/Comments/${id}`;
@@ -323,7 +323,7 @@ export class HttpApiService {
   /**
     * 刪除單一評論data
     * @param  {string} 填入欲刪除的評論id
-    * @return {obj} Comment datas 
+    * @return {obj} Comment datas
   */
   deleteCommentRequest(id: string) : Observable<any>{
     const url = `${this.BaseUrl}/Comments/${id}`;
@@ -334,7 +334,7 @@ export class HttpApiService {
   /**
     * 取得所有收藏data
     *
-    * @return {obj} collection datas 
+    * @return {obj} collection datas
   */
   getCollectionRequest() : Observable<any> {
     return this.http.get(this.BaseUrl + '/Collections');
@@ -343,7 +343,7 @@ export class HttpApiService {
   /**
     * 取得User收藏data
     *
-    * @return {obj} collection datas 
+    * @return {obj} collection datas
   */
   getUserCollectionRequest(user_id:string) : Observable<any> {
     return this.http.get(this.BaseUrl + `/Collections/getUserCollections/${user_id}`);
@@ -352,7 +352,7 @@ export class HttpApiService {
   /**
     * 取得單一收藏data
     * @param  {string} 填入欲取得的收藏id
-    * @return {obj} Collection datas 
+    * @return {obj} Collection datas
   */
   getOneCollectionRequest(id: string): Observable<any> {
     const url = `${this.BaseUrl}/Collections/${id}`;
@@ -362,7 +362,7 @@ export class HttpApiService {
   /**
     * 新增收藏
     * @param  {Collection} 填入body obj
-    * @return {obj} Collection datas 
+    * @return {obj} Collection datas
   */
   uploadCollectionRequest(body: Collection) : Observable<any>{
     const url = `${this.BaseUrl}/Collections`;
@@ -372,7 +372,7 @@ export class HttpApiService {
   /**
     * 更新收藏
     * @param  {Collection} 填入body obj
-    * @return {obj} Comment datas 
+    * @return {obj} Comment datas
   */
   updateCollectionRequest(id:string,body: Collection) : Observable<any>{
     const url = `${this.BaseUrl}/Collections/${id}`;
@@ -382,7 +382,7 @@ export class HttpApiService {
   /**
     * 刪除單一收藏data
     * @param  {string} 填入欲刪除的收藏id
-    * @return {obj} Comment datas 
+    * @return {obj} Comment datas
   */
   deleteCollectionRequest(id: string) : Observable<any>{
     const url = `${this.BaseUrl}/Collections/${id}`;

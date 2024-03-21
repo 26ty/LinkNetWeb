@@ -5,7 +5,7 @@
   <div class="row" style="width: 100%;">
     <div class="col-lg-2">
       <img width="60" alt="Angular Logo" src="../assets/image/linknet-logo.png" (click)="homeLink()" />
-      
+
     </div>
     <div class="col-lg-8">
       <input class="form-control form-control-lg search-bar" type="text" placeholder="搜尋主題和來源" aria-label=".form-control-lg example">
@@ -15,11 +15,11 @@
         <button mat-icon-button>
           <mat-icon>settings</mat-icon>
         </button>
-        
+
 
         <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="this.userData" >
           <mat-icon>person</mat-icon>
-          
+
         </button>
         <span *ngIf="!this.userData" class="user-name">未登入</span>
         <span *ngIf="this.userData" class="user-name">Hi {{this.userData.username}}!</span>
@@ -42,7 +42,7 @@
           </button>
         </mat-menu>
       </div>
- 
+
     </div>
   </div>
   <div class="row" style="width: 100%;">
@@ -68,7 +68,7 @@
         </li>
       </ul>
     </div>
-    
+
   </div>
 
 </div> -->
@@ -78,14 +78,14 @@
   <div class=" mt-5">
     <router-outlet></router-outlet>
   </div>
-  
+
   <!-- Footer -->
   <footer>
     Love LinkNet?&nbsp;
     <a href="https://github.com/angular/angular" target="_blank" rel="noopener"> Welcome.
-      
+
     </a>
-    
+
   </footer>
 
   <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">

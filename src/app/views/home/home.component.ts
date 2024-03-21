@@ -51,20 +51,20 @@ export class HomeComponent implements OnInit {
     this.getNowLocation();
 
     //預測天氣
-    this.getForcastWeatherData("臺南市", "Wx");
+    //this.getForcastWeatherData("臺南市", "Wx");
 
     //現在天氣
-    this.getNowWeatherData("臺南", "TEMP");
+    //this.getNowWeatherData("臺南", "TEMP");
   }
 
   nowLocationData:any
   city:any
   /**
     * 取得現在位置 經緯度轉址
-    * @return {obj} location datas 
+    * @return {obj} location datas
   */
   getNowLocation() {
-    // 
+    //
     this.HttpApiService.getLocation().subscribe(
       res => {
         console.log(res)
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
     * 取得一般天氣預報－今明36小時天氣預報 https://opendata.cwb.gov.tw/dist/opendata-swagger.html
     * @param elementName 欲取得資訊 天氣因子 ex:Wx
     * @param locationName 填入臺灣各縣市 ex:臺南市
-    * @return {obj} weather datas 
+    * @return {obj} weather datas
   */
   getForcastWeatherData(locationName: string, elementName: string) {
     this.HttpApiService.getForcastWeather(locationName, elementName).subscribe(
@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
     * 取得現在天氣觀測報告 https://opendata.cwb.gov.tw/dist/opendata-swagger.html
     * @param elementName 欲取得資訊 ex:TEMP
     * @param locationName 填入氣象站 ex:臺南 可參考 https://e-service.cwb.gov.tw/wdps/obs/state.htm
-    * @return {obj} weather datas 
+    * @return {obj} weather datas
   */
   getNowWeatherData(locationName: string, elementName: string) {
     this.HttpApiService.getNowWeather(locationName, elementName).subscribe(
@@ -146,7 +146,7 @@ export class HomeComponent implements OnInit {
   /**
     * 取得所有文章data
     *
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   getAllArticle() {
     this.HttpApiService.getArticleRequest().subscribe(
@@ -173,7 +173,7 @@ export class HomeComponent implements OnInit {
   /**
     * 取得隨機指定文章data
     * @param  {string} count
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   getRandomArticle(count?: number) {
     this.HttpApiService.getRandomArticlesRequest(count).subscribe(
@@ -213,7 +213,7 @@ export class HomeComponent implements OnInit {
     * 取得圖片
     * @param  {string} a_id 填入文章id
     * @param  {string} imageName 填入欲取得圖片名稱
-    * @return {obj} imagePath and other datas 
+    * @return {obj} imagePath and other datas
   */
   getArticleImageFile(a_id: string, imageName: string) {
     this.HttpApiService.getArticleImageFileRequest(imageName).subscribe(
@@ -249,7 +249,7 @@ export class HomeComponent implements OnInit {
 
   /**
    * 提取字符串中第一个":"后面的值
-   * @param {string} str 欲切割的字串 
+   * @param {string} str 欲切割的字串
    * @returns {string} str 第一個“:”後的字串值
    */
   extractValue(str: string): string {
@@ -322,7 +322,7 @@ export class HomeComponent implements OnInit {
   /**
     * 限制<p>內字數顯示
     * @param limit 限制字數
-    * @return {obj} article datas 
+    * @return {obj} article datas
   */
   limitText(p: HTMLElement, limit: number): void {
     const text: any = p.textContent?.trim();
