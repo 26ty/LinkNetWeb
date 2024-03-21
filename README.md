@@ -1,27 +1,57 @@
 # LinkNetWeb
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
+#### 社群平台留言板主題資料表設計ER-Model:
+![](https://hackmd.io/_uploads/Byw8cTx23.png)
+1. User(使用者)表格
 
-## Development server
+欄位名稱 | 資料類型 | 說明
+--- | --- | ---
+id | INTEGER | 使用者ID，主鍵
+username | VARCHAR(50) | 使用者名稱，唯一
+password | VARCHAR(100) | 使用者密碼
+email | VARCHAR(50) | 使用者電子郵件，唯一
+avatar | VARCHAR(255) | 使用者頭像圖片路徑
+created_at | TIMESTAMP | 使用者建立時間
+updated_at | TIMESTAMP | 使用者最近更新時間
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+2. Article(文章)表格
 
-## Code scaffolding
+欄位名稱 | 資料類型 | 說明
+--- | --- | ---
+id | VARCHAR2(80) | 文章ID，主鍵
+title | VARCHAR2(80) | 文章標題
+content | CLOB | 文章內容
+img_url | varchar1(80) | 文章圖片
+user_id | INTEGER | 作者ID，外鍵參考User表格的id欄位
+created_at | VARCHAR2(80) | 文章建立時間
+updated_at | TIMESTAMP | 文章最近更新時間
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3. Comment(回覆)表格
 
-## Build
+欄位名稱 | 資料類型 | 說明
+--- | --- | ---
+id | INTEGER | 回覆ID，主鍵
+content | TEXT | 回覆內容
+user_id | INTEGER | 回覆者ID，外鍵參考User表格的id欄位
+article_id | INTEGER | 回覆對應的文章ID，外鍵參考Article表格的id欄位
+created_at | TIMESTAMP | 回覆建立時間
+updated_at | TIMESTAMP | 回覆最近更新時間
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 社群平台留言板[LinkNet]
+#### 目前進度
+1. 資料庫及資料表已建立
+2. asp.net core web api 已建立crud controller
+3. Angular已串接註冊/登入，取得所有／個人文章，上傳文章
 
-## Running unit tests
+![image](https://github.com/26ty/LinkNetWeb/assets/69799370/0d8058ab-57a0-42d1-822b-feb14d0e88ef)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![image](https://github.com/26ty/LinkNetWeb/assets/69799370/fb7f4a52-b687-41b8-bfda-e3c61bde78b2)
 
-## Running end-to-end tests
+![image](https://github.com/26ty/LinkNetWeb/assets/69799370/b362f942-f191-4c8d-8227-6bd5af3dad0f)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+![image](https://github.com/26ty/LinkNetWeb/assets/69799370/679e6e7a-70fd-4383-9a64-68af7c5e9019)
+![image](https://github.com/26ty/LinkNetWeb/assets/69799370/e9837759-2e51-4a5d-9d1c-c5bceeb3cf85)
+![image](https://github.com/26ty/LinkNetWeb/assets/69799370/99aefbee-b57e-496a-a611-f802ea22a06d)
 
-## Further help
+![image](https://github.com/26ty/LinkNetWeb/assets/69799370/7f1d419d-0e86-4a73-899d-ae7a7bbcb767)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
